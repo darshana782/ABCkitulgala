@@ -1,71 +1,26 @@
-package com.hotelsystem.hotelkitchensystem.example.model;
+package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "Customer_Table")
-public class Customer {
-
-    @Id
-    @GeneratedValue
-    private int customerId;
-
-    //    @Column(nullable = false)
-    private String cusFirstName;
-
-    //    @Column(nullable = false)
-    private String cusLastName;
-
-    //    @Column(nullable = false)
+public class CustomerSignUpRequest {
+    private String firstName;
+    private String lastName;
     private String email;
-
-    //    @Column(nullable = false)
     private int age;
-
-    //    @Column(nullable = false)
     private String addressLineOne;
-
-    //    @Column(nullable = false)
     private String addressLineTwo;
-
-    //    @Column(nullable = false)
     private String addressLineThree;
-
-    //    @Column(nullable = false)
     private String dobYear;
-
-    //    @Column(nullable = false)
     private String dobMonth;
-
-    //    @Column(nullable = false)
     private String dobDate;
-
-    //    @Column(nullable = false)
     private String nic;
-
-    //    @Column(nullable = false)
     private String teleNumber;
-
-    //    @Column(nullable = false)
     private String password;
 
-
-    //getters
-
-    public String getCusFirstName() {
-        return cusFirstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getCusLastName() {
-        return cusLastName;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {
@@ -113,18 +68,12 @@ public class Customer {
     }
 
 
-    //setters
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setCusFirstName(String cusFirstName) {
-        this.cusFirstName = cusFirstName;
-    }
-
-    public void setCusLastName(String cusLastName) {
-        this.cusLastName = cusLastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setEmail(String email) {
