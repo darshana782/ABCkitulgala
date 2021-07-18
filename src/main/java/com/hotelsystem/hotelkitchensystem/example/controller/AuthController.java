@@ -52,12 +52,13 @@ public class AuthController {
 
         @PostMapping("/customer/login")
     public ResponseEntity customerLogin(@RequestBody CustomerSignInRequest customerSignInRequest){
-        //get object of relavant user
+        //get object of relevant user
         String email=customerSignInRequest.getEmail();
         String responseMsg;
         //continue if user exists on provided details
-        if (authService.checkIfEmailExists(email)){
+        if (authService.checkIfEmailExistsInUserTable(email)){
             CustomerSigned response= authService.customerLogin(customerSignInRequest);
+
             return ResponseEntity.ok().body(response);
         }
         responseMsg="Email Invalid";

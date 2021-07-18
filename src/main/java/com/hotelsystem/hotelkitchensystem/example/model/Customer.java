@@ -42,7 +42,7 @@ public class Customer {
     //    @Column(nullable = false)
     private String teleNumber;
     //    @Column(nullable = false)
-    private String password;
+//    private String password;
 
 
     //getters
@@ -99,9 +99,9 @@ public class Customer {
         return teleNumber;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
 
     //setters
@@ -158,7 +158,7 @@ public class Customer {
         this.teleNumber = teleNumber;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 }
