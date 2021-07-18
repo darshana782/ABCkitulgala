@@ -1,11 +1,14 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +32,14 @@ public class AuthService implements UserDetailsService{
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
+//    //return true if email exists
+//    public boolean findbyEmail(String email) {
+//        if (customerRepository.(email) != null) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     //check whether NIC No exists
     public boolean checkIfNICExists(String nic) {
@@ -54,6 +65,14 @@ public class AuthService implements UserDetailsService{
         return false;
     }
 
+//    //check for email
+//    public boolean checkIfEmail(String email) {
+//        if (customerRepository.findByemail(email) != null) {
+//            return true;
+//        }
+//        return false;
+//    }
+
     public void signup(CustomerSignUpRequest customerSignUpRequest) {
         Customer customer = new Customer();
 
@@ -75,6 +94,30 @@ public class AuthService implements UserDetailsService{
         //save user login data and customer data
         customerRepository.save(customer);
 
+    }
+
+    // customer login verification
+    public CustomerSigned customerLogin(CustomerSignInRequest customerSignInRequest) {
+        // object of relevant user
+        Customer customer = this.customerRepository.findByemail(customerSignInRequest.getEmail());
+
+        //check password and with the user email with authentication manager
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(customer.getEmail(), customerSignInRequest.getPassword())
+            );
+        } catch (Exception ex) {
+            //throw error if emails and password does not match
+            throw new RuntimeException("Invalid Password");
+        }
+        //get jwt token
+        String token = jwtTokenUtil.generateToken(customerSignInRequest.getEmail());
+
+        CustomerSigned response = new CustomerSigned();
+//        response.setId(customer.getCustomerId());
+        response.setEmail(customer.getEmail());
+        response.setToken(token); //append to response entity
+        return response;
     }
 
     @Override

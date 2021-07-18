@@ -17,48 +17,39 @@ public class Customer {
     @Id
     @GeneratedValue
     private int customerId;
-
     //    @Column(nullable = false)
     private String cusFirstName;
-
     //    @Column(nullable = false)
     private String cusLastName;
-
     //    @Column(nullable = false)
     private String email;
-
     //    @Column(nullable = false)
     private int age;
-
     //    @Column(nullable = false)
     private String addressLineOne;
-
     //    @Column(nullable = false)
     private String addressLineTwo;
-
     //    @Column(nullable = false)
     private String addressLineThree;
-
     //    @Column(nullable = false)
     private String dobYear;
-
     //    @Column(nullable = false)
     private String dobMonth;
-
     //    @Column(nullable = false)
     private String dobDate;
-
     //    @Column(nullable = false)
     private String nic;
-
     //    @Column(nullable = false)
     private String teleNumber;
-
     //    @Column(nullable = false)
     private String password;
 
 
     //getters
+
+    public int getCustomerId() {
+        return customerId;
+    }
 
     public String getCusFirstName() {
         return cusFirstName;
