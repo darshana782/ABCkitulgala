@@ -74,7 +74,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/gettoken").permitAll()
                 .antMatchers("/auth/signup").permitAll()
                 .antMatchers("/customers").permitAll()
-//                .antMatchers("/auth/staff").permitAll()
+                .antMatchers("/auth/customer/login").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
