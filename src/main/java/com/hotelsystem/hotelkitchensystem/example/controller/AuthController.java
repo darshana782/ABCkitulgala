@@ -3,6 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
@@ -11,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
-
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -28,9 +27,28 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
+    @PostMapping("/registerEmployee")
+    public ResponseEntity cusreg(@RequestBody EmployeeRegRequest employeeRegRequest){
+        String email=employeeRegRequest.getEmail();
+        String teleNo=employeeRegRequest.getTeleNumber();
+        String responseMsg;
+        if(authService.checkIfEmailExistsInEmployees(email)){
+            responseMsg="Email exists";
+        }else if(authService.checkIfTeleNumberExistsInEmployees(teleNo)){
+            responseMsg="Contact Number exists";
+        }else {
+        authService.cusreg(employeeRegRequest);
+            responseMsg="Employee Added Successfully";
+                return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+}
+
+
+
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody CustomerSignUpRequest customerSignUpRequest){
-
         String email=customerSignUpRequest.getEmail();
         String nic=customerSignUpRequest.getNic();
         String teleNo=customerSignUpRequest.getTeleNumber();

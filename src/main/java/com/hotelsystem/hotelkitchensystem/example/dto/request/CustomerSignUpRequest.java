@@ -14,6 +14,7 @@ public class CustomerSignUpRequest {
     private String nic;
     private String teleNumber;
     private String password;
+    private String usertype;
 
     public String getFirstName() {
         return firstName;
@@ -67,6 +68,9 @@ public class CustomerSignUpRequest {
         return password;
     }
 
+    public String getUsertype() {
+        return usertype;
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -118,5 +122,9 @@ public class CustomerSignUpRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setUsertype(String usertype) {
+        this.usertype = usertype;
     }
 }

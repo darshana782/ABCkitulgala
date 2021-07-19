@@ -2,10 +2,13 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
+import com.hotelsystem.hotelkitchensystem.example.model.Employee;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.EmployeeRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ public class AuthService implements UserDetailsService{
 
     @Autowired
     private UserDataRepository userDataRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private PasswordEncoder bcryptPasswordEncoder;
@@ -67,12 +73,47 @@ public class AuthService implements UserDetailsService{
         }
         return false;
     }
+    //check for email
+    public boolean checkIfEmailExistsInEmployees(String email){
+        if (employeeRepository.findByemail(email) != null) {
+            return true;
+        }
+        return false;
+    }
     //check for Contact No
     public boolean checkIfTeleNumberExists(String teleNo) {
         if (customerRepository.findByteleNumber(teleNo) != null) {
             return true;
         }
         return false;
+    }
+    //
+    public boolean checkIfTeleNumberExistsInEmployees(String teleNo){
+        if (employeeRepository.findByteleNumber(teleNo) != null) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public void cusreg(EmployeeRegRequest employeeRegRequest){
+        Employee employee = new Employee();
+        UserData userData = new UserData();
+
+        //set details to UserData object
+        userData.setEmail(employeeRegRequest.getEmail());
+        userData.setPassword(bcryptPasswordEncoder.encode(employeeRegRequest.getPassword()));
+        userData.setUserType((employeeRegRequest.getUserType()));
+
+        employee.setF_name(employeeRegRequest.getFirstName());
+        employee.setL_name(employeeRegRequest.getLastName());
+        employee.setEmail(employeeRegRequest.getEmail());
+        employee.setTeleNumber(employeeRegRequest.getTeleNumber());
+        employee.setGender(employeeRegRequest.getGender());
+        employee.setType(employeeRegRequest.getUserType());
+
+        employeeRepository.save(employee);
+        userDataRepository.save(userData);
     }
 
 
@@ -98,6 +139,7 @@ public class AuthService implements UserDetailsService{
         //set details to UserData object
         userData.setEmail(customerSignUpRequest.getEmail());
         userData.setPassword(bcryptPasswordEncoder.encode(customerSignUpRequest.getPassword()));
+        userData.setUserType(customerSignUpRequest.getUsertype());
 //        userData.setId(customer.getCustomerId());
 
         //save user login data and customer data
