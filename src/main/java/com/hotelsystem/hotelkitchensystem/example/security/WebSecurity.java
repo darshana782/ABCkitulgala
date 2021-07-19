@@ -76,6 +76,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customers").permitAll()
                 .antMatchers("/auth/customer/login").permitAll()
                 .antMatchers("/addCustomersss").permitAll()
+                .antMatchers("/api/v1/addEmployee").permitAll()
+                .antMatchers("/api/v1/viewEmployees").permitAll()
+                .antMatchers("/api/v1/viewEmployee/{id}").permitAll()
+                .antMatchers("/api/v1/updateEmployee/{id}").permitAll()
+                .antMatchers("/api/v1/deleteEmployee/{id}").permitAll()
+                .antMatchers("/auth/registerEmployee").permitAll()
                 .antMatchers("/users").permitAll()
 
                 .anyRequest().authenticated()
