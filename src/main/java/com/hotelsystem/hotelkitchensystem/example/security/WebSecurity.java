@@ -83,6 +83,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/deleteEmployee/{id}").permitAll()
                 .antMatchers("/auth/registerEmployee").permitAll()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/foods").permitAll()
+                .antMatchers("/addFood").permitAll()
+                .antMatchers("/addIngredient").permitAll()
+                .antMatchers("/ingredients").permitAll()
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
