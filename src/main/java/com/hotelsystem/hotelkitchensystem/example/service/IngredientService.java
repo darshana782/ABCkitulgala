@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
 import com.hotelsystem.hotelkitchensystem.example.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class IngredientService {
 //    }
 
     //delete ingredient
-    public String deleteIngredient(int ingerdientId){
-        ingredientRepository.deleteById(ingerdientId);
-        return "Ingredient Removed.. "+ingerdientId;
+    public String deleteIngredient(int ingredientId){
+        ingredientRepository.deleteById(ingredientId);
+        return "Ingredient Removed.. "+ingredientId;
     }
 
 
@@ -50,5 +51,25 @@ public class IngredientService {
         existingIngredient.setQty(ingredient.getQty());
         existingIngredient.setReorderLevel(ingredient.getReorderLevel());
         return ingredientRepository.save(existingIngredient);
+    }
+
+
+    //check whether Ingredient exists
+    public boolean checkIfIngredientExists(String ingredientName) {
+        if (ingredientRepository.findByingredientName(ingredientName) != null) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public void addingredient(AddIngredientRequest addIngredientRequest){
+        Ingredient ingredient = new Ingredient();
+
+        ingredient.setIngredientName(addIngredientRequest.getIngredientName());
+        ingredient.setQty(addIngredientRequest.getQty());
+        ingredient.setReorderLevel(addIngredientRequest.getReorderLevel());
+
+        ingredientRepository.save(ingredient);
     }
 }

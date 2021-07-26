@@ -1,14 +1,18 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
 import com.hotelsystem.hotelkitchensystem.example.service.FoodService;
 import com.hotelsystem.hotelkitchensystem.example.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class KitchenInventoryController {
 
@@ -59,10 +63,10 @@ public class KitchenInventoryController {
 
 //Ingredient
 
-    @PostMapping("/addIngredient")
-    public Ingredient addIngredient(@RequestBody Ingredient ingredient){
-        return ingredientService.saveIngredient(ingredient);
-    }
+//    @PostMapping("/addIngredient")
+//    public Ingredient addIngredient(@RequestBody Ingredient ingredient){
+//        return ingredientService.saveIngredient(ingredient);
+//    }
 
     @PostMapping("/addIngredients")
     public List<Ingredient> addIngredients(@RequestBody List<Ingredient> ingredients){
@@ -78,6 +82,26 @@ public class KitchenInventoryController {
     public Ingredient findIngredientById(@PathVariable int ingredientId){
         return ingredientService.getIngredientById(ingredientId);
     }
+
+
+
+
+    @PostMapping("/addIngredient")
+    public ResponseEntity addingre(@RequestBody AddIngredientRequest addIngredientRequest){
+        String ingredientName=addIngredientRequest.getIngredientName();
+        String responseMsg;
+        if(ingredientService.checkIfIngredientExists(ingredientName)){
+            responseMsg="Ingredient exists";
+        }else {
+            ingredientService.addingredient(addIngredientRequest);
+            responseMsg="Ingredient Added Successfully";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+
+
 
 //    @GetMapping("/ingredientByName/{ingredientName")
 //    public Ingredient findIngredientByName(@PathVariable String ingredientName){
