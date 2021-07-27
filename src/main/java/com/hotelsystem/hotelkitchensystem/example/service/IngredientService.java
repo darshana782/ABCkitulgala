@@ -28,8 +28,8 @@ public class IngredientService {
         return ingredientRepository.findAll();
     }
 
-    public Ingredient getIngredientById(int ingerdientId){
-        return ingredientRepository.findById(ingerdientId).orElse(null);
+    public Ingredient getIngredientById(int ingredientID){
+        return ingredientRepository.findById(ingredientID).orElse(null);
     }
 
     //get ny name

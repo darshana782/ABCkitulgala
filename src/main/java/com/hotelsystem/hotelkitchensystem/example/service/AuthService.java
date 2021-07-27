@@ -145,7 +145,6 @@ public class AuthService implements UserDetailsService{
         //save user login data and customer data
         customerRepository.save(customer);
         userDataRepository.save(userData);
-
     }
 
     // customer login verification
