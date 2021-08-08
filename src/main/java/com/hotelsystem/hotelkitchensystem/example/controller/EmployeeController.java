@@ -13,30 +13,30 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService service;
+    private EmployeeService employeeService;
 
     @PostMapping("/addEmployee")
     public Employee addEmployee(@RequestBody Employee employee){
-        return service.saveEmployee(employee);
+        return employeeService.saveEmployee(employee);
     }
 
     @GetMapping("/viewEmployees")
     public List<Employee> findAllEmployees(){
-        return service.getEmployees();
+        return employeeService.getEmployees();
     }
 
     @GetMapping("/viewEmployee/{id}")
     public Employee findEmployeeById(@PathVariable int id){
-        return service.getEmployeeById(id);
+        return employeeService.getEmployeeById(id);
     }
 
     @PutMapping("/updateEmployee/{id}")
     public Employee updateEmployee(@PathVariable int id, @RequestBody Employee employee){
-        return service.updateEmployeeById(id,employee);
+        return employeeService.updateEmployeeById(id,employee);
     }
 
     @DeleteMapping("/deleteEmployee/{id}")
     public String deleteEmployee(@PathVariable int id){
-        return service.deleteEmployee(id);
+        return employeeService.deleteEmployee(id);
     }
 }

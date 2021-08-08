@@ -19,7 +19,7 @@ public class Ingredient {
 
     @Id
     @GeneratedValue
-    private int ingredientId;
+        private int ingredientId;
     private String ingredientName;
     private int qty;
     private int reorderLevel;

@@ -10,34 +10,34 @@ import java.util.List;
 @Service
 public class EmployeeService {
     @Autowired
-    private EmployeeRepository repository;
+    private EmployeeRepository employeeRepository;
 
     public Employee saveEmployee(Employee employee){
-        return repository.save(employee);
+        return employeeRepository.save(employee);
     }
 
     public List<Employee> getEmployees(){
-        return repository.findAll();
+        return employeeRepository.findAll();
     }
 
     public Employee getEmployeeById(int id){
-        return repository.findById(id).orElse(null);
+        return employeeRepository.findById(id).orElse(null);
     }
 
     public String deleteEmployee(int id){
-        repository.deleteById(id);
+        employeeRepository.deleteById(id);
         return "Successfully Deleted!";
     }
 
     public Employee updateEmployeeById(int id,Employee employee){
-        Employee  existingEmployee=repository.findById(id).orElse(null);
+        Employee  existingEmployee=employeeRepository.findById(id).orElse(null);
         existingEmployee.setF_name(employee.getF_name());
         existingEmployee.setL_name(employee.getL_name());
         existingEmployee.setEmail(employee.getEmail());
-        existingEmployee.setContact_no(employee.getContact_no());
+        existingEmployee.setTeleNumber(employee.getTeleNumber());
         existingEmployee.setGender(employee.getGender());
         existingEmployee.setType(employee.getType());
         existingEmployee.setPassword(employee.getPassword());
-        return repository.save(existingEmployee);
+        return employeeRepository.save(existingEmployee);
     }
 }
