@@ -98,7 +98,7 @@ public class AuthService implements UserDetailsService{
 
 
     public void signup(CustomerSignUpRequest customerSignUpRequest) {
-        Customer customer = new Customer();
+        Customer tempCustomer = new Customer();
         UserData userData = new UserData();
 
         //set data to the user data object
@@ -111,11 +111,11 @@ public class AuthService implements UserDetailsService{
         userDataRepository.save(userData);
 
         //set data to cutomer object
-        customer.setAddress(customerSignUpRequest.getAddressLineOne()+customerSignUpRequest.getAddressLineTwo()+customerSignUpRequest.getAddressLineThree());
-        customer.setDob(customerSignUpRequest.getDobYear()+customerSignUpRequest.getDobMonth()+customerSignUpRequest.getDobDate());
-        customer.setNic(customerSignUpRequest.getNic());
-        customer.setUserData(userData);
-        customerRepository.save(customer);
+        tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+customerSignUpRequest.getAddressLineTwo()+customerSignUpRequest.getAddressLineThree());
+        tempCustomer.setDob(customerSignUpRequest.getDobYear()+customerSignUpRequest.getDobMonth()+customerSignUpRequest.getDobDate());
+        tempCustomer.setNic(customerSignUpRequest.getNic());
+        tempCustomer.setUserData(userData);
+        customerRepository.save(tempCustomer);
 
     }
 

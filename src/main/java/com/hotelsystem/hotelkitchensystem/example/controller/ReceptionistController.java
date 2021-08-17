@@ -1,7 +1,8 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
-import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
+import com.hotelsystem.hotelkitchensystem.example.service.ReceptionistService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ReceptionistController {
 
     @Autowired
-    AuthService authService;
+    private ReceptionistService receptionistService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -25,13 +26,27 @@ public class ReceptionistController {
     private AuthenticationManager authenticationManager;
 
     //Get customer by contact number
-    @PostMapping("/addCustomer")
-    public ResponseEntity addCustomers(@RequestBody CustomerSignUpRequest customerSignUpRequest){
-        String email=customerSignUpRequest.getEmail();
-        String nic=customerSignUpRequest.getNic();
-        String contactNo=customerSignUpRequest.getContactNo();
+    @PostMapping("/getCustomer")
+    public ResponseEntity getCustomers(@RequestBody GetReceptionistAddCustomerRequest getReceptionistAddCustomerRequest){
+        String email=getReceptionistAddCustomerRequest.getEmail();
+        String nic=getReceptionistAddCustomerRequest.getNic();
+        String contactNo=getReceptionistAddCustomerRequest.getContactNo();
         String responseMsg;
-        if()
+        if(receptionistService.checkIfEmailExists(email)){
+            responseMsg="Email Already Exists";
+        }
+        else if(receptionistService.checkIfContactNumberExists(contactNo)){
+            responseMsg="Contact number already exists";
+        }
+        else if(receptionistService.checkIfNICExists(nic)){
+            responseMsg="NIC number already exists";
+        }
+        else{
+            receptionistService.customerRegistration(getReceptionistAddCustomerRequest);
+            responseMsg="Customer successfuly added";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
     }
 
 }
