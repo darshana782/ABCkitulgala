@@ -28,22 +28,22 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
 
-    @PostMapping("/registerEmployee")
-    public ResponseEntity cusreg(@RequestBody EmployeeRegRequest employeeRegRequest){
-        String email=employeeRegRequest.getEmail();
-        String teleNo=employeeRegRequest.getTeleNumber();
-        String responseMsg;
-        if(authService.checkIfEmailExistsInEmployees(email)){
-            responseMsg="Email exists";
-        }else if(authService.checkIfTeleNumberExistsInEmployees(teleNo)){
-            responseMsg="Contact Number exists";
-        }else {
-        authService.cusreg(employeeRegRequest);
-            responseMsg="Employee Added Successfully";
-                return ResponseEntity.ok().body(responseMsg);
-        }
-        return ResponseEntity.badRequest().body(responseMsg);
-}
+//    @PostMapping("/registerEmployee")
+//    public ResponseEntity cusreg(@RequestBody EmployeeRegRequest employeeRegRequest){
+//        String email=employeeRegRequest.getEmail();
+//        String teleNo=employeeRegRequest.getTeleNumber();
+//        String responseMsg;
+//        if(authService.checkIfEmailExistsInEmployees(email)){
+//            responseMsg="Email exists";
+//        }else if(authService.checkIfTeleNumberExistsInEmployees(teleNo)){
+//            responseMsg="Contact Number exists";
+//        }else {
+//        authService.cusreg(employeeRegRequest);
+//            responseMsg="Employee Added Successfully";
+//                return ResponseEntity.ok().body(responseMsg);
+//        }
+//        return ResponseEntity.badRequest().body(responseMsg);
+//}
 
 
 
@@ -51,13 +51,13 @@ public class AuthController {
     public ResponseEntity signup(@RequestBody CustomerSignUpRequest customerSignUpRequest){
         String email=customerSignUpRequest.getEmail();
         String nic=customerSignUpRequest.getNic();
-        String teleNo=customerSignUpRequest.getTeleNumber();
+        String contactNo=customerSignUpRequest.getContactNo();
         String responseMsg;
         if (authService.checkIfEmailExists(email)){
             responseMsg="Email exists";
         }else if (authService.checkIfNICExists(nic)){
             responseMsg="NIC exists";
-        }else if (authService.checkIfTeleNumberExists(teleNo)){
+        }else if (authService.checkIfContactNumberExists(contactNo)){
             responseMsg="Contact Number exists";
         }else {
             authService.signup(customerSignUpRequest);
@@ -74,13 +74,12 @@ public class AuthController {
         String email=customerSignInRequest.getEmail();
         String responseMsg;
         //continue if user exists on provided details
-        if (authService.checkIfEmailExistsInUserTable(email)){
-            CustomerSigned response= authService.customerLogin(customerSignInRequest);
-
-            return ResponseEntity.ok().body(response);
-        }
-        responseMsg="Email Invalid";
-        return ResponseEntity.badRequest().body(responseMsg);
+            if(authService.checkIfEmailExists(email)){
+                return ResponseEntity.ok().body(authService.customerLogin(customerSignInRequest));
+            }
+            else {
+                return ResponseEntity.badRequest().body("Invalid Email");
+            }
     }
 
 
