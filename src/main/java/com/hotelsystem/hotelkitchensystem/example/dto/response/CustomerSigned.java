@@ -1,16 +1,18 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.response;
 
+import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
+
 public class CustomerSigned {
 
     private long id;
     private String email;
-    private String userType;
+    private UserType userType;
     private String token;
 
     public CustomerSigned(){
     }
 
-    public CustomerSigned(long id, String email, String userType, String token){
+    public CustomerSigned(long id, String email, UserType userType, String token){
         this.id=id;
         this.email=email;
         this.userType=userType;
@@ -29,7 +31,7 @@ public class CustomerSigned {
         return token;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
@@ -45,7 +47,7 @@ public class CustomerSigned {
         this.token = token;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 }
