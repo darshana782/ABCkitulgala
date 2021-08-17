@@ -87,6 +87,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addFood").permitAll()
                 .antMatchers("/addIngredient").permitAll()
                 .antMatchers("/ingredients").permitAll()
+                .antMatchers("/receptionist/getCustomer").permitAll()
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
