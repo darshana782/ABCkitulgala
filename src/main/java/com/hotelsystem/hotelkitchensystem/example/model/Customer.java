@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,8 @@ public class Customer {
     private String dob;
     @Column (nullable = false)
     private String nic;
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus customerStatus;
 
     @OneToOne
     @JsonIgnore

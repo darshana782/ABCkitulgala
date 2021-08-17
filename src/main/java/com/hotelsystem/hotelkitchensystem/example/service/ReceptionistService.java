@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
+import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
@@ -60,7 +61,7 @@ public class ReceptionistService {
         userData.setLastName(getReceptionistAddCustomerRequest.getLastName());
         userData.setContactNo(getReceptionistAddCustomerRequest.getContactNo());
         userData.setEmail(getReceptionistAddCustomerRequest.getEmail());
-        userData.setUserType(getReceptionistAddCustomerRequest.getUserType());
+        userData.setUserType(UserType.valueOf("CUSTOMER"));
         userData.setPassword(bcryptPasswordEncoder.encode("user"));
         userDataRepository.save(userData);
 
@@ -68,6 +69,7 @@ public class ReceptionistService {
         customer.setAddress(getReceptionistAddCustomerRequest.getAddressLineOne()+getReceptionistAddCustomerRequest.getAddressLineTwo()+getReceptionistAddCustomerRequest.getAddressLineThree());
         customer.setDob(getReceptionistAddCustomerRequest.getDobYear()+getReceptionistAddCustomerRequest.getDobMonth()+getReceptionistAddCustomerRequest.getDobDate());
         customer.setNic(getReceptionistAddCustomerRequest.getNic());
+        customer.setCustomerStatus(getReceptionistAddCustomerRequest.getCustomerStatus());
         customer.setUserData(userData);
         customerRepository.save(customer);
 

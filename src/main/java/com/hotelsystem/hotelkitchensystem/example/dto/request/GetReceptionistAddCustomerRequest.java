@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 
 public class GetReceptionistAddCustomerRequest {
@@ -15,7 +16,7 @@ public class GetReceptionistAddCustomerRequest {
     private String dobDate;
     private String nic;
     private String contactNo;
-    private UserType userType;
+    private CustomerStatus customerStatus;
 
     public String getFirstName(){
         return firstName;
@@ -113,11 +114,11 @@ public class GetReceptionistAddCustomerRequest {
         this.contactNo = contactNo;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public CustomerStatus getCustomerStatus() {
+        return customerStatus;
     }
 
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+    public void setCustomerStatus(CustomerStatus customerStatus) {
+        this.customerStatus = customerStatus;
     }
 }
