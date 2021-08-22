@@ -1,5 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Employee")
-public class Employee {
+@Table (name = "rooms")
+public class Rooms {
     @Id
-    @GeneratedValue
-    private int emp_id;
-    @Column (nullable = true)
-    private String gender;
+    private int room_no;
 }
-

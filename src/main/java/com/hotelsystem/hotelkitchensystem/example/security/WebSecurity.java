@@ -88,6 +88,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addIngredient").permitAll()
                 .antMatchers("/ingredients").permitAll()
                 .antMatchers("/receptionist/getCustomer").permitAll()
+                .antMatchers("/manager/addRoomType").permitAll()
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
