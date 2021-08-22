@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoomTypeController {
     @Autowired
     private RoomTypeService roomTypeService;
+
     @PostMapping("/addRoomType")
     public ResponseEntity addRoomType(@RequestBody AddNewRoomTypeRequest addNewRoomTypeRequest) {
         int roomTypeID = addNewRoomTypeRequest.getRoomTypeID();
