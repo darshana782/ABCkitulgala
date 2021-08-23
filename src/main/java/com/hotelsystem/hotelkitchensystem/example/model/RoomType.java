@@ -32,8 +32,7 @@ public class RoomType {
     @Column (nullable = false)
     private int price;
 
-    @OneToMany (targetEntity = Rooms.class, cascade = CascadeType.ALL)
-    @JoinColumn (name = "room_type_id", referencedColumnName = "roomTypeID")
+    @OneToMany (targetEntity = Rooms.class, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<Rooms> rooms;
 
 }
