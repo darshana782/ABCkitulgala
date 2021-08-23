@@ -2,8 +2,10 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
+import com.hotelsystem.hotelkitchensystem.example.model.Booking;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
+import com.hotelsystem.hotelkitchensystem.example.repository.BookingRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
 public class ReceptionistService {
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Autowired
     private UserDataRepository userDataRepository;
@@ -55,6 +60,8 @@ public class ReceptionistService {
     public void customerRegistration(GetReceptionistAddCustomerRequest getReceptionistAddCustomerRequest) {
         Customer customer = new Customer();
         UserData userData = new UserData();
+        Booking booking = new Booking();
+
 
         //set data to the user data object
         userData.setFirstName(getReceptionistAddCustomerRequest.getFirstName());
@@ -72,6 +79,14 @@ public class ReceptionistService {
         customer.setCustomerStatus(getReceptionistAddCustomerRequest.getCustomerStatus());
         customer.setUserData(userData);
         customerRepository.save(customer);
+
+        //set data to the booking object
+        booking.setCheckInDate(getReceptionistAddCustomerRequest.getCheckInDate());
+        booking.setCheckoutDate(getReceptionistAddCustomerRequest.getCheckOutDate());
+        booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
+        booking.setRoomNo(getReceptionistAddCustomerRequest.getRoomNo());
+        bookingRepository.save(booking);
+
 
     }
 

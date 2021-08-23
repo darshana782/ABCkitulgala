@@ -3,6 +3,8 @@ package com.hotelsystem.hotelkitchensystem.example.dto.request;
 import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 
+import java.util.Date;
+
 public class GetReceptionistAddCustomerRequest {
     private String firstName;
     private String lastName;
@@ -17,6 +19,42 @@ public class GetReceptionistAddCustomerRequest {
     private String nic;
     private String contactNo;
     private CustomerStatus customerStatus;
+    private String checkInDate;
+    private String checkOutDate;
+    private String meal;
+    private int roomNo;
+
+    public String getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public String getCheckOutDate() {
+    return checkOutDate;
+    }
+
+    public void setCheckOutDate(String checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public String getMeal() {
+        return meal;
+    }
+
+    public void setMeal(String meal) {
+        this.meal = meal;
+    }
+
+    public int getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(int roomNo) {
+        this.roomNo = roomNo;
+    }
 
     public String getFirstName(){
         return firstName;
