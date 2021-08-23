@@ -33,4 +33,5 @@ public class UserData   {
     @OneToOne(targetEntity = Customer.class, mappedBy = "userData", cascade = CascadeType.ALL)
     private Customer customer;
 
+
 }

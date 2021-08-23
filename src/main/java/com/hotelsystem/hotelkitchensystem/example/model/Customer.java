@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.awt.print.Book;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -31,4 +33,8 @@ public class Customer {
     @OneToOne
     @JsonIgnore
     private UserData userData;
+
+    @OneToMany(targetEntity = Booking.class, mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Booking> booking;
+
 }
