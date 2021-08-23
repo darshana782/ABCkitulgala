@@ -1,7 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomTypeRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
 import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
