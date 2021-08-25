@@ -24,4 +24,49 @@ public class Food {
     private double price;
     private int availableQty;
     private String foodDescription;
+
+    public int getFoodId() {
+        return foodId;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getAvailableQty() {
+        return availableQty;
+    }
+
+    public String getFoodDescription() {
+        return foodDescription;
+    }
+
+    public void setFoodId(int foodId) {
+        this.foodId = foodId;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setAvailableQty(int availableQty) {
+        this.availableQty = availableQty;
+    }
+
+    public void setFoodDescription(String foodDescription) {
+        this.foodDescription = foodDescription;
+    }
+
+
 }
+
+
+

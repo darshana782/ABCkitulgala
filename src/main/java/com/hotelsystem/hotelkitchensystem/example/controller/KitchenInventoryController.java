@@ -1,5 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3030")
 @RestController
 public class KitchenInventoryController {
 
@@ -23,10 +25,10 @@ public class KitchenInventoryController {
 
     //Food
     //post
-    @PostMapping("/addFood")
-    public Food addFood(@RequestBody Food food){
-        return foodService.saveFood(food);
-    }
+//    @PostMapping("/addFood")
+//    public Food addFood(@RequestBody Food food){
+//        return foodService.saveFood(food);
+//    }
 
     @PostMapping("/addFoods")
     public List<Food> addFoods(@RequestBody List<Food> foods){
@@ -101,6 +103,47 @@ public class KitchenInventoryController {
     }
 
 
+    @PostMapping("/addFood")
+    public ResponseEntity addfood(@RequestBody AddFoodRequest addFoodRequest){
+        String foodName=addFoodRequest.getFoodName();
+        String responseMsg;
+//        int[] fi=addFoodRequest.getFoodIngredients();
+//
+//        String[] strArray = new String[fi.length];
+//        for (int i = 0; i < fi.length; i++) {
+//            strArray[i] = String.valueOf(fi[i]);
+//        }
+//
+//        String x = Arrays.toString(strArray);
+
+        if (foodService.checkIfFoodExists(foodName)){
+            responseMsg="Food Exists";
+        }else{
+            foodService.addfood(addFoodRequest);
+            responseMsg="Food Added Successfully";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @PostMapping("/addFoodIngredients")
+    public ResponseEntity addfoodingredients(@RequestBody AddFoodIngredientRequest addFoodIngredientRequest){
+        String foodName = addFoodIngredientRequest.getFoodName();
+        String responseMsg;
+        Food name=foodService.getFoodByName(foodName);
+//        int foodId;
+
+        if (foodService.checkIfFoodExists(foodName)){
+//            addFoodIngredientRequest.setFoodId(name.getFoodId());
+            foodService.addfoodingredients(addFoodIngredientRequest,name.getFoodId());
+            responseMsg="Food ingredients added";
+
+        }else{
+            responseMsg="Food not found";
+            return ResponseEntity.badRequest().body(responseMsg);
+        }
+        return ResponseEntity.ok().body(responseMsg);
+    }
 
 
 //    @GetMapping("/ingredientByName/{ingredientName")
