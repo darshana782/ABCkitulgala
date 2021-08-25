@@ -4,7 +4,7 @@ public enum UserType {
     CUSTOMER,
     MANAGER,
     RECEPTIONIST,
-    STEWART,
+    STEWARD,
     GUIDE,
     KITCHEN_STAFF
 }
