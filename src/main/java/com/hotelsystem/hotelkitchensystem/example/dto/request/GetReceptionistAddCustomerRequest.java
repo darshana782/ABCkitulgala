@@ -1,8 +1,11 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 
-public class CustomerSignUpRequest {
+import java.util.Date;
+
+public class GetReceptionistAddCustomerRequest {
     private String firstName;
     private String lastName;
     private String email;
@@ -15,10 +18,45 @@ public class CustomerSignUpRequest {
     private String dobDate;
     private String nic;
     private String contactNo;
-    private String password;
-//    private UserType userType;
+    private CustomerStatus customerStatus;
+    private String checkInDate;
+    private String checkOutDate;
+    private String meal;
+    private int roomNo;
 
-    public String getFirstName() {
+    public String getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public String getCheckOutDate() {
+    return checkOutDate;
+    }
+
+    public void setCheckOutDate(String checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public String getMeal() {
+        return meal;
+    }
+
+    public void setMeal(String meal) {
+        this.meal = meal;
+    }
+
+    public int getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(int roomNo) {
+        this.roomNo = roomNo;
+    }
+
+    public String getFirstName(){
         return firstName;
     }
 
@@ -114,19 +152,11 @@ public class CustomerSignUpRequest {
         this.contactNo = contactNo;
     }
 
-    public String getPassword() {
-        return password;
+    public CustomerStatus getCustomerStatus() {
+        return customerStatus;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCustomerStatus(CustomerStatus customerStatus) {
+        this.customerStatus = customerStatus;
     }
-
-//    public UserType getUserType() {
-//        return userType;
-//    }
-//
-//    public void setUserType(UserType userType) {
-//        this.userType = userType;
-//    }
 }

@@ -4,6 +4,8 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequ
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.Employee;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
@@ -61,96 +63,69 @@ public class AuthService implements UserDetailsService{
     }
     //check for email
     public boolean checkIfEmailExists(String email) {
-        if (customerRepository.findByemail(email) != null) {
+        if (userDataRepository.findByEmail(email) != null) {
             return true;
         }
         return false;
     }
-    //check for email
-    public boolean checkIfEmailExistsInUserTable(String email) {
-        if (userDataRepository.findByemail(email) != null) {
-            return true;
-        }
-        return false;
-    }
-    //check for email
-    public boolean checkIfEmailExistsInEmployees(String email){
-        if (employeeRepository.findByemail(email) != null) {
-            return true;
-        }
-        return false;
-    }
+
     //check for Contact No
-    public boolean checkIfTeleNumberExists(String teleNo) {
-        if (customerRepository.findByteleNumber(teleNo) != null) {
-            return true;
-        }
-        return false;
-    }
-    //
-    public boolean checkIfTeleNumberExistsInEmployees(String teleNo){
-        if (employeeRepository.findByteleNumber(teleNo) != null) {
+    public boolean checkIfContactNumberExists(String teleNo) {
+        if (userDataRepository.findByContactNo(teleNo)!= null) {
             return true;
         }
         return false;
     }
 
 
-    public void cusreg(EmployeeRegRequest employeeRegRequest){
-        Employee employee = new Employee();
-        UserData userData = new UserData();
-
-        //set details to UserData object
-        userData.setEmail(employeeRegRequest.getEmail());
-        userData.setPassword(bcryptPasswordEncoder.encode(employeeRegRequest.getPassword()));
-        userData.setUserType((employeeRegRequest.getUserType()));
-
-        employee.setF_name(employeeRegRequest.getFirstName());
-        employee.setL_name(employeeRegRequest.getLastName());
-        employee.setEmail(employeeRegRequest.getEmail());
-        employee.setTeleNumber(employeeRegRequest.getTeleNumber());
-        employee.setGender(employeeRegRequest.getGender());
-        employee.setType(employeeRegRequest.getUserType());
-
-        employeeRepository.save(employee);
-        userDataRepository.save(userData);
-    }
+//    public void cusreg(EmployeeRegRequest employeeRegRequest){
+//        Employee employee = new Employee();
+//        UserData userData = new UserData();
+//
+//        //set details to UserData object
+//        userData.setEmail(employeeRegRequest.getEmail());
+//        userData.setPassword(bcryptPasswordEncoder.encode(employeeRegRequest.getPassword()));
+//        userData.setUserType((employeeRegRequest.getUserType()));
+//
+//        employee.setF_name(employeeRegRequest.getFirstName());
+//        employee.setL_name(employeeRegRequest.getLastName());
+//        employee.setEmail(employeeRegRequest.getEmail());
+//        employee.setTeleNumber(employeeRegRequest.getTeleNumber());
+//        employee.setGender(employeeRegRequest.getGender());
+//        employee.setType(employeeRegRequest.getUserType());
+//
+//        employeeRepository.save(employee);
+//        userDataRepository.save(userData);
+//    }
 
 
     public void signup(CustomerSignUpRequest customerSignUpRequest) {
-        Customer customer = new Customer();
+        Customer tempCustomer = new Customer();
         UserData userData = new UserData();
 
-        //encode password with bcrypt password and set details to customer object
-//        customer.setPassword(bcryptPasswordEncoder.encode(customerSignUpRequest.getPassword()));
-        customer.setCusFirstName(customerSignUpRequest.getFirstName());
-        customer.setCusLastName(customerSignUpRequest.getLastName());
-        customer.setEmail(customerSignUpRequest.getEmail());
-        customer.setAge(customerSignUpRequest.getAge());
-        customer.setAddressLineOne(customerSignUpRequest.getAddressLineOne());
-        customer.setAddressLineTwo(customerSignUpRequest.getAddressLineTwo());
-        customer.setAddressLineThree(customerSignUpRequest.getAddressLineThree());
-        customer.setDobYear(customerSignUpRequest.getDobYear());
-        customer.setDobMonth(customerSignUpRequest.getDobMonth());
-        customer.setDobDate(customerSignUpRequest.getDobDate());
-        customer.setNic(customerSignUpRequest.getNic());
-        customer.setTeleNumber(customerSignUpRequest.getTeleNumber());
-
-        //set details to UserData object
+        //set data to the user data object
+        userData.setFirstName(customerSignUpRequest.getFirstName());
+        userData.setLastName(customerSignUpRequest.getLastName());
+        userData.setContactNo(customerSignUpRequest.getContactNo());
         userData.setEmail(customerSignUpRequest.getEmail());
+        userData.setUserType(UserType.valueOf("CUSTOMER"));
         userData.setPassword(bcryptPasswordEncoder.encode(customerSignUpRequest.getPassword()));
-        userData.setUserType(customerSignUpRequest.getUsertype());
-//        userData.setId(customer.getCustomerId());
-
-        //save user login data and customer data
-        customerRepository.save(customer);
         userDataRepository.save(userData);
+
+        //set data to cutomer object
+        tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+","+customerSignUpRequest.getAddressLineTwo()+","+customerSignUpRequest.getAddressLineThree());
+        tempCustomer.setDob(customerSignUpRequest.getDobYear()+"/"+customerSignUpRequest.getDobMonth()+"/"+customerSignUpRequest.getDobDate());
+        tempCustomer.setNic(customerSignUpRequest.getNic());
+        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("PENDING"));
+        tempCustomer.setUserData(userData);
+        customerRepository.save(tempCustomer);
+
     }
 
     // customer login verification
     public CustomerSigned customerLogin(CustomerSignInRequest customerSignInRequest) {
         // object of relevant user
-        UserData userData = this.userDataRepository.findByemail(customerSignInRequest.getEmail());
+        UserData userData = userDataRepository.findByEmail(customerSignInRequest.getEmail());
 
 
         //check password and with the user email with authentication manager
@@ -164,18 +139,19 @@ public class AuthService implements UserDetailsService{
         }
         //get jwt token
         String token = jwtTokenUtil.generateToken(customerSignInRequest.getEmail());
-
+        Customer customer=customerRepository.findByUserData(userData);
         CustomerSigned response = new CustomerSigned();
-//        response.setId(customer.getCustomerId());
+        response.setId(customer.getCustomerId());
         response.setUserType(userData.getUserType());
         response.setEmail(userData.getEmail());
         response.setToken(token); //append to response entity
         return response;
     }
 
+
     @Override
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserData userData = userDataRepository.findByemail(email);
+        UserData userData = userDataRepository.findByEmail(email);
 
         //returning user details to the web security configurer user details according to the requested details
         return new User(userData.getEmail(), userData.getPassword(), new ArrayList<>());

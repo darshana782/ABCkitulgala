@@ -1,13 +1,12 @@
 package com.hotelsystem.hotelkitchensystem.example.model;
 
 
+import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -18,49 +17,21 @@ public class UserData   {
     @Id
     @GeneratedValue
     private int id;
-
-//    @Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = true)
     private String email;
-
-//    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+    @Column(nullable = false,unique = true)
+    private String contactNo;
+    @Column(nullable = true)
+    private String firstName;
+    @Column(nullable = true)
+    private String lastName;
 
-//    @Column
-    private String userType;
-
-//    private String nic;
-//    private String teleNumber;
+    @OneToOne(targetEntity = Customer.class, mappedBy = "userData", cascade = CascadeType.ALL)
+    private Customer customer;
 
 
-    public long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
 }
