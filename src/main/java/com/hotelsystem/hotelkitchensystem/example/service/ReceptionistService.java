@@ -85,6 +85,7 @@ public class ReceptionistService {
         booking.setCheckoutDate(getReceptionistAddCustomerRequest.getCheckOutDate());
         booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
         booking.setRoomNo(getReceptionistAddCustomerRequest.getRoomNo());
+        booking.setCustomer(customer);
         bookingRepository.save(booking);
 
 

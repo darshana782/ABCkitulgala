@@ -19,24 +19,24 @@ public class GetReceptionistAddCustomerRequest {
     private String nic;
     private String contactNo;
     private CustomerStatus customerStatus;
-    private String checkInDate;
-    private String checkOutDate;
+    private Date checkInDate;
+    private Date checkOutDate;
     private String meal;
     private int roomNo;
 
-    public String getCheckInDate() {
+    public Date getCheckInDate() {
         return checkInDate;
     }
 
-    public void setCheckInDate(String checkInDate) {
+    public void setCheckInDate(Date checkInDate) {
         this.checkInDate = checkInDate;
     }
 
-    public String getCheckOutDate() {
+    public Date getCheckOutDate() {
     return checkOutDate;
     }
 
-    public void setCheckOutDate(String checkOutDate) {
+    public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 

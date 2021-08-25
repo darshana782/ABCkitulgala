@@ -20,7 +20,7 @@ public class RoomTypeController {
         RoomTypes roomTypes = addNewRoomTypeRequest.getRoomTypes();
         String responseMsg;
 
-        if (roomTypeService.checkIfRoomTypeIdExists(roomTypeID)) {
+        if (roomTypeService.checkIfRoomTypeIdExists (roomTypeID)) {
             responseMsg = "This Id already exisis";
         }
         else if (roomTypeService.checkIfRoomTypesExists(roomTypes)){

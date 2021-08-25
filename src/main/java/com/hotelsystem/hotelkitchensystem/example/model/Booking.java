@@ -18,9 +18,9 @@ public class Booking {
     @GeneratedValue
     private int bookingId;
     @Column(nullable = false)
-    private String checkInDate;
+    private Date checkInDate;
     @Column(nullable = false)
-    private String checkoutDate;
+    private Date checkoutDate;
     @Column(nullable = false)
     private String meal;
     @Column(nullable = false)
