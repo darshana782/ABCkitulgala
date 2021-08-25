@@ -2,7 +2,10 @@ package com.hotelsystem.hotelkitchensystem.example.repository;
 
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface FoodRepository extends JpaRepository<Food, Integer> {
-//    Food findByName(String foodName);
+    Food findByFoodName(String foodName);
+//    Food findByFoodNameId(String foodName);
 }

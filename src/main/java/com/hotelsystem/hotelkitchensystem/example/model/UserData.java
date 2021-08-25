@@ -36,4 +36,5 @@ public class UserData   {
     @OneToOne(targetEntity = Employee.class, mappedBy = "userData", cascade = CascadeType.ALL)
     @JoinColumn(name = "cp_fk",referencedColumnName = "id")
     private Employee employee;
+
 }

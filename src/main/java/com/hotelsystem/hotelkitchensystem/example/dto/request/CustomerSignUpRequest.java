@@ -16,7 +16,7 @@ public class CustomerSignUpRequest {
     private String nic;
     private String contactNo;
     private String password;
-    private UserType userType;
+//    private UserType userType;
 
     public String getFirstName() {
         return firstName;
@@ -122,11 +122,11 @@ public class CustomerSignUpRequest {
         this.password = password;
     }
 
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
-    }
+//    public UserType getUserType() {
+//        return userType;
+//    }
+//
+//    public void setUserType(UserType userType) {
+//        this.userType = userType;
+//    }
 }

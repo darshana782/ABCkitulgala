@@ -4,6 +4,8 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequ
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.Employee;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
@@ -106,14 +108,15 @@ public class AuthService implements UserDetailsService{
         userData.setLastName(customerSignUpRequest.getLastName());
         userData.setContactNo(customerSignUpRequest.getContactNo());
         userData.setEmail(customerSignUpRequest.getEmail());
-        userData.setUserType(customerSignUpRequest.getUserType());
+        userData.setUserType(UserType.valueOf("CUSTOMER"));
         userData.setPassword(bcryptPasswordEncoder.encode(customerSignUpRequest.getPassword()));
         userDataRepository.save(userData);
 
         //set data to cutomer object
-        tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+customerSignUpRequest.getAddressLineTwo()+customerSignUpRequest.getAddressLineThree());
-        tempCustomer.setDob(customerSignUpRequest.getDobYear()+customerSignUpRequest.getDobMonth()+customerSignUpRequest.getDobDate());
+        tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+","+customerSignUpRequest.getAddressLineTwo()+","+customerSignUpRequest.getAddressLineThree());
+        tempCustomer.setDob(customerSignUpRequest.getDobYear()+"/"+customerSignUpRequest.getDobMonth()+"/"+customerSignUpRequest.getDobDate());
         tempCustomer.setNic(customerSignUpRequest.getNic());
+        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("PENDING"));
         tempCustomer.setUserData(userData);
         customerRepository.save(tempCustomer);
 
