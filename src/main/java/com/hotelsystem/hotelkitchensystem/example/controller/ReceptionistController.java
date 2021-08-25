@@ -1,7 +1,8 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
-import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
 import com.hotelsystem.hotelkitchensystem.example.service.ReceptionistService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import net.bytebuddy.asm.Advice;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReceptionistController {
 
     @Autowired
+    AuthService authService;
     private ReceptionistService receptionistService;
 
     @Autowired
