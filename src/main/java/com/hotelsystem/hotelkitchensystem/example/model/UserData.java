@@ -19,7 +19,7 @@ public class UserData   {
     private int id;
     @Column(nullable = false,unique = true)
     private String email;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false,unique = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private UserType userType;
@@ -33,4 +33,7 @@ public class UserData   {
     @OneToOne(targetEntity = Customer.class, mappedBy = "userData", cascade = CascadeType.ALL)
     private Customer customer;
 
+    @OneToOne(targetEntity = Employee.class, mappedBy = "userData", cascade = CascadeType.ALL)
+    @JoinColumn(name = "cp_fk",referencedColumnName = "id")
+    private Employee employee;
 }
