@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Rooms {
     @Id
     private int roomNo;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int availability;
 
     @ManyToOne

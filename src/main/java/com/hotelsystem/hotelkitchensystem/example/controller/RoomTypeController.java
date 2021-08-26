@@ -38,7 +38,7 @@ public class RoomTypeController {
     }
 
     @GetMapping("/viewRoomTypes")
-    public List<RoomTypeResponse> findAllEmployeess(){
+    public List<RoomTypeResponse> findAllRoomtypes(){
         return roomTypeService.viewRoomType();
     }
 

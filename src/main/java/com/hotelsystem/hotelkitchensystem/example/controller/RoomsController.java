@@ -1,11 +1,14 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.RoomResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
 import com.hotelsystem.hotelkitchensystem.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -29,5 +32,10 @@ public class RoomsController {
             return ResponseEntity.ok().body(responseMsg);
         }
         return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @GetMapping("/viewRooms")
+    public List<RoomResponse> findAllRooms(){
+        return roomService.viewRooms();
     }
 }
