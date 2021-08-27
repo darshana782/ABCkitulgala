@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/manager")
@@ -15,7 +17,7 @@ public class DiscountsController {
 
     @PostMapping("/addDiscounts")
     public ResponseEntity addDiscounts(@RequestBody AddDiscountsRequest addDiscountsRequest){
-        String FromDate = addDiscountsRequest.getFromDate();
+        Date FromDate = addDiscountsRequest.getFromDate();
         String responseMsg;
 
         if(roomDiscountsService.checkIfDiscountExists(FromDate)){
