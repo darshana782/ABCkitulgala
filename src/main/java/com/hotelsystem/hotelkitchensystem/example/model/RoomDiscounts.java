@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -21,9 +22,9 @@ public class RoomDiscounts {
     @Column
     private String description;
     @Column
-    private String fromDate;
+    private Date fromDate;
     @Column
-    private String toDate;
+    private Date toDate;
     @Column
     private String value;
 

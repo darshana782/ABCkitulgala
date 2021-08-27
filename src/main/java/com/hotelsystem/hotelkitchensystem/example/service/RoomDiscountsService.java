@@ -8,6 +8,8 @@ import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class RoomDiscountsService{
     @Autowired
@@ -16,16 +18,9 @@ public class RoomDiscountsService{
     @Autowired
     public RoomTypesRepository roomTypesRepository;
 
-    public boolean checkIfDiscountExists(String fromDate){
+    public boolean checkIfDiscountExists(Date fromDate){
         if (roomDiscountsRepository.findByFromDate(fromDate)!=null){
             return  true;
-        }
-        return false;
-    }
-
-    public boolean checkIfDiscountRoomTypeExists(RoomType roomType){
-        if(roomDiscountsRepository.findByRoomType(roomType)!=null){
-            return true;
         }
         return false;
     }

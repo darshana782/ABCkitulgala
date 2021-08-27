@@ -1,11 +1,13 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
+import java.util.Date;
+
 public class AddDiscountsRequest {
     private String discountName;
     private String description;
     private String value;
-    private String toDate;
-    private String fromDate;
+    private Date toDate;
+    private Date fromDate;
     private int roomTypeID;
 
     public String getDiscountName() {
@@ -32,19 +34,19 @@ public class AddDiscountsRequest {
         this.value = value;
     }
 
-    public String getToDate() {
+    public Date getToDate() {
         return toDate;
     }
 
-    public void setToDate(String toDate) {
+    public void setToDate(Date toDate) {
         this.toDate = toDate;
     }
 
-    public String getFromDate() {
+    public Date getFromDate() {
         return fromDate;
     }
 
-    public void setFromDate(String fromDate) {
+    public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
     }
 
