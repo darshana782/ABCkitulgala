@@ -94,6 +94,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/addRooms").permitAll()
                 .antMatchers("/manager/viewRoomTypes").permitAll()
                 .antMatchers("/manager/viewRooms").permitAll()
+                .antMatchers("/manager/addDiscounts").permitAll()
 
 
                 .anyRequest().authenticated()

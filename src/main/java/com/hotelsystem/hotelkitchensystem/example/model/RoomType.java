@@ -35,4 +35,6 @@ public class RoomType {
     @OneToMany (targetEntity = Rooms.class, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<Rooms> rooms;
 
+    @OneToMany(targetEntity = RoomDiscounts.class, mappedBy = "roomType", cascade = CascadeType.ALL)
+    private List<RoomDiscounts> discount;
 }
