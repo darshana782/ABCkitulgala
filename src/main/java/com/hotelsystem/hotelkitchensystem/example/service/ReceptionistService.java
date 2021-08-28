@@ -68,7 +68,7 @@ public class ReceptionistService {
         userData.setLastName(getReceptionistAddCustomerRequest.getLastName());
         userData.setContactNo(getReceptionistAddCustomerRequest.getContactNo());
         userData.setEmail(getReceptionistAddCustomerRequest.getEmail());
-        userData.setUserType(UserType.valueOf("CUSTOMER"));
+        userData.setUserType(UserType.CUSTOMER);
         userData.setPassword(bcryptPasswordEncoder.encode("user"));
         userDataRepository.save(userData);
 

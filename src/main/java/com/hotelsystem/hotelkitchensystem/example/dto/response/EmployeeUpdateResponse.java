@@ -34,8 +34,8 @@ public class EmployeeUpdateResponse {
         this.email = email;
     }
 
-    public String getContactNo(String contactNo) {
-        return this.contactNo;
+    public String getContactNo() {
+        return contactNo;
     }
 
     public void setContactNo(String contactNo) {
