@@ -37,7 +37,8 @@ public class UserDataService {
     }
 
     public List<EmployeeDetailsResponse> getEmployees(UserType userType) {
-        List<UserData> allDetails= userDataRepository.findByUserTypeNot(userType);
+        String status="ACTIVATE";
+        List<UserData> allDetails= userDataRepository.findByUserTypeNotAndDeleteStatus(userType,status);
         List<EmployeeDetailsResponse> employeeList= new ArrayList<EmployeeDetailsResponse>();
         for (UserData userData: allDetails){
             Employee employee= employeeRepository.findByUserData(userData);
@@ -70,6 +71,46 @@ public class UserDataService {
         return empDetails;
     }
 
+    public void updateEmployeeByID(int id,EmployeeUpdateResponse employeeUpdateResponse){
+        UserData userData = userDataRepository.findById(id);
+        Employee employee = employeeRepository.findByUserData(userData);
+
+        userData.setFirstName(employeeUpdateResponse.getFirstName());
+        userData.setLastName(employeeUpdateResponse.getLastName());
+        userData.setEmail(employeeUpdateResponse.getEmail());
+        userData.setContactNo(employeeUpdateResponse.getContactNo());
+        userData.setUserType(employeeUpdateResponse.getUserType());
+        userDataRepository.save(userData);
+
+        employee.setGender(employeeUpdateResponse.getGender());
+        employeeRepository.save(employee);
+    }
+
+    public void deleteEmployeeByID(int id){
+        UserData userData = userDataRepository.findById(id);
+
+        userData.setDeleteStatus("DEACTIVATED");
+        userDataRepository.save(userData);
+    }
+
+    public boolean checkIfEmailExistsInOtherUsers(int id, String email){
+        if(userDataRepository.findByEmail(email)==userDataRepository.findById(id)){
+            return false;
+        } else if(userDataRepository.findByEmail(email)!=null){
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean checkIfContactNumberExistsInOtherUsers(int id, String contactNo){
+        if(userDataRepository.findByContactNo(contactNo)==userDataRepository.findById(id)){
+            return false;
+        }else if(userDataRepository.findByContactNo(contactNo)!=null){
+            return true;
+        }
+        else return false;
+    }
+
     public void addEmployee(EmployeeDetailsRequest employeeDetailsRequest) {
         Employee employee = new Employee();
         UserData userData = new UserData();
@@ -86,6 +127,5 @@ public class UserDataService {
         employee.setUserData(userData);
         employeeRepository.save(employee);
     }
-
 }
 

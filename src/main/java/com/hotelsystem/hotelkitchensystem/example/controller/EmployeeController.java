@@ -5,7 +5,9 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeDetailsReq
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
-import com.hotelsystem.hotelkitchensystem.example.model.Employee;
+import com.hotelsystem.hotelkitchensystem.example.model.UserData;
+import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
+import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.service.EmployeeService;
 import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class EmployeeController {
 
     @Autowired
     private UserDataService UserDataService;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     @PostMapping("/addEmployee")
     public ResponseEntity addEmployee(@RequestBody EmployeeDetailsRequest employeeDetailsRequest){
@@ -54,8 +59,28 @@ public class EmployeeController {
 //        return employeeService.updateEmployeeById(id,employee);
 //    }
 
-    @DeleteMapping("/deleteEmployee/{id}")
-    public String deleteEmployee(@PathVariable int id){
-        return employeeService.deleteEmployee(id);
+    @PutMapping("/updateEmployee/{id}")
+    public ResponseEntity updateEmployee(@PathVariable int id, @RequestBody EmployeeUpdateResponse employeeUpdateResponse){
+        String email=employeeUpdateResponse.getEmail();
+        String contactNo=employeeUpdateResponse.getContactNo();
+        String responseMsg;
+        if(UserDataService.checkIfEmailExistsInOtherUsers(id,email)){
+            responseMsg="Email Already Exists";
+            System.out.println(responseMsg);
+        }else if(UserDataService.checkIfContactNumberExistsInOtherUsers(id,contactNo)){
+            responseMsg="Contact Number Already Exists";
+            System.out.println(responseMsg);
+        }else {
+            UserDataService.updateEmployeeByID(id,employeeUpdateResponse);
+            responseMsg="Successfully Updated";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @PutMapping("/deleteEmployee/{id}")
+    public ResponseEntity deleteEmployee(@PathVariable int id){
+        UserDataService.deleteEmployeeByID(id);
+        return ResponseEntity.ok().body("Employee successfully deleted");
     }
 }
