@@ -11,5 +11,5 @@ public interface UserDataRepository extends JpaRepository<UserData, Integer> {
     UserData findByContactNo(String contactNo);
     UserData findById(int id);
 
-    List<UserData> findByUserTypeNot(UserType type);
+    List<UserData> findByUserTypeNotAndDeleteStatus(UserType type, String status);
 }

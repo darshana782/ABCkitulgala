@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.model;
 
 
+import com.hotelsystem.hotelkitchensystem.example.enums.DeleteStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,8 @@ public class UserData   {
     private String firstName;
     @Column(nullable = true)
     private String lastName;
+    @Column(nullable = false)
+    private String deleteStatus= "ACTIVATE";
 
     @OneToOne(targetEntity = Customer.class, mappedBy = "userData", cascade = CascadeType.ALL)
     private Customer customer;
