@@ -72,6 +72,7 @@ public class AuthController {
     public ResponseEntity customerLogin(@RequestBody CustomerSignInRequest customerSignInRequest){
         //get object of relevant user
         String email=customerSignInRequest.getEmail();
+        String pwd= customerSignInRequest.getPassword();
         String responseMsg;
         //continue if user exists on provided details
             if(authService.checkIfEmailExists(email)){
