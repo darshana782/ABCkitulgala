@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3030")
 @RestController
 @RequestMapping("/manager")
 public class RoomTypeController {
@@ -42,4 +42,24 @@ public class RoomTypeController {
         return roomTypeService.viewRoomType();
     }
 
+    @GetMapping("/viewUpdateRoomTypeDetails/{id}")
+    public RoomTypeResponse findRoomTypeByID(@PathVariable int id){
+        return roomTypeService.getRoomTypeByID(id);
+    }
+
+    @PutMapping("/updateRoomType/{id}")
+    public ResponseEntity updateRoomType(@PathVariable int id, @RequestBody RoomTypeResponse roomTypeResponse){
+        int roomTypeID = roomTypeResponse.getRoomTypeID();
+        RoomTypes roomTypes = roomTypeResponse.getRoomTypes();
+        String responseMsg;
+
+        if (roomTypeService.checkIfRoomTypeAlreadyGiven(roomTypeID,roomTypes)){
+            responseMsg = "Room type already given";
+        }else {
+            roomTypeService.UpdateRoomType(id,roomTypeResponse);
+            responseMsg = "Successfully Updated";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
 }
