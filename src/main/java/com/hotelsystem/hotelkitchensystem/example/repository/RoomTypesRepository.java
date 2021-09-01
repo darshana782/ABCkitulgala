@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RoomTypesRepository extends JpaRepository<RoomType, Integer> {
     RoomType findByRoomTypeID(int roomTypeID);
     RoomType findByRoomTypes(RoomTypes roomTypes);
-
     RoomType findByRooms(Rooms rooms);
     RoomType findByDiscount(RoomDiscounts roomDiscounts);
 }
