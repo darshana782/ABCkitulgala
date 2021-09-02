@@ -106,4 +106,9 @@ public class RoomTypeService {
         roomType.setPrice(roomTypeResponse.getPrice());
         roomTypesRepository.save(roomType);
     }
+
+    public void deleteRoomType(int id){
+        RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
+        roomTypesRepository.delete(roomType);
+    }
 }
