@@ -26,6 +26,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @Autowired
+    private AuthService authService;
+
+    @Autowired
     private UserDataService UserDataService;
 
     @Autowired
@@ -33,9 +36,19 @@ public class EmployeeController {
 
     @PostMapping("/addEmployee")
     public ResponseEntity addEmployee(@RequestBody EmployeeDetailsRequest employeeDetailsRequest){
-        String responseMsg="Employee added successfully";
-        UserDataService.addEmployee(employeeDetailsRequest);
-        return ResponseEntity.ok().body(responseMsg);
+        String responseMsg;
+        String email = employeeDetailsRequest.getEmail();
+        String contactNo = employeeDetailsRequest.getContactNo();
+        if(authService.checkIfEmailExists(email)){
+            responseMsg="Email Already Exists";
+        }else if(authService.checkIfContactNumberExists(contactNo)) {
+            responseMsg = "Contact Number Already Exists";
+        } else {
+            UserDataService.addEmployee(employeeDetailsRequest);
+            responseMsg="Employee Added Successfully";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
     }
     @GetMapping("/viewEmployees")
     public List<UserData> findAllEmployees(){
@@ -64,10 +77,8 @@ public class EmployeeController {
         String responseMsg;
         if(UserDataService.checkIfEmailExistsInOtherUsers(id,email)){
             responseMsg="Email Already Exists";
-            System.out.println(responseMsg);
         }else if(UserDataService.checkIfContactNumberExistsInOtherUsers(id,contactNo)){
             responseMsg="Contact Number Already Exists";
-            System.out.println(responseMsg);
         }else {
             UserDataService.updateEmployeeByID(id,employeeUpdateResponse);
             responseMsg="Successfully Updated";
