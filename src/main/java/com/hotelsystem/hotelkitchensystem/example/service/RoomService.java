@@ -49,4 +49,14 @@ public class RoomService {
         }
         return allRoomList;
     }
+
+    public RoomResponse getRoomByRoomNo(int id){
+       Rooms rooms = roomsRepository.findByRoomNo(id);
+       RoomResponse roomDetails = new RoomResponse();
+       RoomType roomType = roomTypesRepository.findByRooms(rooms);
+       roomDetails.setRoomNo(rooms.getRoomNo());
+       roomDetails.setRoomTypeID(roomType.getRoomTypeID());
+
+       return roomDetails;
+    }
 }

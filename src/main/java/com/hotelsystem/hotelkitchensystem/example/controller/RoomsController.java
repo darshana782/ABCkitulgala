@@ -38,4 +38,9 @@ public class RoomsController {
     public List<RoomResponse> findAllRooms(){
         return roomService.viewRooms();
     }
+
+    @GetMapping("/viewUpdateRoomDetails/{id}")
+    public RoomResponse findByRoomNo(@PathVariable int id){
+        return roomService.getRoomByRoomNo(id);
+    }
 }
