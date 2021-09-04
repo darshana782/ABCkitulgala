@@ -2,12 +2,14 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.RoomResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.UpdateRoomsResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
 import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,5 +60,12 @@ public class RoomService {
        roomDetails.setRoomTypeID(roomType.getRoomTypeID());
 
        return roomDetails;
+    }
+
+    public void updateRoom(int id, UpdateRoomsResponse updateRoomsResponse){
+        Rooms rooms = roomsRepository.findByRoomNo(id);
+        rooms.setRoomType(roomTypesRepository.findByRoomTypeID(updateRoomsResponse.getRoomTypeID()));
+
+        roomsRepository.save(rooms);
     }
 }
