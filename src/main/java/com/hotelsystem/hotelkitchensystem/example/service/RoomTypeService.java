@@ -109,6 +109,6 @@ public class RoomTypeService {
 
     public void deleteRoomType(int id){
         RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
-        roomTypesRepository.delete(roomType );
+        roomTypesRepository.delete(roomType);
     }
 }
