@@ -19,10 +19,14 @@ public class FoodIngredients {
     @Id
     @GeneratedValue
     private int fiId;
-
     private int foodId;
-
     private int ingredientId;
+    private int qty;
+
+
+    public int getQty() {
+        return qty;
+    }
 
     public int getFoodId() {
         return foodId;
@@ -32,6 +36,9 @@ public class FoodIngredients {
         return ingredientId;
     }
 
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
 
     public void setFoodId(int foodId) {
         this.foodId = foodId;

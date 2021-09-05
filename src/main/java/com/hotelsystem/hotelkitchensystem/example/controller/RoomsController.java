@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.RoomResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.UpdateRoomsResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
 import com.hotelsystem.hotelkitchensystem.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,24 @@ public class RoomsController {
     @GetMapping("/viewRooms")
     public List<RoomResponse> findAllRooms(){
         return roomService.viewRooms();
+    }
+
+    @GetMapping("/viewUpdateRoomDetails/{id}")
+    public RoomResponse findByRoomNo(@PathVariable int id){
+        return roomService.getRoomByRoomNo(id);
+    }
+
+    @PutMapping("/updateRooms/{id}")
+    public ResponseEntity updateRooms(@PathVariable int id,@RequestBody UpdateRoomsResponse updateRoomsResponse){
+        String responseMsg;
+        roomService.updateRoom(id,updateRoomsResponse);
+        responseMsg = "Successfully Updated";
+        return ResponseEntity.ok().body(responseMsg);
+    }
+
+    @DeleteMapping("/deleteRoom/{id}")
+    public ResponseEntity deleteRoomByID(@PathVariable int id){
+        roomService.deleteRooms(id);
+        return ResponseEntity.ok().body("Deleted");
     }
 }

@@ -12,13 +12,12 @@ import com.hotelsystem.hotelkitchensystem.example.service.EmployeeService;
 import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3030")
 
 @RestController
 @RequestMapping("/api/v1")
@@ -52,10 +51,10 @@ public class EmployeeController {
         }
         return ResponseEntity.badRequest().body(responseMsg);
     }
-//    @GetMapping("/viewEmployees")
-//    public List<UserData> findAllEmployees(){
-//        return UserDataService.getUsers();
-//    }
+    @GetMapping("/viewEmployees")
+    public List<UserData> findAllEmployees(){
+        return UserDataService.getUsers();
+    }
 
     @GetMapping("/viewEmployeess/{type}")
     public List<EmployeeDetailsResponse> findAllEmployeess(@PathVariable UserType type){

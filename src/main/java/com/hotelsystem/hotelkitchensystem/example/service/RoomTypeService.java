@@ -33,10 +33,26 @@ public class RoomTypeService {
         return false;
     }
 
+    public boolean checkIfRoomTypeIDAlreadyUsed(int roomTypeID, RoomTypes roomTypes){
+        if (roomTypesRepository.findByRoomTypeID(roomTypeID) == roomTypesRepository.findByRoomTypes(roomTypes)){
+            return false;
+        }else if (roomTypesRepository.findByRoomTypeID(roomTypeID)!=null){
+            return true;
+        }else return false;
+    }
+
+    public boolean checkIfRoomTypeAlreadyGiven(int roomTypeID, RoomTypes roomTypes){
+        if (roomTypesRepository.findByRoomTypes(roomTypes)== roomTypesRepository.findByRoomTypeID(roomTypeID)){
+            return false;
+        }else if (roomTypesRepository.findByRoomTypes(roomTypes)!=null){
+            return true;
+        }else return false;
+    }
+
     public void addRoomTypes(AddNewRoomTypeRequest addNewRoomTypeRequest){
         RoomType roomType = new RoomType();
 
-        //set data for room type object
+        //set Another data for room type object
         roomType.setRoomTypeID(addNewRoomTypeRequest.getRoomTypeID());
         roomType.setRoomTypes(addNewRoomTypeRequest.getRoomTypes());
         roomType.setDescription(addNewRoomTypeRequest.getDescription());
@@ -62,5 +78,37 @@ public class RoomTypeService {
             roomTypeList.add(typeList);
         }
         return roomTypeList;
+    }
+
+    public RoomTypeResponse getRoomTypeByID(int id){
+        RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
+        RoomTypeResponse roomTypeDetails = new RoomTypeResponse();
+        roomTypeDetails.setRoomTypeID(roomType.getRoomTypeID());
+        roomTypeDetails.setRoomTypes(roomType.getRoomTypes());
+        roomTypeDetails.setDescription(roomType.getDescription());
+        roomTypeDetails.setImage(roomType.getImage());
+        roomTypeDetails.setNo_of_rooms(roomType.getNo_of_rooms());
+        roomTypeDetails.setNo_of_persons(roomType.getNo_of_persons());
+        roomTypeDetails.setPrice(roomType.getPrice());
+
+        return roomTypeDetails;
+    }
+
+    public void UpdateRoomType(int id, RoomTypeResponse roomTypeResponse){
+        RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
+
+        roomType.setRoomTypeID(roomTypeResponse.getRoomTypeID());
+        roomType.setRoomTypes(roomTypeResponse.getRoomTypes());
+        roomType.setDescription(roomTypeResponse.getDescription());
+        roomType.setImage(roomTypeResponse.getImage());
+        roomType.setNo_of_rooms(roomTypeResponse.getNo_of_rooms());
+        roomType.setNo_of_persons(roomTypeResponse.getNo_of_persons());
+        roomType.setPrice(roomTypeResponse.getPrice());
+        roomTypesRepository.save(roomType);
+    }
+
+    public void deleteRoomType(int id){
+        RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
+        roomTypesRepository.delete(roomType);
     }
 }

@@ -13,6 +13,4 @@ public interface RoomDiscountsRepository extends JpaRepository<RoomDiscounts,Int
 //    RoomDiscounts<List> findByFromDatebyType(Date fromDate,Date todate);
 
     RoomDiscounts findByFromDateAndToDateAndRoomType_RoomTypeID(Date fromDate, Date todate, int roomTypeID);
-
-
 }
