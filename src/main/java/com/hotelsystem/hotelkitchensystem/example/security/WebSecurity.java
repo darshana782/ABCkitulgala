@@ -102,6 +102,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/updateRoomType/{id}").permitAll()
                 .antMatchers("/manager/deleteRoomType/{id}").permitAll()
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
+                .antMatchers("/updateRecipe/{id}").permitAll()
+
 
 
 
