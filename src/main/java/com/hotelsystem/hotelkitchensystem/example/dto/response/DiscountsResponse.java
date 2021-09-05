@@ -12,6 +12,15 @@ public class DiscountsResponse {
     private Date toDate;
     private Date fromDate;
     private RoomTypes roomTypes;
+    private int roomTypeID;
+
+    public int getRoomTypeID() {
+        return roomTypeID;
+    }
+
+    public void setRoomTypeID(int roomTypeID) {
+        this.roomTypeID = roomTypeID;
+    }
 
     public int getDiscountID() {
         return discountID;

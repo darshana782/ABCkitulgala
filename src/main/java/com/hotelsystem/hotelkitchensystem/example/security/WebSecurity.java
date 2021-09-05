@@ -76,11 +76,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customers").permitAll()
                 .antMatchers("/auth/customer/login").permitAll()
                 .antMatchers("/addCustomersss").permitAll()
-                .antMatchers("/api/v1/addEmployee").permitAll()
-                .antMatchers("/api/v1/viewEmployees").permitAll()
-                .antMatchers("/api/v1/viewEmployee/{id}").permitAll()
-                .antMatchers("/api/v1/updateEmployee/{id}").permitAll()
-                .antMatchers("/api/v1/deleteEmployee/{id}").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
                 .antMatchers("/auth/registerEmployee").permitAll()
                 .antMatchers("/users").permitAll()
                 .antMatchers("/foods").permitAll()
@@ -90,19 +86,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addFoodIngredients").permitAll()
                 .antMatchers("/receptionist/getCustomer").permitAll()
                 .antMatchers("/api/v1/viewEmployeess/{type}").permitAll()
-                .antMatchers("/manager/addRoomType").permitAll()
-                .antMatchers("/manager/addRooms").permitAll()
-                .antMatchers("/manager/viewRoomTypes").permitAll()
-                .antMatchers("/manager/viewRooms").permitAll()
-                .antMatchers("/manager/addDiscounts").permitAll()
-                .antMatchers("/manager/viewDiscounts").permitAll()
                 .antMatchers("/foodIngredients").permitAll()
                 .antMatchers("/foodIngredientById/{foodId}").permitAll()
+
                 .antMatchers("/manager/viewUpdateRoomTypeDetails/{id}").permitAll()
                 .antMatchers("/manager/updateRoomType/{id}").permitAll()
                 .antMatchers("/manager/deleteRoomType/{id}").permitAll()
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
                 .antMatchers("/updateRecipe/{id}").permitAll()
+
+
+                .antMatchers("/manager/**").permitAll()
 
 
 
