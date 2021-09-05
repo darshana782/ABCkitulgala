@@ -10,6 +10,8 @@ import java.util.List;
 public interface FoodIngredientRepository extends JpaRepository<FoodIngredients, Integer > {
 
     List<FoodIngredients> findAllByFoodId(int foodId);
+    FoodIngredients findByfiId(int i);
+//    FoodIngredients findAllByFoodId2(int foodId);
 
 //    @Query(value = "SELECT ingredientId FROM FoodIngredient_Table WHERE foodId=?1 " , nativeQuery = true)
 //    int findAllIngredientsByFoodId(int foodId);
