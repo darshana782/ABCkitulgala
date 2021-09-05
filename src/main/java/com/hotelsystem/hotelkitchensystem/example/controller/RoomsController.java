@@ -52,4 +52,10 @@ public class RoomsController {
         responseMsg = "Successfully Updated";
         return ResponseEntity.ok().body(responseMsg);
     }
+
+    @DeleteMapping("/deleteRoom/{id}")
+    public ResponseEntity deleteRoomByID(@PathVariable int id){
+        roomService.deleteRooms(id);
+        return ResponseEntity.ok().body("Deleted");
+    }
 }
