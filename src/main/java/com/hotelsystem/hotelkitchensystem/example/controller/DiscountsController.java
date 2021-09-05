@@ -38,4 +38,9 @@ public class DiscountsController {
     public List<DiscountsResponse> findAllDiscounts(){
         return roomDiscountsService.viewDiscounts();
     }
+
+    @GetMapping("viewDiscountUpdateDetails/{id}")
+    public DiscountsResponse findByDiscountID(@PathVariable int id){
+        return roomDiscountsService.getDiscountByID(id);
+    }
 }

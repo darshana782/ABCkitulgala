@@ -68,4 +68,8 @@ public class RoomService {
 
         roomsRepository.save(rooms);
     }
+    public void deleteRooms(int id){
+        Rooms rooms = roomsRepository.findByRoomNo(id);
+        roomsRepository.delete(rooms);
+    }
 }

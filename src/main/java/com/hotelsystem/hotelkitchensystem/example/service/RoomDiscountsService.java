@@ -60,4 +60,18 @@ public class RoomDiscountsService{
         }
         return discountList;
     }
+
+    public DiscountsResponse getDiscountByID(int id){
+        RoomDiscounts roomDiscounts = roomDiscountsRepository.findByDiscountId(id);
+        DiscountsResponse discountDetails = new DiscountsResponse();
+        RoomType roomType = roomTypesRepository.findByDiscount(roomDiscounts);
+        discountDetails.setDiscountName(roomDiscounts.getDiscountName());
+        discountDetails.setValue(roomDiscounts.getValue());
+        discountDetails.setFromDate(roomDiscounts.getFromDate());
+        discountDetails.setToDate(roomDiscounts.getToDate());
+        discountDetails.setDescription(roomDiscounts.getDescription());
+        discountDetails.setRoomTypeID(roomType.getRoomTypeID());
+
+        return discountDetails;
+    }
 }
