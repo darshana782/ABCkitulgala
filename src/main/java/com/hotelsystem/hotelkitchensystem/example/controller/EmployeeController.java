@@ -62,6 +62,11 @@ public class EmployeeController {
         return UserDataService.getEmployees(type);
     }
 
+    @GetMapping("/viewEmployeeByName/{type}/{name}")
+    public List<EmployeeDetailsResponse> findEmployeeByName(@PathVariable UserType type,@PathVariable String name){
+        return UserDataService.getEmployeesByName(type, name);
+    }
+
     @GetMapping("/viewEmployee/{id}")
     public EmployeeUpdateResponse findEmployeeById(@PathVariable int id){
         return UserDataService.getEmployeeByID(id);

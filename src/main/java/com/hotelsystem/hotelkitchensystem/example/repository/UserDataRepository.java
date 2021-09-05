@@ -12,4 +12,6 @@ public interface UserDataRepository extends JpaRepository<UserData, Integer> {
     UserData findById(int id);
 
     List<UserData> findByUserTypeNotAndDeleteStatus(UserType type, String status);
+
+    List<UserData> findAllByFirstNameIsContainingOrLastNameIsContainingOrContactNoIsContainingAndUserTypeNotAndDeleteStatus(String f_name, String l_name,String contact, UserType userType, String status);
 }
