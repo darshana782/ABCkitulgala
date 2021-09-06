@@ -58,7 +58,7 @@ public class UserDataService {
 
     public List<EmployeeDetailsResponse> getEmployeesByName(UserType userType,String name) {
         String status="ACTIVATE";
-        List<UserData> allDetails= userDataRepository.findAllByFirstNameIsContainingOrLastNameIsContainingOrContactNoIsContainingAndUserTypeNotAndDeleteStatus(name,name,name,userType,status);
+        List<UserData> allDetails= userDataRepository.findByFirstNameIsContainingAndUserTypeNotAndDeleteStatus(name,userType,status);
         List<EmployeeDetailsResponse> employeeList= new ArrayList<EmployeeDetailsResponse>();
         for (UserData userData: allDetails){
             Employee employee= employeeRepository.findByUserData(userData);
