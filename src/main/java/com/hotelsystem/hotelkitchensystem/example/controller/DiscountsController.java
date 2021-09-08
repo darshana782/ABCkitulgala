@@ -43,4 +43,21 @@ public class DiscountsController {
     public DiscountsResponse findByDiscountID(@PathVariable int id){
         return roomDiscountsService.getDiscountByID(id);
     }
+
+    @PutMapping("/updateDiscounts/{id}")
+    public ResponseEntity updateDiscounts(@PathVariable int id, @RequestBody AddDiscountsRequest addDiscountsRequest){
+        int RoomTypeID = addDiscountsRequest.getRoomTypeID();
+        Date FromDate = addDiscountsRequest.getFromDate();
+        Date ToDate = addDiscountsRequest.getToDate();
+        String responseMsg;
+
+        if(roomDiscountsService.checkIfDiscountExists(FromDate, ToDate, RoomTypeID)){
+            responseMsg = "Discount already Exists for selected date";
+        }else{
+            roomDiscountsService.updateDiscounts(id,addDiscountsRequest);
+            responseMsg = "Successfully Updated";
+            return ResponseEntity.ok().body(responseMsg);
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
 }

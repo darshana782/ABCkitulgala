@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,12 @@ public class RoomDiscounts {
     @Column
     private String description;
     @Column
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-dd-MM")
     private Date fromDate;
     @Column
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-dd-MM")
     private Date toDate;
     @Column
     private String value;
