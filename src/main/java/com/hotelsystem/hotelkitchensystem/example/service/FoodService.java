@@ -100,6 +100,4 @@ public class FoodService {
     public List<FoodIngredients> getFoodIngredientById(int foodId) {
         return foodIngredientRepository.findAllByFoodId(foodId);
     }
-
-
 }

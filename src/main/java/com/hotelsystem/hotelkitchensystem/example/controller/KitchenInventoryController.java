@@ -3,9 +3,11 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AddRecipeDetailsRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
+import com.hotelsystem.hotelkitchensystem.example.service.FoodIngredientsService;
 import com.hotelsystem.hotelkitchensystem.example.service.FoodService;
 import com.hotelsystem.hotelkitchensystem.example.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class KitchenInventoryController {
     private FoodService foodService;
     @Autowired
     private IngredientService ingredientService;
+    @Autowired
+    private FoodIngredientsService foodIngredientsService;
 
     //Food
     //post
@@ -167,6 +171,20 @@ public class KitchenInventoryController {
     @DeleteMapping("/deleteIngredient/{ingredientId}")
     public String deleteIngredient(@PathVariable int ingredientId){
         return ingredientService.deleteIngredient(ingredientId);
+    }
+
+    @PostMapping("/updateRecipe/{foodId}")
+    public ResponseEntity updateRecipe(@PathVariable int foodId, @RequestBody AddRecipeDetailsRequest addRecipeDetailsRequest){
+        String responseMsg;
+        if (foodIngredientsService.checkIfFoodIngredientExists(foodId)){
+            foodIngredientsService.addRecipe(foodId, addRecipeDetailsRequest);
+            responseMsg="Recipe added";
+        }
+        else{
+            responseMsg="Food not found";
+            return ResponseEntity.badRequest().body(responseMsg);
+         }
+        return ResponseEntity.ok().body(responseMsg);
     }
 
 

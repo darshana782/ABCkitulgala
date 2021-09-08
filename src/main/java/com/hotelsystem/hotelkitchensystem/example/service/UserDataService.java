@@ -56,6 +56,26 @@ public class UserDataService {
         return employeeList;
     }
 
+    public List<EmployeeDetailsResponse> getEmployeesByName(UserType userType,String name) {
+        String status="ACTIVATE";
+        List<UserData> allDetails= userDataRepository.findByFirstNameIsContainingAndUserTypeNotAndDeleteStatus(name,userType,status);
+        List<EmployeeDetailsResponse> employeeList= new ArrayList<EmployeeDetailsResponse>();
+        for (UserData userData: allDetails){
+            Employee employee= employeeRepository.findByUserData(userData);
+            EmployeeDetailsResponse empList= new EmployeeDetailsResponse();
+            empList.setId(userData.getId());
+            empList.setFirstName(userData.getFirstName());
+            empList.setLastName(userData.getLastName());
+            empList.setEmail(userData.getEmail());
+            empList.setContactNo(userData.getContactNo());
+            empList.setUserType(userData.getUserType());
+            empList.setGender(employee.getGender());
+            empList.setEmp_id(employee.getEmp_id());
+            employeeList.add(empList);
+        }
+        return employeeList;
+    }
+
     public EmployeeUpdateResponse getEmployeeByID(int id){
         UserData userdata = userDataRepository.findById(id);
         EmployeeUpdateResponse empDetails= new EmployeeUpdateResponse();
