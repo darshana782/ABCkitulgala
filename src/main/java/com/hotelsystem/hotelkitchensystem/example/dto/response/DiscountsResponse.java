@@ -77,4 +77,5 @@ public class DiscountsResponse {
     public void setRoomTypes(RoomTypes roomTypes) {
         this.roomTypes = roomTypes;
     }
+
 }
