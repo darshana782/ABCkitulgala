@@ -2,17 +2,16 @@ package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 
+import java.util.Date;
+
 public class CustomerSignUpRequest {
     private String firstName;
     private String lastName;
     private String email;
-    private int age;
     private String addressLineOne;
     private String addressLineTwo;
     private String addressLineThree;
-    private String dobYear;
-    private String dobMonth;
-    private String dobDate;
+    private Date dob;
     private String nic;
     private String contactNo;
     private String password;
@@ -42,14 +41,6 @@ public class CustomerSignUpRequest {
         this.email = email;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getAddressLineOne() {
         return addressLineOne;
     }
@@ -72,30 +63,6 @@ public class CustomerSignUpRequest {
 
     public void setAddressLineThree(String addressLineThree) {
         this.addressLineThree = addressLineThree;
-    }
-
-    public String getDobYear() {
-        return dobYear;
-    }
-
-    public void setDobYear(String dobYear) {
-        this.dobYear = dobYear;
-    }
-
-    public String getDobMonth() {
-        return dobMonth;
-    }
-
-    public void setDobMonth(String dobMonth) {
-        this.dobMonth = dobMonth;
-    }
-
-    public String getDobDate() {
-        return dobDate;
-    }
-
-    public void setDobDate(String dobDate) {
-        this.dobDate = dobDate;
     }
 
     public String getNic() {
@@ -122,7 +89,15 @@ public class CustomerSignUpRequest {
         this.password = password;
     }
 
-//    public UserType getUserType() {
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    //    public UserType getUserType() {
 //        return userType;
 //    }
 //

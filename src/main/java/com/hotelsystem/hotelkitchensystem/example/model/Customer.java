@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.awt.print.Book;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,7 +26,9 @@ public class Customer {
     @Column(nullable = true)
     private String address;
     @Column(nullable = false)
-    private String dob;
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-dd-MM")
+    private Date dob;
     @Column (nullable = false)
     private String nic;
     @Enumerated(EnumType.STRING)
