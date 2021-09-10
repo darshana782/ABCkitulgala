@@ -20,6 +20,9 @@ import java.util.Optional;
 public class UserDataService {
 
     @Autowired
+    EmailSenderService emailSenderService;
+
+    @Autowired
     private UserDataRepository userDataRepository;
 
     @Autowired
@@ -131,7 +134,7 @@ public class UserDataService {
         else return false;
     }
 
-    public void addEmployee(EmployeeDetailsRequest employeeDetailsRequest) {
+    public void addEmployee(EmployeeDetailsRequest employeeDetailsRequest,String password) {
         Employee employee = new Employee();
         UserData userData = new UserData();
 
@@ -140,12 +143,22 @@ public class UserDataService {
         userData.setEmail(employeeDetailsRequest.getEmail());
         userData.setContactNo(employeeDetailsRequest.getContactNo());
         userData.setUserType(employeeDetailsRequest.getUserType());
-        userData.setPassword(bcryptPasswordEncoder.encode(employeeDetailsRequest.getPassword()));
+//        userData.setPassword(password);
+        userData.setPassword(bcryptPasswordEncoder.encode(password));
         userDataRepository.save(userData);
 
         employee.setGender(employeeDetailsRequest.getGender());
         employee.setUserData(userData);
         employeeRepository.save(employee);
+
+    }
+
+    public void sendEmail(String email, String name, String password){
+        String toEmail = email;
+        String body = "Hi "+ name +". Thank you for join with Adventure Base Camp Kitulgala. Your UserName and Password are in the below.\n"
+                +"UserName : "+email+"\nPassword : "+password;
+        String subject = "Registration for the Adventure Base Kitulgala";
+        emailSenderService.sendSimpleEmail(toEmail, body, subject);
     }
 
 }

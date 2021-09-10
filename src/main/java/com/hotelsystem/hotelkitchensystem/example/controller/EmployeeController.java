@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 
@@ -37,17 +38,41 @@ public class EmployeeController {
 
     @PostMapping("/addEmployee")
     public ResponseEntity addEmployee(@RequestBody EmployeeDetailsRequest employeeDetailsRequest){
+
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 4; i++)
+        {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+        String password = sb.toString();
+
         String responseMsg;
         String email = employeeDetailsRequest.getEmail();
         String contactNo = employeeDetailsRequest.getContactNo();
+        String name = employeeDetailsRequest.getFirstName();
         if(authService.checkIfEmailExists(email)){
             responseMsg="Email Already Exists";
         }else if(authService.checkIfContactNumberExists(contactNo)) {
             responseMsg = "Contact Number Already Exists";
         } else {
-            UserDataService.addEmployee(employeeDetailsRequest);
-            responseMsg="Employee Added Successfully";
-            return ResponseEntity.ok().body(responseMsg);
+            try{
+                UserDataService.addEmployee(employeeDetailsRequest,password);
+                responseMsg="Employee Added Successfully";
+                return ResponseEntity.ok().body(responseMsg);
+            } finally {
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                UserDataService.sendEmail(email,name,password);
+                            }
+                        },
+                        500
+                );
+            }
         }
         return ResponseEntity.badRequest().body(responseMsg);
     }
