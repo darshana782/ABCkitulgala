@@ -13,9 +13,7 @@ public class GetReceptionistAddCustomerRequest {
     private String addressLineOne;
     private String addressLineTwo;
     private String addressLineThree;
-    private String dobYear;
-    private String dobMonth;
-    private String dobDate;
+    private Date dob;
     private String nic;
     private String contactNo;
     private CustomerStatus customerStatus;
@@ -112,28 +110,12 @@ public class GetReceptionistAddCustomerRequest {
         this.addressLineThree = addressLineThree;
     }
 
-    public String getDobYear() {
-        return dobYear;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setDobYear(String dobYear) {
-        this.dobYear = dobYear;
-    }
-
-    public String getDobMonth() {
-        return dobMonth;
-    }
-
-    public void setDobMonth(String dobMonth) {
-        this.dobMonth = dobMonth;
-    }
-
-    public String getDobDate() {
-        return dobDate;
-    }
-
-    public void setDobDate(String dobDate) {
-        this.dobDate = dobDate;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getNic() {

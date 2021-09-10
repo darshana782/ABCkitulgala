@@ -74,7 +74,7 @@ public class ReceptionistService {
 
         //set data to customer object
         customer.setAddress(getReceptionistAddCustomerRequest.getAddressLineOne()+getReceptionistAddCustomerRequest.getAddressLineTwo()+getReceptionistAddCustomerRequest.getAddressLineThree());
-        customer.setDob(getReceptionistAddCustomerRequest.getDobYear()+getReceptionistAddCustomerRequest.getDobMonth()+getReceptionistAddCustomerRequest.getDobDate());
+        customer.setDob(getReceptionistAddCustomerRequest.getDob());
         customer.setNic(getReceptionistAddCustomerRequest.getNic());
         customer.setCustomerStatus(getReceptionistAddCustomerRequest.getCustomerStatus());
         customer.setUserData(userData);
