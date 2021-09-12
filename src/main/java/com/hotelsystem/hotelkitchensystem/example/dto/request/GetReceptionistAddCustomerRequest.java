@@ -9,7 +9,7 @@ public class GetReceptionistAddCustomerRequest {
     private String firstName;
     private String lastName;
     private String email;
-    private int age;
+//    private int age;
     private String addressLineOne;
     private String addressLineTwo;
     private String addressLineThree;
@@ -19,42 +19,10 @@ public class GetReceptionistAddCustomerRequest {
     private CustomerStatus customerStatus;
     private Date checkInDate;
     private Date checkOutDate;
-    private String meal;
+//    private String meal;
     private int roomNo;
 
-    public Date getCheckInDate() {
-        return checkInDate;
-    }
-
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public Date getCheckOutDate() {
-    return checkOutDate;
-    }
-
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
-    }
-
-    public String getMeal() {
-        return meal;
-    }
-
-    public void setMeal(String meal) {
-        this.meal = meal;
-    }
-
-    public int getRoomNo() {
-        return roomNo;
-    }
-
-    public void setRoomNo(int roomNo) {
-        this.roomNo = roomNo;
-    }
-
-    public String getFirstName(){
+    public String getFirstName() {
         return firstName;
     }
 
@@ -78,13 +46,13 @@ public class GetReceptionistAddCustomerRequest {
         this.email = email;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
+//    public int getAge() {
+//        return age;
+//    }
+//
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
 
     public String getAddressLineOne() {
         return addressLineOne;
@@ -140,5 +108,37 @@ public class GetReceptionistAddCustomerRequest {
 
     public void setCustomerStatus(CustomerStatus customerStatus) {
         this.customerStatus = customerStatus;
+    }
+
+    public Date getCheckInDate() {
+        return checkInDate;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Date getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+//    public String getMeal() {
+//        return meal;
+//    }
+//
+//    public void setMeal(String meal) {
+//        this.meal = meal;
+//    }
+
+    public int getRoomNo() {
+        return roomNo;
+    }
+
+    public void setRoomNo(int roomNo) {
+        this.roomNo = roomNo;
     }
 }
