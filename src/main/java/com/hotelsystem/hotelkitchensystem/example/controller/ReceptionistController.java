@@ -25,6 +25,8 @@ public class ReceptionistController {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
     private ReceptionistService receptionistService;
 
     @Autowired
