@@ -36,8 +36,8 @@ public class ReceptionistController {
     private AuthenticationManager authenticationManager;
 
     //Get customer by contact number
-    @PostMapping("/getCustomer")
-    public ResponseEntity getCustomers(@RequestBody GetReceptionistAddCustomerRequest getReceptionistAddCustomerRequest){
+    @PostMapping("/addCustomer")
+    public ResponseEntity addCustomers(@RequestBody GetReceptionistAddCustomerRequest getReceptionistAddCustomerRequest){
         String email=getReceptionistAddCustomerRequest.getEmail();
         String nic=getReceptionistAddCustomerRequest.getNic();
         String contactNo=getReceptionistAddCustomerRequest.getContactNo();
