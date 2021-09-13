@@ -187,5 +187,11 @@ public class KitchenInventoryController {
         return ResponseEntity.ok().body(responseMsg);
     }
 
+    @GetMapping("/cusfoodmenu")
+    public List<Food> allAvailableFoods(){
+        return foodService.getAvailableFoods();
+    }
+
+
 
 }
