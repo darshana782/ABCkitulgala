@@ -4,11 +4,14 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientR
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
+import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
 import com.hotelsystem.hotelkitchensystem.example.repository.FoodIngredientRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.FoodRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +22,9 @@ public class FoodService {
 
     @Autowired
     private FoodIngredientRepository foodIngredientRepository;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
 
     //post method
     public Food saveFood(Food food){
@@ -99,5 +105,41 @@ public class FoodService {
 
     public List<FoodIngredients> getFoodIngredientById(int foodId) {
         return foodIngredientRepository.findAllByFoodId(foodId);
+    }
+
+    public List<Food> getAvailableFoods() {
+        int x=0, dummyIngredientId=0, b=0;
+        List<Food> foods = foodRepository.findAll();
+        List<Food> foods2 = new ArrayList<Food>();
+        for (Food i:foods){
+            boolean temp1=false;
+            boolean temp2=true;
+            x= i.getFoodId();
+            System.out.println(x);
+
+            List<FoodIngredients> foodIngredients = foodIngredientRepository.findAll();
+            for (FoodIngredients j:foodIngredients){
+                if (x==j.getFoodId()){
+                    dummyIngredientId = j.getIngredientId();
+
+                    List<Ingredient> ingredient = ingredientRepository.findAll();
+                    for (Ingredient z:ingredient){
+                        if (dummyIngredientId == z.getIngredientId()){
+
+                            if (z.getQty() > z.getReorderLevel()){
+                                temp1=true;
+                            }else {
+                                temp2=false;
+                            }
+                        }
+                    }
+                }
+            }
+            if (temp1==true && temp2==true){
+                System.out.println(i.getFoodName());
+                foods2.add(i);
+            }
+        }
+        return foods2;
     }
 }
