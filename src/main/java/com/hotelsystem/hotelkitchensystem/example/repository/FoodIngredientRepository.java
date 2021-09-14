@@ -11,8 +11,9 @@ public interface FoodIngredientRepository extends JpaRepository<FoodIngredients,
 
     List<FoodIngredients> findAllByFoodId(int foodId);
     FoodIngredients findByfiId(int i);
-//    FoodIngredients findAllByFoodId2(int foodId);
 
+//    FoodIngredients findAllByFoodId2(int foodId);
+//    FoodIngredients findAllByQty
 //    @Query(value = "SELECT ingredientId FROM FoodIngredient_Table WHERE foodId=?1 " , nativeQuery = true)
 //    int findAllIngredientsByFoodId(int foodId);
 }

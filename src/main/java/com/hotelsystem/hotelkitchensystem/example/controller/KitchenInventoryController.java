@@ -85,6 +85,16 @@ public class KitchenInventoryController {
         return ingredientService.getIngredients();
     }
 
+    @GetMapping("/ingredientsHaveToReFill")
+    public List<Ingredient> findAllHaveToReFillIngredients(){
+        return ingredientService.getIngredientsHaveToReFillIngredients();
+    }
+
+    @GetMapping("/ingredientsStillNotHaveToReFill")
+    public List<Ingredient> findAllStillNotHaveToReFillIngredients(){
+        return ingredientService.getIngredientsStillNotHaveToReFillIngredients();
+    }
+
     @GetMapping("/ingredientById/{ingredientId}")
     public Ingredient findIngredientById(@PathVariable int ingredientId){
         return ingredientService.getIngredientById(ingredientId);
@@ -186,6 +196,12 @@ public class KitchenInventoryController {
          }
         return ResponseEntity.ok().body(responseMsg);
     }
+
+    @GetMapping("/cusfoodmenu")
+    public List<Food> allAvailableFoods(){
+        return foodService.getAvailableFoods();
+    }
+
 
 
 }
