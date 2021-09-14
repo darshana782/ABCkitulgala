@@ -32,6 +32,14 @@ public class IngredientService {
         return ingredientRepository.findById(ingredientID).orElse(null);
     }
 
+    public List<Ingredient> getIngredientsHaveToReFillIngredients(){
+        return ingredientRepository.findAllHavetoRefill();
+    }
+
+    public List<Ingredient> getIngredientsStillNotHaveToReFillIngredients(){
+        return ingredientRepository.findAllStillNotHaveToReFillIngredients();
+    }
+
     //get ny name
 //    public Ingredient getIngredientByName(String ingredientName){
 //        return ingredientRepository.findByName(ingredientName);
