@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.CustomerOrders;
 import com.hotelsystem.hotelkitchensystem.example.service.FoodService;
 import com.hotelsystem.hotelkitchensystem.example.service.OrderService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3030")
 @RestController
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -22,6 +24,12 @@ public class OrderController {
         //check in ekak thiyena ekekta witharai order ekak danna puluwan
         orderService.saveCustomerOrders(customerOrders);
         return ResponseEntity.ok().body("Order Successfull");
+    }
+
+    @PostMapping("/placeOrder/{orderTime}")
+    public void placeOrder(@PathVariable String orderTime, @RequestBody CustomerFoodOrderRequest customerFoodOrderRequest){
+        String responseMsg;
+        orderService.addFoodOrder(orderTime, customerFoodOrderRequest);
     }
 
 //    @PostMapping("/listOfAddedFoods")
