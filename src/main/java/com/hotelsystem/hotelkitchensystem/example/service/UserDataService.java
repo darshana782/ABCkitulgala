@@ -154,7 +154,7 @@ public class UserDataService {
     }
 
     public void sendEmail(String email, String name, String password){
-        String toEmail = email;
+        String toEmail = email; 
         String body = "Hi "+ name +". Thank you for join with Adventure Base Camp Kitulgala. Your UserName and Password are in the below.\n"
                 +"UserName : "+email+"\nPassword : "+password;
         String subject = "Registration for the Adventure Base Kitulgala";
