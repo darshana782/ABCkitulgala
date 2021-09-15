@@ -50,17 +50,17 @@ public class FoodService {
     }
 
     //get by name
+
     public Food getFoodByName(String foodName){
         return foodRepository.findByFoodName(foodName);
     }
 
-
     //Delete food
+
     public String deleteFood(int foodId){
         foodRepository.deleteById(foodId);
         return "Food Removed.. "+foodId;
     }
-
     public boolean checkIfFoodExists(String foodName){
         if (foodRepository.findByFoodName(foodName) != null){
             return true;
@@ -69,6 +69,7 @@ public class FoodService {
     }
 
     //Update food
+
     public Food updateFood(Food food){
         Food existingFood=foodRepository.findById(food.getFoodId()).orElse(null);
         existingFood.setFoodName(food.getFoodName());
@@ -77,7 +78,6 @@ public class FoodService {
         existingFood.setFoodDescription(food.getFoodDescription());
         return foodRepository.save(existingFood);
     }
-
 
     public void addfood(AddFoodRequest addFoodRequest){
         Food food = new Food();
@@ -102,6 +102,24 @@ public class FoodService {
             foodIngredientRepository.save(foodIngredients);
         }
     }
+
+//    public List<Food> getAllAddedFoods(AddedFoodRequest addedFoodRequest){
+//        int[] addedFoodList = addedFoodRequest.getIdOfOrderedFoods();
+//        List<Food> foods = foodRepository.findAll();
+//        List<Food> foods2 = new ArrayList<Food>();
+//        int x=0, k=0;
+//        for (int i:addedFoodList){
+//            x=addedFoodList[k];
+//            k++;
+//            for (Food j:foods){
+//                if (x==j.getFoodId()){
+//                    foods2.add(j);
+//                }
+//            }
+//
+//        }
+//        return foods2;
+//    }
 
     public List<FoodIngredients> getFoodIngredientById(int foodId) {
         return foodIngredientRepository.findAllByFoodId(foodId);

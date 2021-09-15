@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserDataService {
@@ -37,6 +36,10 @@ public class UserDataService {
 
     public List<UserData> getUsers(){
         return userDataRepository.findAll();
+    }
+
+    public UserData findUser(int id){
+        return userDataRepository.findById(id);
     }
 
     public List<EmployeeDetailsResponse> getEmployees(UserType userType) {

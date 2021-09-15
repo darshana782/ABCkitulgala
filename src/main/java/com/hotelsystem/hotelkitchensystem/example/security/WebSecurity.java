@@ -84,6 +84,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/v1/deleteEmployee/{id}").permitAll()
                 .antMatchers("/auth/registerEmployee").permitAll()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/user/{id}").permitAll()
                 .antMatchers("/foods").permitAll()
                 .antMatchers("/addFood").permitAll()
                 .antMatchers("/addIngredient").permitAll()
@@ -108,6 +109,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
                 .antMatchers("/updateRecipe/{id}").permitAll()
                 .antMatchers("/cusfoodmenu").permitAll()
+
+                .antMatchers("/listOfAddedFoods").permitAll()
+
+                .antMatchers("/createOrderId").permitAll()
+
 
 
 
