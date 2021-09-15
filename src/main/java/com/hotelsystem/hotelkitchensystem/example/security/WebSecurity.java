@@ -88,8 +88,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addFood").permitAll()
                 .antMatchers("/addIngredient").permitAll()
                 .antMatchers("/ingredients").permitAll()
+                .antMatchers("/ingredientsHaveToReFill").permitAll()
+                .antMatchers("/ingredientsStillNotHaveToReFill").permitAll()
                 .antMatchers("/addFoodIngredients").permitAll()
-                .antMatchers("/receptionist/getCustomer").permitAll()
+                .antMatchers("/receptionist/addCustomer").permitAll()
 //                .antMatchers("/api/v1/viewEmployeess/{type}").permitAll()
                 .antMatchers("/manager/addRoomType").permitAll()
                 .antMatchers("/manager/addRooms").permitAll()
@@ -105,6 +107,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/deleteRoomType/{id}").permitAll()
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
                 .antMatchers("/updateRecipe/{id}").permitAll()
+                .antMatchers("/cusfoodmenu").permitAll()
+
 
 
                 .antMatchers("/manager/**").permitAll()

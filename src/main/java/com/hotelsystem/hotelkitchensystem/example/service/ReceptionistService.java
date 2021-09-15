@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Booking;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
@@ -83,7 +84,7 @@ public class ReceptionistService {
         //set data to the booking object
         booking.setCheckInDate(getReceptionistAddCustomerRequest.getCheckInDate());
         booking.setCheckoutDate(getReceptionistAddCustomerRequest.getCheckOutDate());
-        booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
+//        booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
         booking.setRoomNo(getReceptionistAddCustomerRequest.getRoomNo());
         booking.setCustomer(customer);
         bookingRepository.save(booking);
