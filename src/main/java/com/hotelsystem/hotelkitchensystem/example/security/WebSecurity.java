@@ -112,7 +112,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/listOfAddedFoods").permitAll()
 
-                .antMatchers("/createOrderId").permitAll()
+                .antMatchers("/order/createOrderId").permitAll()
+                .antMatchers("/order/placeOrder/{orderTime}").permitAll()
 
 
 

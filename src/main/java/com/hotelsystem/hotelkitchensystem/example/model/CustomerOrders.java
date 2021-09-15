@@ -20,6 +20,9 @@ public class CustomerOrders {
     @GeneratedValue
     private int orderId;
     private int customerId;
+    private int roomId;
+    private String orderDate;
+    private String orderTime;
 
     public int getOrderId() {
         return orderId;
@@ -34,5 +37,29 @@ public class CustomerOrders {
     }
 
     public static void setCustomerId(int customerId) {
+    }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public String getOrderTime() {
+        return orderTime;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setOrderTime(String orderTime) {
+        this.orderTime = orderTime;
     }
 }
