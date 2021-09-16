@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface FoodOrderRepository extends JpaRepository<FoodOrders, Integer> {
     List<FoodOrders> findByorderId(int orderId);
+    List<FoodOrders> findAllByorderId(int orderId);
 
 }

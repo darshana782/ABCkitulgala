@@ -2,12 +2,8 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
-import com.hotelsystem.hotelkitchensystem.example.model.CustomerOrders;
-import com.hotelsystem.hotelkitchensystem.example.model.Food;
-import com.hotelsystem.hotelkitchensystem.example.model.FoodOrders;
-import com.hotelsystem.hotelkitchensystem.example.repository.FoodOrderRepository;
-import com.hotelsystem.hotelkitchensystem.example.repository.FoodRepository;
-import com.hotelsystem.hotelkitchensystem.example.repository.OrderRepository;
+import com.hotelsystem.hotelkitchensystem.example.model.*;
+import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +21,12 @@ public class OrderService {
 
     @Autowired
     private FoodRepository foodRepository;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private FoodIngredientRepository foodIngredientRepository;
 
     public List<CustomerOrders> getAllOrders(){
         return orderRepository.findAll();
@@ -73,13 +75,37 @@ public class OrderService {
     public void finishOrder(int orderId){
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("FINISH");
-        orderRepository.save(customerOrders);
+//        orderRepository.save(customerOrders);
     }
 
     public void prepareOrder(int orderId){
+        int item_qty = 0, foodId=0, ingredientId=0, ingredient_qty=0, ingredients_for_ordered_food=0, ingredient_qty_before_make_food=0, ingredient_qty_after_make_food=0;
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("IN PROGRESS");
         orderRepository.save(customerOrders);
+        List<FoodOrders> foodOrders = foodOrderRepository.findAllByorderId(orderId);
+
+        for (FoodOrders i:foodOrders){
+            item_qty = i.getQty();
+            foodId = i.getFoodId();
+            List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(foodId);
+//            System.out.println(foodIngredients);
+
+            for (FoodIngredients j:foodIngredients){
+                ingredientId = j.getIngredientId();
+                ingredient_qty = j.getQty();
+                ingredients_for_ordered_food = ingredients_for_ordered_food + (item_qty*ingredient_qty);
+//                System.out.println(ingredientId + " " + ingredient_qty + " " + item_qty + " " + ingredients_for_ordered_food);
+                Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
+                ingredient_qty_before_make_food = ingredient.getQty();
+                ingredient_qty_after_make_food = ingredient_qty_before_make_food - ingredients_for_ordered_food;
+
+                ingredient.setQty(ingredient_qty_after_make_food);
+                ingredientRepository.save(ingredient);
+                ingredients_for_ordered_food=0;
+            }
+        }
+
     }
 
     public List<CustomerOrders> getpendingOrders(){
