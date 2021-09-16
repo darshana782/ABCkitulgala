@@ -23,6 +23,15 @@ public class CustomerOrders {
     private int roomId;
     private String orderDate;
     private String orderTime;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getOrderId() {
         return orderId;
