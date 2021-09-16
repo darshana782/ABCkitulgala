@@ -18,8 +18,9 @@ public class StewardGuide {
     @Column(nullable = false)
     private String availability = "AVAILABLE";
 
+
+
     @OneToOne
     @JsonIgnore
     private Employee employee;
 }
-//hfdhfhfhf
