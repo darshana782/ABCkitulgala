@@ -4,7 +4,7 @@ import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 
 public class CustomerSigned {
 
-    private long id;
+//    private long id;
     private long userId;
     private String email;
     private String fName;
@@ -15,8 +15,8 @@ public class CustomerSigned {
     public CustomerSigned(){
     }
 
-    public CustomerSigned(long id, long userId, String email, String fName, String lName, UserType userType, String token){
-        this.id=id;
+    public CustomerSigned( long userId, String email, String fName, String lName, UserType userType, String token){
+//        this.id=id;
         this.userId=userId;
         this.email=email;
         this.fName=fName;
@@ -25,9 +25,9 @@ public class CustomerSigned {
         this.token=token;
     }
 
-    public long getId() {
-        return id;
-    }
+//    public long getId() {
+//        return id;
+//    }
 
     public String getEmail() {
         return email;
@@ -53,9 +53,9 @@ public class CustomerSigned {
         return lName;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public void setEmail(String email) {
         this.email = email;

@@ -125,7 +125,6 @@ public class AuthService implements UserDetailsService{
         // object of relevant user
         UserData userData = userDataRepository.findByEmail(customerSignInRequest.getEmail());
 
-
         //check password and with the user email with authentication manager
         try {
             authenticationManager.authenticate(
@@ -137,9 +136,13 @@ public class AuthService implements UserDetailsService{
         }
         //get jwt token
         String token = jwtTokenUtil.generateToken(customerSignInRequest.getEmail());
-        Customer customer=customerRepository.findByUserData(userData);
+//        Customer customer=customerRepository.findByUserData(userData);
+
+//        Employee employee=employeeRepository.findByUserData(userData);
+
         CustomerSigned response = new CustomerSigned();
-        response.setId(customer.getCustomerId());
+
+//        response.setId(customer.getCustomerId());
         response.setUserId(userData.getId());
         response.setfName(userData.getFirstName());
         response.setlName(userData.getLastName());
