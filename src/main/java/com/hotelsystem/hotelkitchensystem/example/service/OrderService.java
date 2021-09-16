@@ -71,6 +71,7 @@ public class OrderService {
         }
     }
 
+    //Change the status of order
     public void finishOrder(int orderId){
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("FINISH");
