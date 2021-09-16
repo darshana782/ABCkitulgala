@@ -39,5 +39,10 @@ public class UserController {
         return userDataService.getUsers();
     }
 
+    @GetMapping("/user/{id}")
+    public UserData findById(@PathVariable int id){
+        return userDataService.findUser(id);
+    }
+
 
 }

@@ -5,8 +5,10 @@ import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsRe
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Employee;
+import com.hotelsystem.hotelkitchensystem.example.model.StewardGuide;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.EmployeeRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.StewardGuideRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserDataService {
@@ -31,12 +32,19 @@ public class UserDataService {
     @Autowired
     private PasswordEncoder bcryptPasswordEncoder;
 
+    @Autowired
+    private StewardGuideRepository stewardGuideRepository;
+
     public UserData saveUserData(UserData userData){
         return userDataRepository.save(userData);
     }
 
     public List<UserData> getUsers(){
         return userDataRepository.findAll();
+    }
+
+    public UserData findUser(int id){
+        return userDataRepository.findById(id);
     }
 
     public List<EmployeeDetailsResponse> getEmployees(UserType userType) {
@@ -137,6 +145,9 @@ public class UserDataService {
     public void addEmployee(EmployeeDetailsRequest employeeDetailsRequest,String password) {
         Employee employee = new Employee();
         UserData userData = new UserData();
+        StewardGuide stewardGuide = new StewardGuide();
+        UserType userTypeSTEWARD = UserType.STEWARD;
+        UserType userTypeGUIDE = UserType.GUIDE;
 
         userData.setFirstName(employeeDetailsRequest.getFirstName());
         userData.setLastName(employeeDetailsRequest.getLastName());
@@ -151,10 +162,15 @@ public class UserDataService {
         employee.setUserData(userData);
         employeeRepository.save(employee);
 
+        if (employeeDetailsRequest.getUserType()==userTypeSTEWARD || employeeDetailsRequest.getUserType()==userTypeGUIDE ){
+            stewardGuide.setEmployee(employee);
+            stewardGuideRepository.save(stewardGuide);
+        }
+
     }
 
     public void sendEmail(String email, String name, String password){
-        String toEmail = email;
+        String toEmail = email; 
         String body = "Hi "+ name +". Thank you for join with Adventure Base Camp Kitulgala. Your UserName and Password are in the below.\n"
                 +"UserName : "+email+"\nPassword : "+password;
         String subject = "Registration for the Adventure Base Kitulgala";

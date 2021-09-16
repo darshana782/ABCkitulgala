@@ -22,5 +22,9 @@ public class Employee {
     @OneToOne
     @JsonIgnore
     private UserData userData;
+
+    @OneToOne(targetEntity = StewardGuide.class, mappedBy = "employee", cascade = CascadeType.ALL)
+    @JoinColumn(name = "sg_fk",referencedColumnName = "emp_id")
+    private StewardGuide stewardGuide;
 }
 
