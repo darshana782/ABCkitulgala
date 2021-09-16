@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface IngredientRepository extends JpaRepository<Ingredient, Integer> {
     Ingredient findByingredientName(String ingredientName);
+    Ingredient findByingredientId(int ingredientId);
 
     @Query(value = "SELECT x FROM Ingredient x WHERE x.qty <= x.reorderLevel")
     List<Ingredient> findAllHavetoRefill();

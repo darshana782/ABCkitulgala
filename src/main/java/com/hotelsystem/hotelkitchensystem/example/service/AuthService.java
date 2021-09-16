@@ -2,12 +2,10 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
-import com.hotelsystem.hotelkitchensystem.example.model.Employee;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.EmployeeRepository;
@@ -127,7 +125,6 @@ public class AuthService implements UserDetailsService{
         // object of relevant user
         UserData userData = userDataRepository.findByEmail(customerSignInRequest.getEmail());
 
-
         //check password and with the user email with authentication manager
         try {
             authenticationManager.authenticate(
@@ -139,9 +136,16 @@ public class AuthService implements UserDetailsService{
         }
         //get jwt token
         String token = jwtTokenUtil.generateToken(customerSignInRequest.getEmail());
-        Customer customer=customerRepository.findByUserData(userData);
+//        Customer customer=customerRepository.findByUserData(userData);
+
+//        Employee employee=employeeRepository.findByUserData(userData);
+
         CustomerSigned response = new CustomerSigned();
-        response.setId(customer.getCustomerId());
+
+//        response.setId(customer.getCustomerId());
+        response.setUserId(userData.getId());
+        response.setfName(userData.getFirstName());
+        response.setlName(userData.getLastName());
         response.setUserType(userData.getUserType());
         response.setEmail(userData.getEmail());
         response.setToken(token); //append to response entity
