@@ -5,8 +5,10 @@ import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsRe
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Employee;
+import com.hotelsystem.hotelkitchensystem.example.model.StewardGuide;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.EmployeeRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.StewardGuideRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +31,9 @@ public class UserDataService {
 
     @Autowired
     private PasswordEncoder bcryptPasswordEncoder;
+
+    @Autowired
+    private StewardGuideRepository stewardGuideRepository;
 
     public UserData saveUserData(UserData userData){
         return userDataRepository.save(userData);
@@ -140,6 +145,9 @@ public class UserDataService {
     public void addEmployee(EmployeeDetailsRequest employeeDetailsRequest,String password) {
         Employee employee = new Employee();
         UserData userData = new UserData();
+        StewardGuide stewardGuide = new StewardGuide();
+        UserType userTypeSTEWARD = UserType.STEWARD;
+        UserType userTypeGUIDE = UserType.GUIDE;
 
         userData.setFirstName(employeeDetailsRequest.getFirstName());
         userData.setLastName(employeeDetailsRequest.getLastName());
@@ -153,6 +161,11 @@ public class UserDataService {
         employee.setGender(employeeDetailsRequest.getGender());
         employee.setUserData(userData);
         employeeRepository.save(employee);
+
+        if (employeeDetailsRequest.getUserType()==userTypeSTEWARD || employeeDetailsRequest.getUserType()==userTypeGUIDE ){
+            stewardGuide.setEmployee(employee);
+            stewardGuideRepository.save(stewardGuide);
+        }
 
     }
 
