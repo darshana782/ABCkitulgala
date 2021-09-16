@@ -70,4 +70,28 @@ public class OrderService {
         }
     }
 
+    public void finishOrder(int orderId){
+        CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+        customerOrders.setStatus("FINISH");
+        orderRepository.save(customerOrders);
+    }
+
+    public void prepareOrder(int orderId){
+        CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+        customerOrders.setStatus("IN PROGRESS");
+        orderRepository.save(customerOrders);
+    }
+
+    public List<CustomerOrders> getpendingOrders(){
+        String status = "PENDING";
+        return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
+    }
+
+    public List<CustomerOrders> getInprogressOrders(){
+        String status = "IN PROGRESS";
+        return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
+    }
+
+
+
 }
