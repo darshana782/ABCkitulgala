@@ -74,17 +74,17 @@ public class ReceptionistService {
         userDataRepository.save(userData);
 
         //set data to customer object
-        customer.setAddress(getReceptionistAddCustomerRequest.getAddressLineOne()+getReceptionistAddCustomerRequest.getAddressLineTwo()+getReceptionistAddCustomerRequest.getAddressLineThree());
+        customer.setAddress(getReceptionistAddCustomerRequest.getAddressLineOne()+","+getReceptionistAddCustomerRequest.getAddressLineTwo()+","+getReceptionistAddCustomerRequest.getAddressLineThree());
         customer.setDob(getReceptionistAddCustomerRequest.getDob());
         customer.setNic(getReceptionistAddCustomerRequest.getNic());
-        customer.setCustomerStatus(getReceptionistAddCustomerRequest.getCustomerStatus());
+        customer.setCustomerStatus(CustomerStatus.valueOf("ACTIVE"));
         customer.setUserData(userData);
         customerRepository.save(customer);
 
         //set data to the booking object
         booking.setCheckInDate(getReceptionistAddCustomerRequest.getCheckInDate());
         booking.setCheckoutDate(getReceptionistAddCustomerRequest.getCheckOutDate());
-//        booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
+        booking.setMeal(getReceptionistAddCustomerRequest.getMeal());
         booking.setRoomNo(getReceptionistAddCustomerRequest.getRoomNo());
         booking.setCustomer(customer);
         bookingRepository.save(booking);

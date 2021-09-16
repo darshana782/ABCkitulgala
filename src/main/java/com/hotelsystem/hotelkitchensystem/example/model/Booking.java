@@ -26,7 +26,7 @@ public class Booking {
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-dd-MM")
     private Date checkoutDate;
-//    @Column(nullable = true)
+    @Column(nullable = true)
     private String meal;
     @Column(nullable = false)
     private int roomNo;
@@ -34,4 +34,8 @@ public class Booking {
     @ManyToOne
     @JsonIgnore
     private Customer customer;
+
+    @ManyToOne
+    @JsonIgnore
+    private Rooms rooms;
 }

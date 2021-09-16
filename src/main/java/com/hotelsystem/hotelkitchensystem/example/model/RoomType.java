@@ -42,6 +42,7 @@ public class RoomType {
         return roomTypeID;
     }
 
+
     public void setRoomTypeID(int roomTypeID) {
         this.roomTypeID = roomTypeID;
     }
@@ -109,4 +110,5 @@ public class RoomType {
     public void setDiscount(List<RoomDiscounts> discount) {
         this.discount = discount;
     }
+
 }

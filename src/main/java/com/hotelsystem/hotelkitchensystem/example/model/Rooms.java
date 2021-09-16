@@ -17,6 +17,11 @@ public class Rooms {
     private int roomNo;
     @Column(nullable = true)
     private int availability;
+//    private  int roomTypeId;
+//
+//    public int getRoomTypeId() {
+//        return roomTypeId;
+//    }
 
     @ManyToOne
     @JsonIgnore

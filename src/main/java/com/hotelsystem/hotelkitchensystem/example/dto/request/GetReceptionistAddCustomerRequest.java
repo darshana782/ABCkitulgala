@@ -19,7 +19,7 @@ public class GetReceptionistAddCustomerRequest {
     private CustomerStatus customerStatus;
     private Date checkInDate;
     private Date checkOutDate;
-//    private String meal;
+    private String meal;
     private int roomNo;
 
     public String getFirstName() {
@@ -126,13 +126,13 @@ public class GetReceptionistAddCustomerRequest {
         this.checkOutDate = checkOutDate;
     }
 
-//    public String getMeal() {
-//        return meal;
-//    }
-//
-//    public void setMeal(String meal) {
-//        this.meal = meal;
-//    }
+    public String getMeal() {
+        return meal;
+    }
+
+    public void setMeal(String meal) {
+        this.meal = meal;
+    }
 
     public int getRoomNo() {
         return roomNo;
