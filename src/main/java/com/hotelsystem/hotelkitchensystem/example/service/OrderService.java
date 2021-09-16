@@ -68,16 +68,16 @@ public class OrderService {
             foodOrders.setQty(qtyList[k]);
             k++;
             foodOrderRepository.save(foodOrders);
-
         }
     }
 
     public void finishOrder(int orderId){
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("FINISH");
-//        orderRepository.save(customerOrders);
+        orderRepository.save(customerOrders);
     }
 
+    //Update Ingredients on Stock
     public void prepareOrder(int orderId){
         int item_qty = 0, foodId=0, ingredientId=0, ingredient_qty=0, ingredients_for_ordered_food=0, ingredient_qty_before_make_food=0, ingredient_qty_after_make_food=0;
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
@@ -89,13 +89,10 @@ public class OrderService {
             item_qty = i.getQty();
             foodId = i.getFoodId();
             List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(foodId);
-//            System.out.println(foodIngredients);
-
             for (FoodIngredients j:foodIngredients){
                 ingredientId = j.getIngredientId();
                 ingredient_qty = j.getQty();
                 ingredients_for_ordered_food = ingredients_for_ordered_food + (item_qty*ingredient_qty);
-//                System.out.println(ingredientId + " " + ingredient_qty + " " + item_qty + " " + ingredients_for_ordered_food);
                 Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
                 ingredient_qty_before_make_food = ingredient.getQty();
                 ingredient_qty_after_make_food = ingredient_qty_before_make_food - ingredients_for_ordered_food;
@@ -105,7 +102,6 @@ public class OrderService {
                 ingredients_for_ordered_food=0;
             }
         }
-
     }
 
     public List<CustomerOrders> getpendingOrders(){
