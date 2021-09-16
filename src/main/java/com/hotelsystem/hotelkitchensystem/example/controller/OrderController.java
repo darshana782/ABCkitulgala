@@ -32,6 +32,17 @@ public class OrderController {
         return (List<FoodOrderResponse>) orderService.getByOrderId(orderId);
     }
 
+    @GetMapping("/pendingOrders")
+    public List<CustomerOrders> pendingOrders(){
+        return orderService.getpendingOrders();
+    }
+
+    @GetMapping("/inprogressOrders")
+    public List<CustomerOrders> inprogressOrders(){
+        return orderService.getInprogressOrders();
+    }
+
+
     @PostMapping("/createOrderId")
     public ResponseEntity createOrderId(@RequestBody CustomerOrders customerOrders){
         //check in ekak thiyena ekekta witharai order ekak danna puluwan
@@ -44,6 +55,18 @@ public class OrderController {
         String responseMsg;
         orderService.addFoodOrder(orderTime, customerFoodOrderRequest);
     }
+
+    @PostMapping("finishOrder/{orderId}")
+    public void finishOrder(@PathVariable int orderId){
+        orderService.finishOrder(orderId);
+    }
+
+    @PostMapping("prepareOrder/{orderId}")
+    public void prepareOrder(@PathVariable int orderId){
+        orderService.prepareOrder(orderId);
+    }
+
+
 
 //    @PostMapping("/listOfAddedFoods")
 //    public ResponseEntity findAddedFoods(@RequestBody AddedFoodRequest addedFoodRequest){
