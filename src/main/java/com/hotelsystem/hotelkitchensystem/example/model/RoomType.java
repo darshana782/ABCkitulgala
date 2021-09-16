@@ -37,4 +37,8 @@ public class RoomType {
 
     @OneToMany(targetEntity = RoomDiscounts.class, mappedBy = "roomType", cascade = CascadeType.ALL)
     private List<RoomDiscounts> discount;
+
+    public int getRoomTypeID() {
+        return roomTypeID;
+    }
 }

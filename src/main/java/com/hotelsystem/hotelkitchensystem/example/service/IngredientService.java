@@ -19,7 +19,7 @@ public class IngredientService {
         return ingredientRepository.save(ingredient);
     }
 
-    public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
+public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
         return (List<Ingredient>) ingredientRepository.saveAll(ingredients);
     }
 

@@ -3,6 +3,8 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.RoomResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.UpdateRoomsResponse;
+import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
+import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
 import com.hotelsystem.hotelkitchensystem.example.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +59,9 @@ public class RoomsController {
     public ResponseEntity deleteRoomByID(@PathVariable int id){
         roomService.deleteRooms(id);
         return ResponseEntity.ok().body("Deleted");
+    }
+    @GetMapping("/getRoomsByRoomTypes/{roomTypes}")
+    public List<Rooms> findRoomsByName(@PathVariable RoomTypes roomTypes){
+        return roomService.getRoomsByRoomTypes(roomTypes);
     }
 }
