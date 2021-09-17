@@ -4,6 +4,7 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeDetailsRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
@@ -35,6 +36,7 @@ public class EmployeeController {
 
     @Autowired
     private UserDataRepository userDataRepository;
+
 
     @PostMapping("/addEmployee")
     public ResponseEntity addEmployee(@RequestBody EmployeeDetailsRequest employeeDetailsRequest){
@@ -79,6 +81,11 @@ public class EmployeeController {
     @GetMapping("/viewEmployees")
     public List<UserData> findAllEmployees(){
         return UserDataService.getUsers();
+    }
+
+    @GetMapping("/avaialableStewards")
+    public List<StewardResponse> findavaialableStewards(){
+        return employeeService.avaialableStewards();
     }
 
     @GetMapping("/viewEmployeess/{type}")

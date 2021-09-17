@@ -61,7 +61,7 @@ public class UserDataService {
             empList.setContactNo(userData.getContactNo());
             empList.setUserType(userData.getUserType());
             empList.setGender(employee.getGender());
-            empList.setEmp_id(employee.getEmp_id());
+            empList.setEmp_id(employee.getEmpId());
             employeeList.add(empList);
         }
         return employeeList;
@@ -81,7 +81,7 @@ public class UserDataService {
             empList.setContactNo(userData.getContactNo());
             empList.setUserType(userData.getUserType());
             empList.setGender(employee.getGender());
-            empList.setEmp_id(employee.getEmp_id());
+            empList.setEmp_id(employee.getEmpId());
             employeeList.add(empList);
         }
         return employeeList;
