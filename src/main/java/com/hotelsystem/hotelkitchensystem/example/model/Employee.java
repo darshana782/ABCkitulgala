@@ -15,9 +15,25 @@ import javax.persistence.*;
 public class Employee {
     @Id
     @GeneratedValue
-    private int emp_id;
+    private int empId;
     @Column (nullable = true)
     private String gender;
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public StewardGuide getStewardGuide() {
+        return stewardGuide;
+    }
 
     @OneToOne
     @JsonIgnore

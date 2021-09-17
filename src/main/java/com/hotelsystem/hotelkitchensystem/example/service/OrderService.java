@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
@@ -27,6 +28,21 @@ public class OrderService {
 
     @Autowired
     private FoodIngredientRepository foodIngredientRepository;
+
+    @Autowired
+    private StewardGuideRepository stewardGuideRepository;
+
+    public boolean checkIfAlreadyStewardAssigned(int orderId) {
+        if (orderRepository.findByorderId(orderId) != null) {
+            CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+            if (customerOrders.getAssignedStewardId()!=0){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
 
     public List<CustomerOrders> getAllOrders(){
         return orderRepository.findAll();
@@ -102,6 +118,22 @@ public class OrderService {
                 ingredientRepository.save(ingredient);
                 ingredients_for_ordered_food=0;
             }
+        }
+    }
+
+    public void assignSteward(AssignStewardRequest assignStewardRequest){
+        String assigned="ASSIGNED";
+        int orderId = assignStewardRequest.getOrderId();
+        int empId = assignStewardRequest.getEmpId();
+        CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+        StewardGuide stewardGuide = stewardGuideRepository.findByEmployee_empId(empId);
+
+        if (customerOrders.getAssignedStewardId()==0){
+            customerOrders.setAssignedStewardId(assignStewardRequest.getEmpId());
+            orderRepository.save(customerOrders);
+
+            stewardGuide.setAvailability(assigned);
+            stewardGuideRepository.save(stewardGuide);
         }
     }
 

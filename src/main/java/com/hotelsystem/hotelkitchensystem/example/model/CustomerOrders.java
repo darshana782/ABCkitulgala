@@ -24,6 +24,15 @@ public class CustomerOrders {
     private String orderDate;
     private String orderTime;
     private String status;
+    private int assignedStewardId;
+
+    public int getAssignedStewardId() {
+        return assignedStewardId;
+    }
+
+    public void setAssignedStewardId(int assignedStewardId) {
+        this.assignedStewardId = assignedStewardId;
+    }
 
     public String getStatus() {
         return status;
