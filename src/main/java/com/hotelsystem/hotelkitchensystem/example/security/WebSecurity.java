@@ -100,21 +100,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
                 .antMatchers("/updateRecipe/{id}").permitAll()
                 .antMatchers("/cusfoodmenu").permitAll()
-
                 .antMatchers("/listOfAddedFoods").permitAll()
-
                 .antMatchers("/order/**").permitAll()
                 .antMatchers("/order/createOrderId").permitAll()
                 .antMatchers("/order/placeOrder/{orderTime}").permitAll()
-
-
-
-
                 .antMatchers("/manager/**").permitAll()
-
-
-
-
+                .antMatchers("/customer/booking/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
