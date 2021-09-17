@@ -3,6 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardTaskResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class OrderService {
 
     @Autowired
     private StewardGuideRepository stewardGuideRepository;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     public boolean checkIfAlreadyStewardAssigned(int orderId) {
         if (orderRepository.findByorderId(orderId) != null) {
@@ -147,6 +151,25 @@ public class OrderService {
         return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
     }
 
+    public StewardTaskResponse StewardTask(int stewardId){
+        StewardTaskResponse stewardTaskResponse = new StewardTaskResponse();
+        CustomerOrders customerOrders = orderRepository.findByStewardId(stewardId);
+        String status = customerOrders.getStatus();
+        String text = "FINISH";
 
+        if(status.equals(text)){
+            System.out.println(customerOrders.getStatus());
+            System.out.println(stewardId);
+            int customerId = customerOrders.getCustomerId();
+            UserData userData = userDataRepository.findById(customerId);
+            String firstName = userData.getFirstName();
+            String lastName = userData.getLastName();
+            String fullName = firstName + " " + lastName;
+            stewardTaskResponse.setOrderId(customerOrders.getOrderId());
+            stewardTaskResponse.setRoomId(customerOrders.getRoomId());
+            stewardTaskResponse.setCustomerName(fullName);
+        }
+        return stewardTaskResponse;
+    }
 
 }
