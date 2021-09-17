@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.FinishOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardTaskResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
@@ -35,6 +36,9 @@ public class OrderService {
 
     @Autowired
     private UserDataRepository userDataRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public boolean checkIfAlreadyStewardAssigned(int orderId) {
         if (orderRepository.findByorderId(orderId) != null) {
@@ -92,10 +96,16 @@ public class OrderService {
     }
 
     //Change the status of order
-    public void finishOrder(int orderId){
+    public void finishOrder(int orderId, FinishOrderRequest finishOrderRequest){
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("FINISH");
         orderRepository.save(customerOrders);
+
+        int sgId = finishOrderRequest.getUserId() + 2;
+        StewardGuide stewardGuide = stewardGuideRepository.findBysgId(sgId);
+        stewardGuide.setAvailability("AVAILABLE");
+        stewardGuideRepository.save(stewardGuide);
+//        System.out.println(finishOrderRequest.getUserId());
     }
 
     //Update Ingredients on Stock
@@ -152,14 +162,17 @@ public class OrderService {
     }
 
     public StewardTaskResponse StewardTask(int stewardId){
+        stewardId++;
+        String statusText = "IN PROGRESS";
         StewardTaskResponse stewardTaskResponse = new StewardTaskResponse();
-        CustomerOrders customerOrders = orderRepository.findByStewardId(stewardId);
+        CustomerOrders customerOrders = orderRepository.findByStewardIdAndstatus(stewardId, statusText);
         String status = customerOrders.getStatus();
         String text = "FINISH";
+//
+//        System.out.println(customerOrders.getStatus());
+//        System.out.println(customerOrders);
 
-        if(status.equals(text)){
-            System.out.println(customerOrders.getStatus());
-            System.out.println(stewardId);
+        if(!status.equals(text)){
             int customerId = customerOrders.getCustomerId();
             UserData userData = userDataRepository.findById(customerId);
             String firstName = userData.getFirstName();

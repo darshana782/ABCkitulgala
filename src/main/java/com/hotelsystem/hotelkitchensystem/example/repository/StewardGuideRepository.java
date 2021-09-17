@@ -14,5 +14,7 @@ public interface StewardGuideRepository extends JpaRepository<StewardGuide, Inte
 
     StewardGuide findByEmployee_empId(int empId);
 
+    StewardGuide findBysgId(int sgId);
+
 
 }
