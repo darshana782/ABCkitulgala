@@ -1,7 +1,10 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.FinishOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardTaskResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,27 @@ public class OrderService {
 
     @Autowired
     private FoodIngredientRepository foodIngredientRepository;
+
+    @Autowired
+    private StewardGuideRepository stewardGuideRepository;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    public boolean checkIfAlreadyStewardAssigned(int orderId) {
+        if (orderRepository.findByorderId(orderId) != null) {
+            CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+            if (customerOrders.getAssignedStewardId()!=0){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
 
     public List<CustomerOrders> getAllOrders(){
         return orderRepository.findAll();
@@ -72,10 +96,16 @@ public class OrderService {
     }
 
     //Change the status of order
-    public void finishOrder(int orderId){
+    public void finishOrder(int orderId, FinishOrderRequest finishOrderRequest){
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         customerOrders.setStatus("FINISH");
         orderRepository.save(customerOrders);
+
+        int sgId = finishOrderRequest.getUserId() + 2;
+        StewardGuide stewardGuide = stewardGuideRepository.findBysgId(sgId);
+        stewardGuide.setAvailability("AVAILABLE");
+        stewardGuideRepository.save(stewardGuide);
+//        System.out.println(finishOrderRequest.getUserId());
     }
 
     //Update Ingredients on Stock
@@ -105,6 +135,22 @@ public class OrderService {
         }
     }
 
+    public void assignSteward(AssignStewardRequest assignStewardRequest){
+        String assigned="ASSIGNED";
+        int orderId = assignStewardRequest.getOrderId();
+        int empId = assignStewardRequest.getEmpId();
+        CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
+        StewardGuide stewardGuide = stewardGuideRepository.findByEmployee_empId(empId);
+
+        if (customerOrders.getAssignedStewardId()==0){
+            customerOrders.setAssignedStewardId(assignStewardRequest.getEmpId());
+            orderRepository.save(customerOrders);
+
+            stewardGuide.setAvailability(assigned);
+            stewardGuideRepository.save(stewardGuide);
+        }
+    }
+
     public List<CustomerOrders> getpendingOrders(){
         String status = "PENDING";
         return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
@@ -115,6 +161,28 @@ public class OrderService {
         return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
     }
 
+    public StewardTaskResponse StewardTask(int stewardId){
+        stewardId++;
+        String statusText = "IN PROGRESS";
+        StewardTaskResponse stewardTaskResponse = new StewardTaskResponse();
+        CustomerOrders customerOrders = orderRepository.findByStewardIdAndstatus(stewardId, statusText);
+        String status = customerOrders.getStatus();
+        String text = "FINISH";
+//
+//        System.out.println(customerOrders.getStatus());
+//        System.out.println(customerOrders);
 
+        if(!status.equals(text)){
+            int customerId = customerOrders.getCustomerId();
+            UserData userData = userDataRepository.findById(customerId);
+            String firstName = userData.getFirstName();
+            String lastName = userData.getLastName();
+            String fullName = firstName + " " + lastName;
+            stewardTaskResponse.setOrderId(customerOrders.getOrderId());
+            stewardTaskResponse.setRoomId(customerOrders.getRoomId());
+            stewardTaskResponse.setCustomerName(fullName);
+        }
+        return stewardTaskResponse;
+    }
 
 }

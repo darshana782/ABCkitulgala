@@ -1,6 +1,8 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.FinishOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.CustomerOrders;
 import com.hotelsystem.hotelkitchensystem.example.service.FoodService;
@@ -57,13 +59,28 @@ public class OrderController {
     }
 
     @PostMapping("finishOrder/{orderId}")
-    public void finishOrder(@PathVariable int orderId){
-        orderService.finishOrder(orderId);
+    public void finishOrder(@PathVariable int orderId, @RequestBody FinishOrderRequest finishOrderRequest){
+        orderService.finishOrder(orderId, finishOrderRequest);
+
     }
 
     @PostMapping("prepareOrder/{orderId}")
     public void prepareOrder(@PathVariable int orderId){
         orderService.prepareOrder(orderId);
+    }
+
+    @PostMapping("/assignSteward")
+    public ResponseEntity assignSteward(@RequestBody AssignStewardRequest assignStewardRequest){
+        int orderId = assignStewardRequest.getOrderId();
+        String responseMsg = "";
+        if(orderService.checkIfAlreadyStewardAssigned(orderId)){
+            responseMsg="Steward Already Added";
+            return ResponseEntity.ok().body(responseMsg);
+        }else {
+            orderService.assignSteward(assignStewardRequest);
+            responseMsg="Steward Added Successfully";
+            return ResponseEntity.ok().body(responseMsg);
+        }
     }
 
 

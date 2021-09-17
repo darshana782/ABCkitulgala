@@ -4,11 +4,14 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeDetailsRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardTaskResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.service.EmployeeService;
+import com.hotelsystem.hotelkitchensystem.example.service.OrderService;
 import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +38,10 @@ public class EmployeeController {
 
     @Autowired
     private UserDataRepository userDataRepository;
+
+    @Autowired
+    private OrderService orderService;
+
 
     @PostMapping("/addEmployee")
     public ResponseEntity addEmployee(@RequestBody EmployeeDetailsRequest employeeDetailsRequest){
@@ -79,6 +86,16 @@ public class EmployeeController {
     @GetMapping("/viewEmployees")
     public List<UserData> findAllEmployees(){
         return UserDataService.getUsers();
+    }
+
+    @GetMapping("/avaialableStewards")
+    public List<StewardResponse> findavaialableStewards(){
+        return employeeService.avaialableStewards();
+    }
+
+    @GetMapping("/assignedTasks/{stewardId}")
+    public StewardTaskResponse findStewardTask(@PathVariable int stewardId){
+        return orderService.StewardTask(stewardId);
     }
 
     @GetMapping("/viewEmployeess/{type}")

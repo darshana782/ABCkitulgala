@@ -17,6 +17,11 @@ public interface OrderRepository extends JpaRepository<CustomerOrders, Integer> 
     CustomerOrders findByorderId(int orderId);
     List<CustomerOrders> findAllBystatus(String status);
 
+    @Query(value = "SELECT x FROM CustomerOrders x WHERE x.customerId = ?1 AND x.orderTime = ?2")
+    CustomerOrders findByassignedStewardId(int orderId);
+
+    @Query(value = "SELECT x FROM CustomerOrders x WHERE x.assignedStewardId = ?1 AND x.status =?2")
+    CustomerOrders findByStewardIdAndstatus(int stewardId, String statusText);
 
 
 }
