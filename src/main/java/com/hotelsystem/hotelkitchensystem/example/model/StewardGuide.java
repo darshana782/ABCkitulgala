@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class StewardGuide {
     @Id
     @GeneratedValue
-    private int SG_id;
+    private int sgId;
     @Column(nullable = false)
     private String availability = "AVAILABLE";
 
