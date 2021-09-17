@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Entity
 
-public class Review {
+public class ReviewFeedback {
     @Id
     @GeneratedValue
     private int feedbackId;
