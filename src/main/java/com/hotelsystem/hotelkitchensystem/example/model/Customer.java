@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.awt.print.Book;
 import java.util.Date;
 import java.util.List;
 
@@ -40,5 +39,8 @@ public class Customer {
 
     @OneToMany(targetEntity = Booking.class, mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Booking> booking;
+
+    @OneToMany(targetEntity = ReviewFeedback.class, mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<ReviewFeedback> reviewFeedback;
 
 }
