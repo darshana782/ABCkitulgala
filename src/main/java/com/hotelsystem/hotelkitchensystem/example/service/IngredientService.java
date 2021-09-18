@@ -1,8 +1,13 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.DeleteIngredientRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.UpdateIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
+import com.hotelsystem.hotelkitchensystem.example.model.IngredientsReport;
+import com.hotelsystem.hotelkitchensystem.example.repository.FoodRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.IngredientRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.IngredientsReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +18,12 @@ public class IngredientService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private FoodRepository foodRepository;
+
+    @Autowired
+    IngredientsReportRepository ingredientsReportRepository;
 
     //post method
     public Ingredient saveIngredient(Ingredient ingredient){
@@ -51,6 +62,16 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
         return "Ingredient Removed.. "+ingredientId;
     }
 
+    public void saveDeletedIngredientInReport(int ingredientId, DeleteIngredientRequest deleteIngredientRequest){
+        Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
+        IngredientsReport ingredientsReport = new IngredientsReport();
+
+        ingredientsReport.setIngredientId(ingredientId);
+        ingredientsReport.setIngredientName(ingredient.getIngredientName());
+        ingredientsReport.setChangedDate(deleteIngredientRequest.getCurrentDate());
+        ingredientsReport.setStatus("DELETED");
+        ingredientsReportRepository.save(ingredientsReport);
+    }
 
     //update ingredient
     public Ingredient updateIngredient(Ingredient ingredient){
@@ -73,11 +94,43 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
 
     public void addingredient(AddIngredientRequest addIngredientRequest){
         Ingredient ingredient = new Ingredient();
+        IngredientsReport ingredientsReport = new IngredientsReport();
 
         ingredient.setIngredientName(addIngredientRequest.getIngredientName());
         ingredient.setQty(addIngredientRequest.getQty());
         ingredient.setReorderLevel(addIngredientRequest.getReorderLevel());
-
         ingredientRepository.save(ingredient);
+
+        Ingredient lastSavedIngredient = ingredientRepository.findByingredientName(addIngredientRequest.getIngredientName());
+
+        ingredientsReport.setIngredientId(lastSavedIngredient.getIngredientId());
+        ingredientsReport.setIngredientName(addIngredientRequest.getIngredientName());
+        ingredientsReport.setChangedQty(addIngredientRequest.getQty());
+        ingredientsReport.setChangedDate(addIngredientRequest.getCurrentDate());
+        ingredientsReport.setStatus("ADDED");
+        ingredientsReportRepository.save(ingredientsReport);
+
+
     }
+
+    public void updateIngredientQty(UpdateIngredientRequest updateIngredientRequest){
+        int ingredientId = updateIngredientRequest.getIngredientId();
+        Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
+        int availQty = ingredient.getQty();
+        availQty = availQty + updateIngredientRequest.getQty();
+        ingredient.setQty(availQty);
+        ingredientRepository.save(ingredient);
+
+        IngredientsReport ingredientsReport = new IngredientsReport();
+        ingredientsReport.setIngredientId(ingredientId);
+        ingredientsReport.setIngredientName(ingredient.getIngredientName());
+        ingredientsReport.setChangedQty(updateIngredientRequest.getQty());
+        ingredientsReport.setChangedDate(updateIngredientRequest.getCurrentDate());
+        ingredientsReport.setStatus("STOCK UPDATED");
+        ingredientsReportRepository.save(ingredientsReport);
+    }
+
+
+
+
 }

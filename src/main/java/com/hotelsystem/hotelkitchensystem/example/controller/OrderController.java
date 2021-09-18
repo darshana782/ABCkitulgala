@@ -75,7 +75,7 @@ public class OrderController {
         String responseMsg = "";
         if(orderService.checkIfAlreadyStewardAssigned(orderId)){
             responseMsg="Steward Already Added";
-            return ResponseEntity.ok().body(responseMsg);
+            return ResponseEntity.badRequest().body(responseMsg);
         }else {
             orderService.assignSteward(assignStewardRequest);
             responseMsg="Steward Added Successfully";
