@@ -115,6 +115,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/order/placeOrder/{orderTime}").permitAll()
                 .antMatchers("/manager/**").permitAll()
                 .antMatchers("/customer/booking/**").permitAll()
+                .antMatchers("/outdoor-activities").permitAll()
+                .antMatchers("/outdoor-activity-schedules").permitAll()
+                .antMatchers("/outdoor-activity-schedules/available").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/set-completed").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/completed").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/in-complete").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
