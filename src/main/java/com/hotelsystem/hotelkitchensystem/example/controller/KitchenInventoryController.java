@@ -197,6 +197,11 @@ public class KitchenInventoryController {
         return ingredientService.deleteIngredient(ingredientId);
     }
 
+    @PostMapping("/saveDeletedIngredientStatus/{ingredientId}")
+    public void saveDeletedIngredientInReport(@PathVariable int ingredientId, @RequestBody DeleteIngredientRequest deleteIngredientRequest){
+        ingredientService.saveDeletedIngredientInReport(ingredientId, deleteIngredientRequest);
+    }
+
     @DeleteMapping("/deleteFood/{foodId}")
     public String deleteFood(@PathVariable int foodId){
         return foodService.deleteFood(foodId);

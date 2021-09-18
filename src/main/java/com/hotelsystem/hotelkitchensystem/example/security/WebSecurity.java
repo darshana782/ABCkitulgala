@@ -94,6 +94,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addFoodIngredients").permitAll()
                 .antMatchers("/deleteIngredient/{ingredientId}").permitAll()
 
+                .antMatchers("/saveDeletedIngredientStatus/{ingredientId}").permitAll()
+
                 .antMatchers("/receptionist/addCustomer").permitAll()
 //                .antMatchers("/api/v1/viewEmployeess/{type}").permitAll()
                 .antMatchers("/manager/**").permitAll()
