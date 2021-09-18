@@ -38,7 +38,10 @@ public class OrderService {
     private UserDataRepository userDataRepository;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    IngredientsReportRepository ingredientsReportRepository;
+
+    @Autowired
+    OrderReportRepository orderReportRepository;
 
     public boolean checkIfAlreadyStewardAssigned(int orderId) {
         if (orderRepository.findByorderId(orderId) != null) {
@@ -130,7 +133,30 @@ public class OrderService {
 
                 ingredient.setQty(ingredient_qty_after_make_food);
                 ingredientRepository.save(ingredient);
-                ingredients_for_ordered_food=0;
+
+                IngredientsReport ingredientsReport3 = ingredientsReportRepository.findByorderIdAndingredientIdForUpdateIngredientQTY(ingredientId, orderId);
+                if(ingredientsReport3 != null){
+
+                    IngredientsReport ingredientsReport2 = ingredientsReportRepository.findByorderIdAndingredientId2(ingredientId, orderId);
+                    ingredientsReport2.setChangedQty(ingredientsReport2.getChangedQty() + ingredients_for_ordered_food);
+                    ingredientsReportRepository.save(ingredientsReport2);
+
+                    ingredients_for_ordered_food=0;
+
+                }else{
+
+                    IngredientsReport ingredientsReport = new IngredientsReport();
+                    ingredientsReport.setOrderId(orderId);
+                    ingredientsReport.setIngredientId(ingredientId);
+                    ingredientsReport.setIngredientName(ingredient.getIngredientName());
+                    ingredientsReport.setChangedQty(ingredients_for_ordered_food);
+                    ingredientsReport.setChangedDate(customerOrders.getOrderDate());
+                    ingredientsReport.setStatus("USED FOR ORDERS");
+                    ingredientsReportRepository.save(ingredientsReport);
+
+                    ingredients_for_ordered_food=0;
+
+                }
             }
         }
     }
@@ -139,16 +165,46 @@ public class OrderService {
         String assigned="ASSIGNED";
         int orderId = assignStewardRequest.getOrderId();
         int empId = assignStewardRequest.getEmpId();
+        int userId = empId - 1;
         CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
         StewardGuide stewardGuide = stewardGuideRepository.findByEmployee_empId(empId);
 
-        if (customerOrders.getAssignedStewardId()==0){
+        UserData userData = userDataRepository.findById(customerOrders.getCustomerId());
+            String customerName = userData.getFirstName() + " " + userData.getLastName();
+
+            UserData stewardUser = userDataRepository.findById(userId);
+            String stewardName = stewardUser.getFirstName() + " " + stewardUser.getLastName();
+
             customerOrders.setAssignedStewardId(assignStewardRequest.getEmpId());
             orderRepository.save(customerOrders);
 
             stewardGuide.setAvailability(assigned);
             stewardGuideRepository.save(stewardGuide);
-        }
+
+            List<FoodOrders> foodOrders = foodOrderRepository.findAllByorderId(orderId);
+            for (FoodOrders i:foodOrders){
+                List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(i.getFoodId());
+                for (FoodIngredients j:foodIngredients){
+                    OrderReport orderReport = new OrderReport();
+
+                    orderReport.setOrderId(orderId);
+                    orderReport.setCustomerId(customerOrders.getCustomerId());
+                    orderReport.setCustomerName(customerName);
+                    orderReport.setRoomId(0);
+                    orderReport.setStewardId(empId);
+                    orderReport.setStewardName(stewardName);
+                    orderReport.setOrderDate(customerOrders.getOrderDate());
+                    orderReport.setFoodId(i.getFoodId());
+                        Food food = foodRepository.findByfoodId(i.getFoodId());
+                    orderReport.setFoodName(food.getFoodName());
+                    orderReport.setOrderedQty(i.getQty());
+                    orderReport.setIngredientId(j.getIngredientId());
+                        Ingredient ingredient = ingredientRepository.findByingredientId(j.getIngredientId());
+                    orderReport.setIngredientName(ingredient.getIngredientName());
+                    orderReport.setUsedIngredientQty(ingredientsReportRepository.findByorderIdAndingredientId(j.getIngredientId(), orderId));
+                    orderReportRepository.save(orderReport);
+                }
+            }
     }
 
     public List<CustomerOrders> getpendingOrders(){

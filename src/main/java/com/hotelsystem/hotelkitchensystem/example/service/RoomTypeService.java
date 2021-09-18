@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddNewRoomTypeRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.GetRoomTypesResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.RoomTypeResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
@@ -111,4 +112,18 @@ public class RoomTypeService {
         RoomType roomType = roomTypesRepository.findByRoomTypeID(id);
         roomTypesRepository.delete(roomType);
     }
+
+    public List<GetRoomTypesResponse> viewRoomTypes(){
+        List<RoomType> roomTypesList = roomTypesRepository.findAll();
+        List<GetRoomTypesResponse> typeList = new ArrayList<GetRoomTypesResponse>();
+
+        for (RoomType roomType:roomTypesList){
+            GetRoomTypesResponse mylist = new GetRoomTypesResponse();
+            mylist.setRoomTypes(roomType.getRoomTypes());
+            mylist.setRoomTypeID(roomType.getRoomTypeID());
+            typeList.add(mylist);
+        }
+        return typeList;
+    }
+
 }

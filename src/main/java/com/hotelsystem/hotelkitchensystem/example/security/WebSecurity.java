@@ -80,13 +80,22 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/registerEmployee").permitAll()
                 .antMatchers("/users").permitAll()
                 .antMatchers("/user/{id}").permitAll()
+
                 .antMatchers("/foods").permitAll()
                 .antMatchers("/addFood").permitAll()
+                .antMatchers("//deleteFood/{foodId}").permitAll()
+                .antMatchers("/updateFoodPrice").permitAll()
+
                 .antMatchers("/addIngredient").permitAll()
                 .antMatchers("/ingredients").permitAll()
+                .antMatchers("/updateIngredientQty").permitAll()
                 .antMatchers("/ingredientsHaveToReFill").permitAll()
                 .antMatchers("/ingredientsStillNotHaveToReFill").permitAll()
                 .antMatchers("/addFoodIngredients").permitAll()
+                .antMatchers("/deleteIngredient/{ingredientId}").permitAll()
+
+                .antMatchers("/saveDeletedIngredientStatus/{ingredientId}").permitAll()
+
                 .antMatchers("/receptionist/addCustomer").permitAll()
 //                .antMatchers("/api/v1/viewEmployeess/{type}").permitAll()
                 .antMatchers("/manager/**").permitAll()
@@ -100,21 +109,23 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/manager/viewUpdateRoomDetails/{id}").permitAll()
                 .antMatchers("/updateRecipe/{id}").permitAll()
                 .antMatchers("/cusfoodmenu").permitAll()
-
                 .antMatchers("/listOfAddedFoods").permitAll()
-
                 .antMatchers("/order/**").permitAll()
                 .antMatchers("/order/createOrderId").permitAll()
                 .antMatchers("/order/placeOrder/{orderTime}").permitAll()
-
-
-
-
                 .antMatchers("/manager/**").permitAll()
                 .antMatchers("/customer/review/**").permitAll()
 
 
 
+                .antMatchers("/customer/booking/**").permitAll()
+                .antMatchers("/outdoor-activities").permitAll()
+                .antMatchers("/outdoor-activity-schedules").permitAll()
+                .antMatchers("/outdoor-activity-schedules/available").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/set-completed").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/completed").permitAll()
+                .antMatchers("/outdoor-activity-schedules/customer-schedules/in-complete").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
