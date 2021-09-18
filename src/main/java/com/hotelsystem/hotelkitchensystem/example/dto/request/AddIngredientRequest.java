@@ -4,6 +4,15 @@ public class AddIngredientRequest {
     private String ingredientName;
     private int qty;
     private int reorderLevel;
+    private String currentDate;
+
+    public String getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
+    }
 
     public String getIngredientName() {
         return ingredientName;

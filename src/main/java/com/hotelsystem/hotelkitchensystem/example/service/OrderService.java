@@ -40,6 +40,9 @@ public class OrderService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    IngredientsReportRepository ingredientsReportRepository;
+
     public boolean checkIfAlreadyStewardAssigned(int orderId) {
         if (orderRepository.findByorderId(orderId) != null) {
             CustomerOrders customerOrders = orderRepository.findByorderId(orderId);
@@ -130,6 +133,16 @@ public class OrderService {
 
                 ingredient.setQty(ingredient_qty_after_make_food);
                 ingredientRepository.save(ingredient);
+
+                IngredientsReport ingredientsReport = new IngredientsReport();
+                ingredientsReport.setOrderId(orderId);
+                ingredientsReport.setIngredientId(ingredientId);
+                ingredientsReport.setIngredientName(ingredient.getIngredientName());
+                ingredientsReport.setChangedQty(ingredients_for_ordered_food);
+                ingredientsReport.setChangedDate(customerOrders.getOrderDate());
+                ingredientsReport.setStatus("USED FOR ORDERS");
+                ingredientsReportRepository.save(ingredientsReport);
+
                 ingredients_for_ordered_food=0;
             }
         }
