@@ -1,7 +1,9 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.UpdateIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
+import com.hotelsystem.hotelkitchensystem.example.repository.FoodRepository;
 import com.hotelsystem.hotelkitchensystem.example.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ public class IngredientService {
 
     @Autowired
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private FoodRepository foodRepository;
 
     //post method
     public Ingredient saveIngredient(Ingredient ingredient){
@@ -51,7 +56,6 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
         return "Ingredient Removed.. "+ingredientId;
     }
 
-
     //update ingredient
     public Ingredient updateIngredient(Ingredient ingredient){
         Ingredient existingIngredient=ingredientRepository.findById(ingredient.getIngredientId()).orElse(null);
@@ -80,4 +84,17 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
 
         ingredientRepository.save(ingredient);
     }
+
+    public void updateIngredientQty(UpdateIngredientRequest updateIngredientRequest){
+        int ingredientId = updateIngredientRequest.getIngredientId();
+        Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
+        int availQty = ingredient.getQty();
+        availQty = availQty + updateIngredientRequest.getQty();
+        ingredient.setQty(availQty);
+        ingredientRepository.save(ingredient);
+    }
+
+
+
+
 }
