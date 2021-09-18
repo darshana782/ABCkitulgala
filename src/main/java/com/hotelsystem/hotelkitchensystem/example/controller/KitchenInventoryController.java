@@ -1,9 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
-import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.AddIngredientRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.AddRecipeDetailsRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.*;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
@@ -57,15 +54,15 @@ public class KitchenInventoryController {
 //    }
 
     //update
-    @PutMapping("/updateFood")
-    public Food updateFood(@RequestBody Food food){
-        return foodService.updateFood(food);
-    }
+//    @PutMapping("/updateFood")
+//    public Food updateFood(@RequestBody Food food){
+//        return foodService.updateFood(food);
+//    }
 
-    @DeleteMapping("/deleteFood/{foodId}")
-    public String deleteFood(@PathVariable int foodId){
-        return foodService.deleteFood(foodId);
-    }
+//    @DeleteMapping("/deleteFood/{foodId}")
+//    public String deleteFood(@PathVariable int foodId){
+//        return foodService.deleteFood(foodId);
+//    }
 
 
 //Ingredient
@@ -79,6 +76,7 @@ public class KitchenInventoryController {
     public List<Ingredient> addIngredients(@RequestBody List<Ingredient> ingredients){
         return ingredientService.saveIngredients(ingredients);
     }
+
 
     @GetMapping("/ingredients")
     public List<Ingredient> findAllIngredients(){
@@ -117,6 +115,22 @@ public class KitchenInventoryController {
             return ResponseEntity.ok().body(responseMsg);
         }
         return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @PostMapping("/updateIngredientQty")
+    public ResponseEntity updateIngredientQty(@RequestBody UpdateIngredientRequest updateIngredientRequest){
+        String responseMsg;
+        ingredientService.updateIngredientQty(updateIngredientRequest);
+        responseMsg="Ingredient Updated Successfully";
+        return ResponseEntity.ok().body(responseMsg);
+    }
+
+    @PostMapping("/updateFoodPrice")
+    public ResponseEntity updateIngredientQty(@RequestBody UpdateFoodPriceRequest updateFoodPriceRequest){
+        String responseMsg;
+        foodService.updateFoodPrice(updateFoodPriceRequest);
+        responseMsg="Price Updated Successfully";
+        return ResponseEntity.ok().body(responseMsg);
     }
 
 
@@ -181,6 +195,11 @@ public class KitchenInventoryController {
     @DeleteMapping("/deleteIngredient/{ingredientId}")
     public String deleteIngredient(@PathVariable int ingredientId){
         return ingredientService.deleteIngredient(ingredientId);
+    }
+
+    @DeleteMapping("/deleteFood/{foodId}")
+    public String deleteFood(@PathVariable int foodId){
+        return foodService.deleteFood(foodId);
     }
 
     @PostMapping("/updateRecipe/{foodId}")

@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.UpdateFoodPriceRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
@@ -61,6 +62,7 @@ public class FoodService {
         foodRepository.deleteById(foodId);
         return "Food Removed.. "+foodId;
     }
+
     public boolean checkIfFoodExists(String foodName){
         if (foodRepository.findByFoodName(foodName) != null){
             return true;
@@ -70,13 +72,20 @@ public class FoodService {
 
     //Update food
 
-    public Food updateFood(Food food){
-        Food existingFood=foodRepository.findById(food.getFoodId()).orElse(null);
-        existingFood.setFoodName(food.getFoodName());
-        existingFood.setPrice(food.getPrice());
-        existingFood.setAvailableQty(food.getAvailableQty());
-        existingFood.setFoodDescription(food.getFoodDescription());
-        return foodRepository.save(existingFood);
+//    public Food updateFood(Food food){
+//        Food existingFood=foodRepository.findById(food.getFoodId()).orElse(null);
+//        existingFood.setFoodName(food.getFoodName());
+//        existingFood.setPrice(food.getPrice());
+//        existingFood.setAvailableQty(food.getAvailableQty());
+//        existingFood.setFoodDescription(food.getFoodDescription());
+//        return foodRepository.save(existingFood);
+//    }
+
+    public void updateFoodPrice(UpdateFoodPriceRequest updateFoodPriceRequest){
+        int foodId = updateFoodPriceRequest.getFoodId();
+        Food food = foodRepository.findByfoodId(foodId);
+        food.setPrice(updateFoodPriceRequest.getPrice());
+        foodRepository.save(food);
     }
 
     public void addfood(AddFoodRequest addFoodRequest){
