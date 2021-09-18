@@ -111,7 +111,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers("/manager/**").permitAll()
-
+                .antMatchers("/customer/review/**").permitAll()
 
 
 
