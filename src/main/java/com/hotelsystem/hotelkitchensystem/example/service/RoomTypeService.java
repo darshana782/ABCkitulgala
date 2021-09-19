@@ -120,7 +120,6 @@ public class RoomTypeService {
         for (RoomType roomType:roomTypesList){
             GetRoomTypesResponse mylist = new GetRoomTypesResponse();
             mylist.setRoomTypes(roomType.getRoomTypes());
-            mylist.setRoomTypeID(roomType.getRoomTypeID());
             typeList.add(mylist);
         }
         return typeList;
