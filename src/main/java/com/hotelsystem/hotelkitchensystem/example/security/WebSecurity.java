@@ -96,13 +96,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/saveDeletedIngredientStatus/{ingredientId}").permitAll()
 
-                .antMatchers("/receptionist/addCustomer").permitAll()
+                .antMatchers("/receptionist/**").permitAll()
 //                .antMatchers("/api/v1/viewEmployeess/{type}").permitAll()
                 .antMatchers("/manager/**").permitAll()
                 .antMatchers("/foodIngredients").permitAll()
                 .antMatchers("/manager/getRoomsByRoomTypes/{roomType}").permitAll()
                 .antMatchers("/foodIngredientById/{foodId}").permitAll()
-
                 .antMatchers("/manager/viewUpdateRoomTypeDetails/{id}").permitAll()
                 .antMatchers("/manager/updateRoomType/{id}").permitAll()
                 .antMatchers("/manager/deleteRoomType/{id}").permitAll()
@@ -115,9 +114,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/order/placeOrder/{orderTime}").permitAll()
                 .antMatchers("/manager/**").permitAll()
                 .antMatchers("/customer/review/**").permitAll()
-
-
-
                 .antMatchers("/customer/booking/**").permitAll()
                 .antMatchers("/outdoor-activities").permitAll()
                 .antMatchers("/outdoor-activity-schedules").permitAll()
