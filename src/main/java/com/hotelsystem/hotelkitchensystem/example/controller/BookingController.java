@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import com.hotelsystem.hotelkitchensystem.example.model.Booking;
 import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
@@ -36,6 +37,42 @@ public class BookingController {
             return ResponseEntity.ok().body(responseMsg);
         }catch (Exception e){
             responseMsg = "Rooms Unavailable";
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @GetMapping("/viewbookings/{id}")
+    public List<ViewBookingRequest> viewBookings(@PathVariable int id){
+        return bookingService.viewBookings(id);
+    }
+
+    @GetMapping("viewbookingbyid/{id}")
+    public ViewBookingRequest viewBookingByID(@PathVariable int id){
+        return bookingService.viewBookingByID(id);
+    }
+
+    @PostMapping("updatebooking/{id}")
+    public ResponseEntity updateBooking(@PathVariable int id,@RequestBody ViewBookingRequest viewBookingRequest){
+        String responseMsg;
+        try {
+            bookingService.updateBooking(id,viewBookingRequest);
+            responseMsg = "Successfully Updated";
+            return ResponseEntity.ok().body(responseMsg);
+        }catch (Exception e){
+            responseMsg = "Something Went Wrong";
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
+    }
+
+    @DeleteMapping("deletebooking/{id}")
+    public ResponseEntity deleteBooking(@PathVariable int id){
+        String responseMsg;
+        try {
+            bookingService.deleteBooking(id);
+            responseMsg = "Successfully Deleted";
+            return ResponseEntity.ok().body(responseMsg);
+        }catch (Exception e){
+            responseMsg = "Something Went Wrong";
         }
         return ResponseEntity.badRequest().body(responseMsg);
     }

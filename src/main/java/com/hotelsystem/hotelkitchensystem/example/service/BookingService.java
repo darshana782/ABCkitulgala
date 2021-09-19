@@ -1,20 +1,18 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hotelsystem.hotelkitchensystem.example.controller.UpdateBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
-import com.hotelsystem.hotelkitchensystem.example.model.Booking;
-import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
-import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
-import com.hotelsystem.hotelkitchensystem.example.repository.BookingRepository;
-import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
-import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository;
-import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
+import com.hotelsystem.hotelkitchensystem.example.model.*;
+import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.swing.text.View;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -33,6 +31,9 @@ public class BookingService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private UserDataRepository userDataRepository;
 
     public int getRoomNoByRoomType(RoomTypes roomTypes, Date date1 ,Date date2){
         RoomType roomType = roomTypesRepository.findByRoomTypes(roomTypes);
@@ -111,5 +112,53 @@ public class BookingService {
         }
 
         return randomElement;
+    }
+
+    public List<ViewBookingRequest> viewBookings(int id){
+        UserData userData = userDataRepository.findById(id);
+        Customer customer = customerRepository.findByUserData_Id(id);
+        List<Booking> bookings = bookingRepository.findAllByCustomer_CustomerId(customer.getCustomerId());
+        List<ViewBookingRequest> viewBooking = new ArrayList<ViewBookingRequest>();
+        for (Booking booking:bookings){
+            Rooms rooms = roomsRepository.findByRoomNo(booking.getRoomNo());
+            RoomType roomType = roomTypesRepository.findByRoomTypeID(rooms.getRoomType().getRoomTypeID());
+            ViewBookingRequest tempList = new ViewBookingRequest();
+            tempList.setBookingID(booking.getBookingId());
+            tempList.setRoomTypes(roomType.getRoomTypes());
+            tempList.setCheckInDate(booking.getCheckInDate());
+            tempList.setCheckOutDate(booking.getCheckoutDate());
+            tempList.setMeal(booking.getMeal());
+            tempList.setCustName(userData.getFirstName());
+            viewBooking.add(tempList);
+        }
+        return viewBooking;
+    }
+
+    public ViewBookingRequest viewBookingByID(int id){
+        Booking booking = bookingRepository.findByBookingId(id);
+        Rooms rooms = roomsRepository.findByRoomNo(booking.getRoomNo());
+        RoomType roomType = roomTypesRepository.findByRoomTypeID(rooms.getRoomType().getRoomTypeID());
+        UserData userData = userDataRepository.findById(booking.getCustomer().getUserData().getId());
+
+        ViewBookingRequest tempList = new ViewBookingRequest();
+
+        tempList.setBookingID(id);
+        tempList.setCustName(userData.getFirstName());
+        tempList.setRoomTypes(roomType.getRoomTypes());
+        tempList.setMeal(booking.getMeal());
+        tempList.setCheckInDate(booking.getCheckInDate());
+        tempList.setCheckOutDate(booking.getCheckoutDate());
+
+        return tempList;
+    }
+
+    public void updateBooking(int id, ViewBookingRequest viewBookingRequest){
+        Booking booking = bookingRepository.findByBookingId(id);
+        booking.setMeal(viewBookingRequest.getMeal());
+        bookingRepository.save(booking);
+    }
+
+    public void deleteBooking(int id){
+        bookingRepository.deleteById(id);
     }
 }
