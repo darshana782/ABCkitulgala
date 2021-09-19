@@ -3,8 +3,6 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,7 @@ public class AuthController {
             responseMsg="Contact Number exists";
         }else {
             authService.signup(customerSignUpRequest);
-            responseMsg="Customer Added Successfully";
+            responseMsg="Account Created Successfully";
             return ResponseEntity.ok().body(responseMsg);
         }
         return ResponseEntity.badRequest().body(responseMsg);
