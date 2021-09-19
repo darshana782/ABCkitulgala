@@ -209,7 +209,7 @@ public class OrderService {
 
     public List<CustomerOrders> getpendingOrders(){
         String status = "PENDING";
-        return (List<CustomerOrders>) orderRepository.findAllBystatus(status);
+        return (List<CustomerOrders>) orderRepository.findBystatusAndTime(status);
     }
 
     public List<CustomerOrders> getInprogressOrders(){
