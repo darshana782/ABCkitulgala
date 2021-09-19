@@ -114,6 +114,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/order/createOrderId").permitAll()
                 .antMatchers("/order/placeOrder/{orderTime}").permitAll()
                 .antMatchers("/manager/**").permitAll()
+                .antMatchers("/customer/review/**").permitAll()
+
+
+
                 .antMatchers("/customer/booking/**").permitAll()
                 .antMatchers("/outdoor-activities").permitAll()
                 .antMatchers("/outdoor-activity-schedules").permitAll()
