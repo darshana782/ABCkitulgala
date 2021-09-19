@@ -114,7 +114,7 @@ public class AuthService implements UserDetailsService{
         tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+","+customerSignUpRequest.getAddressLineTwo()+","+customerSignUpRequest.getAddressLineThree());
         tempCustomer.setNic(customerSignUpRequest.getNic());
         tempCustomer.setDob(customerSignUpRequest.getDob());
-        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("PENDING"));
+        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("USERS"));
         tempCustomer.setUserData(userData);
         customerRepository.save(tempCustomer);
 

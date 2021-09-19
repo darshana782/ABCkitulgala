@@ -4,5 +4,6 @@ public enum CustomerStatus {
     PENDING,
     ACTIVE,
     CHECK_OUT,
-    CANCELED
+    CANCELED,
+    USERS
 }
