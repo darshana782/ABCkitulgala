@@ -4,9 +4,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelsystem.hotelkitchensystem.example.controller.UpdateBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
-import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
+import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
+// import com.hotelsystem.hotelkitchensystem.example.model.Booking;
+// import com.hotelsystem.hotelkitchensystem.example.model.Customer;
+// import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
+// import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
+// import com.hotelsystem.hotelkitchensystem.example.repository.BookingRepository;
+// import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
+// import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository;
+// import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,9 +74,14 @@ public class BookingService {
 
     public void addBooking(BookingRequest bookingRequest){
 
+        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
+        customer.setCustomerStatus(CustomerStatus.PENDING);
+        customerRepository.save(customer);
+
         int n = bookingRequest.getNumberOfRooms();
         for(int i=0;i<n;i++){
             Booking booking = new Booking();
+//            Customer customer = new Customer();
 
             booking.setCheckInDate(bookingRequest.getCheckInDate());
             booking.setCheckoutDate(bookingRequest.getCheckOutDate());
