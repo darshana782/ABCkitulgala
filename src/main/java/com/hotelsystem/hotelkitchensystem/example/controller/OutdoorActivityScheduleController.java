@@ -2,8 +2,9 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.OutdoorActivityScheduleRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.AvailableOutdoorActivityResponse;
-import com.hotelsystem.hotelkitchensystem.example.dto.response.OutdoorActivityResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.OutdoorActivitySchedule;
+import com.hotelsystem.hotelkitchensystem.example.model.UserData;
+import com.hotelsystem.hotelkitchensystem.example.repository.UserDataRepository;
 import com.hotelsystem.hotelkitchensystem.example.service.OutdoorActivityScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,12 @@ public class OutdoorActivityScheduleController {
     @Autowired
     private final OutdoorActivityScheduleService outdoorActivityScheduleService;
 
-    public OutdoorActivityScheduleController(OutdoorActivityScheduleService outdoorActivityScheduleService) {
+    @Autowired
+    private final UserDataRepository userDataRepository;
+
+    public OutdoorActivityScheduleController(OutdoorActivityScheduleService outdoorActivityScheduleService, UserDataRepository userDataRepository) {
         this.outdoorActivityScheduleService = outdoorActivityScheduleService;
+        this.userDataRepository = userDataRepository;
     }
 
     @GetMapping
@@ -56,6 +61,8 @@ public class OutdoorActivityScheduleController {
             if(outdoorActivityScheduleService.checkIfOutdoorActivityScheduleTimeslotIsFilled(outdoorActivityScheduleRequest)){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Timeslot Already Filled");
             }else{
+                UserData userData = userDataRepository.findById(outdoorActivityScheduleRequest.getCustomerId());
+                outdoorActivityScheduleRequest.setCustomerId(userData.getCustomer().getCustomerId());
                 outdoorActivityScheduleService.createOutdoorActivitySchedule(outdoorActivityScheduleRequest);
                 return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Created");
             }
@@ -67,6 +74,9 @@ public class OutdoorActivityScheduleController {
     @PostMapping("/customer-schedules")
     public ResponseEntity<Object> getAllOutdoorActivitySchedulesByCustomer(@RequestBody OutdoorActivityScheduleRequest outdoorActivityScheduleRequest){
         try{
+            UserData userData = userDataRepository.findById(outdoorActivityScheduleRequest.getCustomerId());
+            outdoorActivityScheduleRequest.setCustomerId(userData.getCustomer().getCustomerId());
+
             List<OutdoorActivitySchedule> outdoorActivityScheduleList = outdoorActivityScheduleService.getAllOutdoorActivitySchedulesByCustomerId(outdoorActivityScheduleRequest);
             if(outdoorActivityScheduleList != null){
                 return ResponseEntity.status(HttpStatus.OK).body(outdoorActivityScheduleList);
@@ -116,9 +126,15 @@ public class OutdoorActivityScheduleController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Object> deleteOutdoorActivityScheduleByCustomerId(@RequestBody OutdoorActivityScheduleRequest outdoorActivityScheduleRequest){
+    @DeleteMapping("/{customerId}/{outdoorActivityScheduleId}")
+    public ResponseEntity<Object> deleteOutdoorActivityScheduleByCustomerId(@PathVariable String customerId, @PathVariable String outdoorActivityScheduleId){
         try{
+            int cusId = Integer.parseInt(customerId);
+            int outActivity = Integer.parseInt(outdoorActivityScheduleId);
+            UserData userData = userDataRepository.findById(cusId);
+            OutdoorActivityScheduleRequest outdoorActivityScheduleRequest = new OutdoorActivityScheduleRequest();
+            outdoorActivityScheduleRequest.setCustomerId(userData.getCustomer().getCustomerId());
+            outdoorActivityScheduleRequest.setOutdoorActivityScheduleId(outActivity);
             if(outdoorActivityScheduleService.checkIfOutdoorActivityScheduleExists(outdoorActivityScheduleRequest)) {
                 outdoorActivityScheduleService.deleteOutdoorActivityScheduleByCustomerId(outdoorActivityScheduleRequest);
                 return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Deleted");
