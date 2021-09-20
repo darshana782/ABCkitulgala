@@ -61,7 +61,12 @@ public class FoodService {
 
     public String deleteFood(int foodId){
         foodRepository.deleteById(foodId);
+        List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(foodId);
+        for (FoodIngredients i:foodIngredients){
+            foodIngredientRepository.deleteById(i.getFiId());
+        }
         return "Food Removed.. "+foodId;
+
     }
 
     public boolean checkIfFoodExists(String foodName){
