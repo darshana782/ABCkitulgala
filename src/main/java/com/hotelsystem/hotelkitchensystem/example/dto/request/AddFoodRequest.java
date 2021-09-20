@@ -2,13 +2,22 @@ package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
 public class AddFoodRequest {
 
+        String foodImageUrl;
         String foodName;
         Double foodPrice;
         String foodDescription;
 //        int[] foodIngredients;
 
 
-        public String getFoodName() {
+    public void setFoodImageUrl(String foodImageUrl) {
+        this.foodImageUrl = foodImageUrl;
+    }
+
+    public String getFoodImageUrl() {
+        return foodImageUrl;
+    }
+
+    public String getFoodName() {
         return foodName;
     }
 

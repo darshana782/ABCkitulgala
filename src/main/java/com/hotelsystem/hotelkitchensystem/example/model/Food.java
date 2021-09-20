@@ -24,6 +24,15 @@ public class Food {
     private double price;
     private int availableQty;
     private String foodDescription;
+    private String foodImageUrl;
+
+    public void setFoodImageUrl(String foodImageUrl) {
+        this.foodImageUrl = foodImageUrl;
+    }
+
+    public String getFoodImageUrl() {
+        return foodImageUrl;
+    }
 
     public int getFoodId() {
         return foodId;

@@ -105,6 +105,7 @@ public class FoodService {
         food.setFoodName(addFoodRequest.getFoodName());
         food.setPrice(addFoodRequest.getFoodPrice());
         food.setFoodDescription(addFoodRequest.getFoodDescription());
+        food.setFoodImageUrl(addFoodRequest.getFoodImageUrl());
         foodRepository.save(food);
 //
 //        foodIngredients.setFoodId(food.getFoodId());
