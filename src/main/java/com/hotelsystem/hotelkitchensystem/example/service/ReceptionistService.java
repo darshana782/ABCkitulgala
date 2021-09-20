@@ -1,8 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerDetailsResponse;
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Booking;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
@@ -15,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ReceptionistService {
@@ -81,7 +76,7 @@ public class ReceptionistService {
         customer.setAddress(getReceptionistAddCustomerRequest.getAddressLineOne()+","+getReceptionistAddCustomerRequest.getAddressLineTwo()+","+getReceptionistAddCustomerRequest.getAddressLineThree());
         customer.setDob(getReceptionistAddCustomerRequest.getDob());
         customer.setNic(getReceptionistAddCustomerRequest.getNic());
-        customer.setCustomerStatus(CustomerStatus.valueOf("ACTIVE"));
+//        customer.setCustomerStatus(CustomerStatus.valueOf("ACTIVE"));
         customer.setUserData(userData);
         customerRepository.save(customer);
 
@@ -96,26 +91,27 @@ public class ReceptionistService {
 
     }
 
-    public List<CustomerDetailsResponse> viewCustomers(CustomerStatus customerStatus){
-        String status = "ACTIVATE";
-        UserType type = UserType.CUSTOMER;
-
-        List<UserData> allDetails = userDataRepository.findByUserTypeAndDeleteStatusAndCustomer_CustomerStatus(type,status,customerStatus);
-        List<CustomerDetailsResponse> custList = new ArrayList<>();
-
-        for(UserData userData:allDetails){
-            Customer customer = customerRepository.findByUserData(userData);
-            CustomerDetailsResponse customerList = new CustomerDetailsResponse();
-            customerList.setEmail(userData.getEmail());
-            customerList.setFirstName(userData.getFirstName());
-            customerList.setLastName(userData.getLastName());
-            customerList.setContactNo(userData.getContactNo());
-            customerList.setNic(customer.getNic());
-            customerList.setAddress(customer.getAddress());
-            customerList.setDob(customer.getDob());
-            custList.add(customerList);
-        }
-        return custList;
-    }
+//    public List<CustomerDetailsResponse> viewCustomers(CustomerStatus customerStatus){
+//        String status = "ACTIVATE";
+//        UserType type = UserType.CUSTOMER;
+//
+//        List<UserData> allDetails = userDataRepository.findByUserTypeAndDeleteStatusAndCustomer_CustomerStatus(type,status,customerStatus);
+//        List<CustomerDetailsResponse> custList = new ArrayList<>();
+//
+//        for(UserData userData:allDetails){
+//            Customer customer = customerRepository.findByUserData(userData);
+//            CustomerDetailsResponse customerList = new CustomerDetailsResponse();
+//            customerList.setEmail(userData.getEmail());
+//            customerList.setFirstName(userData.getFirstName());
+//            customerList.setLastName(userData.getLastName());
+//            customerList.setContactNo(userData.getContactNo());
+//            customerList.setCustomerId(customer.getCustomerId());
+//            customerList.setNic(customer.getNic());
+//            customerList.setAddress(customer.getAddress());
+//            customerList.setDob(customer.getDob());
+//            custList.add(customerList);
+//        }
+//        return custList;
+//    }
 
 }

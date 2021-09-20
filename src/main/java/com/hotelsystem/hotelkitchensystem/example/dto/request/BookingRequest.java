@@ -1,6 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 
 import java.util.Date;
 

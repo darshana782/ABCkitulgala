@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
@@ -59,6 +60,9 @@ public class BookingService {
 
     public void addBooking(BookingRequest bookingRequest){
 
+//        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
+//        customer.setCustomerStatus(BookingStatus.PENDING);
+//        customerRepository.save(customer);
         Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
         customer.setCustomerStatus(CustomerStatus.PENDING);
         customerRepository.save(customer);
@@ -87,6 +91,7 @@ public class BookingService {
             booking.setCheckInDate(bookingRequest.getCheckInDate());
             booking.setCheckoutDate(bookingRequest.getCheckOutDate());
             booking.setMeal(bookingRequest.getMeal());
+            booking.setBookingStatus(BookingStatus.PENDING);
             booking.setCustomer(customerRepository.findByUserData_Id(bookingRequest.getCustomerID()));
 
 //            Integer[] arrayNumbers = availableRooms.toArray(new Integer[availableRooms.size()]);

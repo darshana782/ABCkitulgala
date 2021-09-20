@@ -4,6 +4,7 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
+import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
+    @Autowired
+    UserDataService userDataService;
 
     @Autowired
     AuthService authService;
@@ -50,6 +54,8 @@ public class AuthController {
         String email=customerSignUpRequest.getEmail();
         String nic=customerSignUpRequest.getNic();
         String contactNo=customerSignUpRequest.getContactNo();
+        String password = customerSignUpRequest.getPassword();
+        String name = customerSignUpRequest.getFirstName();
         String responseMsg;
         if (authService.checkIfEmailExists(email)){
             responseMsg="Email exists";
@@ -58,9 +64,24 @@ public class AuthController {
         }else if (authService.checkIfContactNumberExists(contactNo)){
             responseMsg="Contact Number exists";
         }else {
-            authService.signup(customerSignUpRequest);
-            responseMsg="Account Created Successfully";
-            return ResponseEntity.ok().body(responseMsg);
+
+//            authService.signup(customerSignUpRequest);
+//            responseMsg="Customer Added Successfully";
+//            return ResponseEntity.ok().body(responseMsg);
+            try{
+                authService.signup(customerSignUpRequest);
+                responseMsg="Customer Added Successfully";
+                return ResponseEntity.ok().body(responseMsg);
+            }finally{
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask(){
+                            @Override
+                            public void run(){
+                                userDataService.sendEmail(email,name,password);
+                            }
+                        },500
+                );
+            }
         }
         return ResponseEntity.badRequest().body(responseMsg);
     }
