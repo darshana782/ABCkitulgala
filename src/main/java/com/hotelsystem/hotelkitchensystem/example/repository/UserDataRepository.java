@@ -18,6 +18,7 @@ public interface UserDataRepository extends JpaRepository<UserData, Integer> {
 
 //    List<UserData> findByUserTypeAndDeleteStatusAndCustomer_CustomerStatus(UserType type, String status, BookingStatus bookingStatus);
 
+
 //    @Query(value= "select * from UserData_Table where firstName like ?1% or lastName like ?2% OR contactNo like ?3% and userType = ?4 and deleteStatus = ?5",nativeQuery = true)
 //    List<UserData> find ByTest(String f_name, String l_name, String contact, UserType type, String status);
 

@@ -1,5 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerDetailsResponse;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
 import com.hotelsystem.hotelkitchensystem.example.service.ReceptionistService;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -50,9 +55,9 @@ public class ReceptionistController {
         return ResponseEntity.badRequest().body(responseMsg);
     }
 //
-//    @GetMapping("/viewCustomers/{customerStatus}")
-//    public List<CustomerDetailsResponse> viewCustomerDetails(@PathVariable CustomerStatus customerStatus){
-//        return receptionistService.viewCustomers(customerStatus);
-//    }
+    @GetMapping("/viewCustomers/{bookingStatus}")
+    public List<CustomerDetailsResponse> viewCustomerDetails(@PathVariable BookingStatus bookingStatus){
+        return receptionistService.viewPendingCustomers(bookingStatus);
+    }
 
 }
