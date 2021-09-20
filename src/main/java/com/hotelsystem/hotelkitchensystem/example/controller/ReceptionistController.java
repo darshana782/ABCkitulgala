@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingStatusRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
@@ -58,6 +59,20 @@ public class ReceptionistController {
     @GetMapping("/viewCustomers/{bookingStatus}")
     public List<CustomerDetailsResponse> viewCustomerDetails(@PathVariable BookingStatus bookingStatus){
         return receptionistService.viewPendingCustomers(bookingStatus);
+    }
+
+    @PutMapping("/updateBookingStatus/{id}")
+    public ResponseEntity updateBookingStatus(@PathVariable int id, @RequestBody BookingStatusRequest bookingStatusRequest){
+        String responseMsg;
+        receptionistService.updateBooking(id,bookingStatusRequest);
+        responseMsg="Successfully Updated";
+        return ResponseEntity.ok().body(responseMsg);
+    }
+
+    @DeleteMapping("deleteBooking/{id}")
+    public ResponseEntity deleteBookings(@PathVariable int id){
+        receptionistService.delete(id);
+        return ResponseEntity.ok().body("Deleted");
     }
 
 }

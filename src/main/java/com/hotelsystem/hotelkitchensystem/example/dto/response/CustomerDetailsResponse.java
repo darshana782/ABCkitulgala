@@ -15,6 +15,15 @@ public class CustomerDetailsResponse {
     private List<Integer> roomNo;
     private Date checkInDate;
     private Date checkoutDate;
+    private int realBookId;
+
+    public int getRealBookId() {
+        return realBookId;
+    }
+
+    public void setRealBookId(int realBookId) {
+        this.realBookId = realBookId;
+    }
 
     public List<Integer> getRoomNo() {
         return roomNo;

@@ -1,5 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
+import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingStatusRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.GetReceptionistAddCustomerRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
@@ -120,6 +121,7 @@ public class ReceptionistService {
                 temp.setCustomerId(customerID);
                 temp.setCheckoutDate(booking.getCheckoutDate());
                 temp.setCheckInDate(booking.getCheckInDate());
+                temp.setRealBookId(booking.getRealBookId());
 
                 Customer customer = customerRepository.findByCustomerId(customerID);
                 temp.setNic(customer.getNic());
@@ -137,23 +139,24 @@ public class ReceptionistService {
             }
             customerDetailsResponses.add(temp);
         }
-//        List<UserData> allDetails = userDataRepository.findByUserTypeAndDeleteStatusAndCustomer_CustomerStatus(type,status,customerStatus);
-//        List<CustomerDetailsResponse> custList = new ArrayList<>();
-//
-//        for(UserData userData:allDetails){
-//            Customer customer = customerRepository.findByUserData(userData);
-//            CustomerDetailsResponse customerList = new CustomerDetailsResponse();
-//            customerList.setEmail(userData.getEmail());
-//            customerList.setFirstName(userData.getFirstName());
-//            customerList.setLastName(userData.getLastName());
-//            customerList.setContactNo(userData.getContactNo());
-//            customerList.setCustomerId(customer.getCustomerId());
-//            customerList.setNic(customer.getNic());
-//            customerList.setAddress(customer.getAddress());
-//            customerList.setDob(customer.getDob());
-//            custList.add(customerList);
-//        }
+
         return customerDetailsResponses;
+    }
+
+    public void updateBooking(int id, BookingStatusRequest bookingStatusRequest){
+        List<Booking> bookings = bookingRepository.findAllByRealBookId(id);
+        for (Booking booking:bookings){
+            booking.setBookingStatus(bookingStatusRequest.getBookingStatus());
+            bookingRepository.save(booking);
+        }
+
+    }
+
+    public void delete(int id){
+        List<Booking> bookings = bookingRepository.findAllByRealBookId(id);
+        for (Booking booking:bookings){
+            bookingRepository.delete(booking);
+        }
     }
 
 }
