@@ -36,7 +36,7 @@ public class OutdoorActivityScheduleController {
         }
     }
 
-    @GetMapping("/available")
+    @PostMapping("/available")
     public ResponseEntity<Object> getAllAvailableOutdoorActivitySchedules(@RequestBody OutdoorActivityScheduleRequest outdoorActivitySchedule){
         try{
             List<AvailableOutdoorActivityResponse> outdoorActivityScheduleList = outdoorActivityScheduleService
