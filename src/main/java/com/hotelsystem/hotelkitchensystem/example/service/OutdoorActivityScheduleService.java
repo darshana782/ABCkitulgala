@@ -37,7 +37,7 @@ public class OutdoorActivityScheduleService {
 
     public boolean checkIfOutdoorActivityScheduleExists(OutdoorActivityScheduleRequest outdoorActivityScheduleRequest) throws Exception{
         OutdoorActivitySchedule outdoorActivitySchedule = outdoorActivityScheduleRepository
-                .findByOutdoorActivityScheduleId(outdoorActivityScheduleRequest.getOutdoorActivityId());
+                .findByOutdoorActivityScheduleId(outdoorActivityScheduleRequest.getOutdoorActivityScheduleId());
         return outdoorActivitySchedule != null;
     }
 
@@ -114,7 +114,7 @@ public class OutdoorActivityScheduleService {
                             timeslot.put(ScheduleTimeSlot.FOUR_PM_TO_SIX_PM,SCHEDULE_LIMIT);
 
                             timeslot.put(item.getScheduledTimeSlot(), timeslot.get(item.getScheduledTimeSlot()) - 1);
-
+                            temp.add(item.getOutdoorActivity().getOutdoorActivityId());
                             activityResponse.setOutdoorActivity(item.getOutdoorActivity());
                             activityResponse.setAvailableSlots(timeslot);
                             outdoorActivityResponseList.add(activityResponse);
