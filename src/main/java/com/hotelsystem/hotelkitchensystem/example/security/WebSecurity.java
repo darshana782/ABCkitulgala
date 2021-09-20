@@ -119,6 +119,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer/booking/**").permitAll()
                 .antMatchers("/outdoor-activities").permitAll()
                 .antMatchers("/outdoor-activity-schedules").permitAll()
+                .antMatchers("/outdoor-activity-schedules/{customerId}/{outdoorActivityScheduleId}").permitAll()
                 .antMatchers("/outdoor-activity-schedules/available").permitAll()
                 .antMatchers("/outdoor-activity-schedules/customer-schedules").permitAll()
                 .antMatchers("/outdoor-activity-schedules/customer-schedules/set-completed").permitAll()
