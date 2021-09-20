@@ -5,7 +5,6 @@ import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,9 +62,6 @@ public class BookingService {
 //        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
 //        customer.setCustomerStatus(BookingStatus.PENDING);
 //        customerRepository.save(customer);
-        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
-        customer.setCustomerStatus(CustomerStatus.PENDING);
-        customerRepository.save(customer);
         List<Booking> testBooking = bookingRepository.findAll();
         HashSet<Integer> realBooking = new HashSet<>();
         for (Booking booking:testBooking){
