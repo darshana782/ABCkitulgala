@@ -9,6 +9,15 @@ public class OrderReportResponse {
     private int[] orderedFoodQty;
     private int assignedStewardId;
     private String assignedStewardName;
+    private float orderPrice;
+
+    public void setOrderPrice(float orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public float getOrderPrice() {
+        return orderPrice;
+    }
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;

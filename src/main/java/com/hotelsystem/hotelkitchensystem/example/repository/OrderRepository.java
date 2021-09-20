@@ -27,5 +27,8 @@ public interface OrderRepository extends JpaRepository<CustomerOrders, Integer> 
     @Query(value = "SELECT x FROM CustomerOrders x WHERE x.assignedStewardId = ?1 AND x.status =?2")
     CustomerOrders findByStewardIdAndstatus(int stewardId, String statusText);
 
+    @Query(value = "SELECT x.totalPrice FROM CustomerOrders x WHERE x.orderId=?1")
+    float findOrderPriceById(int orderId);
+
 
 }

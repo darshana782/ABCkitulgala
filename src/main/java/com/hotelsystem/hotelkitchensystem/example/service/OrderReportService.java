@@ -3,6 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.InventoryReportDateRangeRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.OrderReportResponse;
 import com.hotelsystem.hotelkitchensystem.example.repository.OrderReportRepository;
+import com.hotelsystem.hotelkitchensystem.example.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class OrderReportService {
     @Autowired
     OrderReportRepository orderReportRepository;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     public List<OrderReportResponse> findOrdersBySelectedDateRange(InventoryReportDateRangeRequest inventoryReportDateRangeRequest){
         List<OrderReportResponse> orderReportResponses = new ArrayList<OrderReportResponse>();
         int[] distinctOrderIDs = orderReportRepository.finddistinctOrderIDs(inventoryReportDateRangeRequest.getDateFrom(), inventoryReportDateRangeRequest.getDateTo());
@@ -26,6 +30,7 @@ public class OrderReportService {
             orderReportResponse.setOrderId(distinctOrderIDs[i]);
             orderReportResponse.setRoomId(orderReportRepository.findRoomIdByOrderId(distinctOrderIDs[i]));
             orderReportResponse.setCustomerName(orderReportRepository.findCustomerNameIdByOrderId(distinctOrderIDs[i]));
+            orderReportResponse.setOrderPrice(orderRepository.findOrderPriceById(distinctOrderIDs[i]));
 
             String[] OrderedFoodList = orderReportRepository.findOrderedFoodListByOrderId(distinctOrderIDs[i]);
             orderReportResponse.setOrderedFoods(OrderedFoodList);
