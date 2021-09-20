@@ -3,8 +3,6 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeRegRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
@@ -66,6 +64,7 @@ public class AuthController {
         }else if (authService.checkIfContactNumberExists(contactNo)){
             responseMsg="Contact Number exists";
         }else {
+
 //            authService.signup(customerSignUpRequest);
 //            responseMsg="Customer Added Successfully";
 //            return ResponseEntity.ok().body(responseMsg);

@@ -1,6 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.*;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.RecipeResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
@@ -99,7 +100,7 @@ public class KitchenInventoryController {
     }
 
     @GetMapping("/foodIngredientById/{foodId}")
-    public List<FoodIngredients> findFoodIngredientById(@PathVariable int foodId){
+    public List<RecipeResponse> findFoodIngredientById(@PathVariable int foodId){
         return foodService.getFoodIngredientById(foodId);
     }
 
@@ -126,10 +127,10 @@ public class KitchenInventoryController {
     }
 
     @PostMapping("/updateFoodPrice")
-    public ResponseEntity updateIngredientQty(@RequestBody UpdateFoodPriceRequest updateFoodPriceRequest){
+    public ResponseEntity updateFoodDetails(@RequestBody UpdateFoodPriceRequest updateFoodPriceRequest){
         String responseMsg;
-        foodService.updateFoodPrice(updateFoodPriceRequest);
-        responseMsg="Price Updated Successfully";
+        foodService.updateFoodDetails(updateFoodPriceRequest);
+        responseMsg="Updated Successfully";
         return ResponseEntity.ok().body(responseMsg);
     }
 
@@ -192,14 +193,15 @@ public class KitchenInventoryController {
         return ingredientService.updateIngredient(ingredient);
     }
 
-    @DeleteMapping("/deleteIngredient/{ingredientId}")
-    public String deleteIngredient(@PathVariable int ingredientId){
-        return ingredientService.deleteIngredient(ingredientId);
-    }
+//    @DeleteMapping("/deleteIngredient/{ingredientId}")
+//    public String deleteIngredient(@PathVariable int ingredientId){
+//        return ingredientService.deleteIngredient(ingredientId);
+//    }
 
-    @PostMapping("/saveDeletedIngredientStatus/{ingredientId}")
-    public void saveDeletedIngredientInReport(@PathVariable int ingredientId, @RequestBody DeleteIngredientRequest deleteIngredientRequest){
-        ingredientService.saveDeletedIngredientInReport(ingredientId, deleteIngredientRequest);
+    @PostMapping("/deleteIngredient/{ingredientId}")
+    public String saveDeletedIngredientInReportAndDeleteIngredient(@PathVariable int ingredientId, @RequestBody DeleteIngredientRequest deleteIngredientRequest){
+        return ingredientService.saveDeletedIngredientInReportAndDeleteIngredient(ingredientId, deleteIngredientRequest);
+//        return ingredientService.deleteIngredient(ingredientId);
     }
 
     @DeleteMapping("/deleteFood/{foodId}")

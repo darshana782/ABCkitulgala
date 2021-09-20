@@ -20,6 +20,8 @@ public class Booking {
     @GeneratedValue
     private int bookingId;
     @Column(nullable = false)
+    private int realBookId;
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-dd-MM")
     private Date checkInDate;

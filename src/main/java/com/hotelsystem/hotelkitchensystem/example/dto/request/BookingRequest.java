@@ -10,15 +10,6 @@ public class BookingRequest {
     private String meal;
     private int numberOfRooms;
     private int customerID;
-//    private BookingStatus bookingStatus;
-
-//    public BookingStatus getCustomerStatus() {
-//        return bookingStatus;
-//    }
-//
-//    public void setCustomerStatus(BookingStatus bookingStatus) {
-//        this.bookingStatus = bookingStatus;
-//    }
 
     public Date getCheckInDate() {
         return checkInDate;

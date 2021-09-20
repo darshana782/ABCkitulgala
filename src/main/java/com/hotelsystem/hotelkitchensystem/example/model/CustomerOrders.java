@@ -25,6 +25,15 @@ public class CustomerOrders {
     private String orderTime;
     private String status;
     private int assignedStewardId;
+    private float totalPrice;
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
 
     public int getAssignedStewardId() {
         return assignedStewardId;
