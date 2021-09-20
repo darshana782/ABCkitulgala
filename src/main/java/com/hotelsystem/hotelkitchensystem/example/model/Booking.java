@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,8 @@ public class Booking {
     @GeneratedValue
     private int bookingId;
     @Column(nullable = false)
+    private int realBookId;
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-dd-MM")
     private Date checkInDate;
@@ -30,6 +33,8 @@ public class Booking {
     private String meal;
     @Column(nullable = false)
     private int roomNo;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus bookingStatus;
 
     @ManyToOne
     @JsonIgnore

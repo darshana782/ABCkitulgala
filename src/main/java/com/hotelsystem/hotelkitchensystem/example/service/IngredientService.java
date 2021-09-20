@@ -57,12 +57,12 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
 //    }
 
     //delete ingredient
-    public String deleteIngredient(int ingredientId){
-        ingredientRepository.deleteById(ingredientId);
-        return "Ingredient Removed.. "+ingredientId;
-    }
+//    public String deleteIngredient(int ingredientId){
+//        ingredientRepository.deleteById(ingredientId);
+//        return "Ingredient Removed.. "+ingredientId;
+//    }
 
-    public void saveDeletedIngredientInReport(int ingredientId, DeleteIngredientRequest deleteIngredientRequest){
+    public String saveDeletedIngredientInReportAndDeleteIngredient(int ingredientId, DeleteIngredientRequest deleteIngredientRequest){
         Ingredient ingredient = ingredientRepository.findByingredientId(ingredientId);
         IngredientsReport ingredientsReport = new IngredientsReport();
 
@@ -71,6 +71,8 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
         ingredientsReport.setChangedDate(deleteIngredientRequest.getCurrentDate());
         ingredientsReport.setStatus("DELETED");
         ingredientsReportRepository.save(ingredientsReport);
+        ingredientRepository.deleteById(ingredientId);
+        return "Ingredient Removed.. "+ingredientId;
     }
 
     //update ingredient
@@ -126,7 +128,11 @@ public List<Ingredient> saveIngredients(List<Ingredient> ingredients){
         ingredientsReport.setIngredientName(ingredient.getIngredientName());
         ingredientsReport.setChangedQty(updateIngredientRequest.getQty());
         ingredientsReport.setChangedDate(updateIngredientRequest.getCurrentDate());
-        ingredientsReport.setStatus("STOCK UPDATED");
+        if (updateIngredientRequest.getQty()<0){
+            ingredientsReport.setStatus("WASTE");
+        }else {
+            ingredientsReport.setStatus("STOCK UPDATED");
+        }
         ingredientsReportRepository.save(ingredientsReport);
     }
 

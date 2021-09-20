@@ -3,6 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodIngredientRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.AddFoodRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.UpdateFoodPriceRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.RecipeResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.Food;
 import com.hotelsystem.hotelkitchensystem.example.model.FoodIngredients;
 import com.hotelsystem.hotelkitchensystem.example.model.Ingredient;
@@ -60,7 +61,12 @@ public class FoodService {
 
     public String deleteFood(int foodId){
         foodRepository.deleteById(foodId);
+        List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(foodId);
+        for (FoodIngredients i:foodIngredients){
+            foodIngredientRepository.deleteById(i.getFiId());
+        }
         return "Food Removed.. "+foodId;
+
     }
 
     public boolean checkIfFoodExists(String foodName){
@@ -81,10 +87,15 @@ public class FoodService {
 //        return foodRepository.save(existingFood);
 //    }
 
-    public void updateFoodPrice(UpdateFoodPriceRequest updateFoodPriceRequest){
+    public void updateFoodDetails(UpdateFoodPriceRequest updateFoodPriceRequest){
         int foodId = updateFoodPriceRequest.getFoodId();
         Food food = foodRepository.findByfoodId(foodId);
-        food.setPrice(updateFoodPriceRequest.getPrice());
+        if(updateFoodPriceRequest.getPrice() != 0){
+            food.setPrice(updateFoodPriceRequest.getPrice());
+        }
+        if(updateFoodPriceRequest.getFoodName() != ""){
+            food.setFoodName(updateFoodPriceRequest.getFoodName());
+        }
         foodRepository.save(food);
     }
 
@@ -130,8 +141,19 @@ public class FoodService {
 //        return foods2;
 //    }
 
-    public List<FoodIngredients> getFoodIngredientById(int foodId) {
-        return foodIngredientRepository.findAllByFoodId(foodId);
+    public List<RecipeResponse> getFoodIngredientById(int foodId) {
+        List<FoodIngredients> foodIngredients = foodIngredientRepository.findAllByFoodId(foodId);
+        List<RecipeResponse> recipeResponses = new ArrayList<RecipeResponse>();
+        for (FoodIngredients i:foodIngredients){
+            RecipeResponse recipeResponse = new RecipeResponse();
+            Ingredient ingredient = ingredientRepository.findByingredientId(i.getIngredientId());
+                recipeResponse.setFiId(i.getFiId());
+                recipeResponse.setIngredientId(i.getIngredientId());
+                recipeResponse.setIngredientName(ingredient.getIngredientName());
+
+            recipeResponses.add(recipeResponse);
+        }
+        return recipeResponses;
     }
 
     public List<Food> getAvailableFoods() {
