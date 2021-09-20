@@ -21,7 +21,7 @@ public class Customer {
     @Id
     @GeneratedValue
     private int customerId;
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String address;
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
