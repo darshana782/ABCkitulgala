@@ -3,6 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.dto.response;
 import java.util.Date;
 
 public class CustomerDetailsResponse {
+    private int customerId;
     private String firstName;
     private String lastName;
     private String email;
@@ -66,6 +67,15 @@ public class CustomerDetailsResponse {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
 
 
 }

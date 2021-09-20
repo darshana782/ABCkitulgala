@@ -1,8 +1,7 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 import com.hotelsystem.hotelkitchensystem.example.model.Booking;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
@@ -15,10 +14,6 @@ import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -66,9 +61,9 @@ public class BookingService {
 
     public void addBooking(BookingRequest bookingRequest){
 
-        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
-        customer.setCustomerStatus(CustomerStatus.PENDING);
-        customerRepository.save(customer);
+//        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
+//        customer.setCustomerStatus(BookingStatus.PENDING);
+//        customerRepository.save(customer);
 
         int n = bookingRequest.getNumberOfRooms();
         for(int i=0;i<n;i++){
@@ -78,6 +73,7 @@ public class BookingService {
             booking.setCheckInDate(bookingRequest.getCheckInDate());
             booking.setCheckoutDate(bookingRequest.getCheckOutDate());
             booking.setMeal(bookingRequest.getMeal());
+            booking.setBookingStatus(BookingStatus.PENDING);
             booking.setCustomer(customerRepository.findByUserData_Id(bookingRequest.getCustomerID()));
 
 //            Integer[] arrayNumbers = availableRooms.toArray(new Integer[availableRooms.size()]);

@@ -1,10 +1,8 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.EmployeeDetailsRequest;
-import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeDetailsResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.EmployeeUpdateResponse;
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;

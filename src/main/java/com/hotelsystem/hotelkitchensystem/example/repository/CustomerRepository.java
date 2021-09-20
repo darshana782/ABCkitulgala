@@ -1,6 +1,5 @@
 package com.hotelsystem.hotelkitchensystem.example.repository;
 
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import org.springframework.data.jpa.repository.JpaRepository;

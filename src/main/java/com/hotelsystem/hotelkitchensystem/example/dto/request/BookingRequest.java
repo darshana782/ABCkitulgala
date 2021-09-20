@@ -1,6 +1,6 @@
 package com.hotelsystem.hotelkitchensystem.example.dto.request;
 
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 
 import java.util.Date;
 
@@ -10,15 +10,15 @@ public class BookingRequest {
     private String meal;
     private int numberOfRooms;
     private int customerID;
-    private CustomerStatus customerStatus;
+//    private BookingStatus bookingStatus;
 
-    public CustomerStatus getCustomerStatus() {
-        return customerStatus;
-    }
-
-    public void setCustomerStatus(CustomerStatus customerStatus) {
-        this.customerStatus = customerStatus;
-    }
+//    public BookingStatus getCustomerStatus() {
+//        return bookingStatus;
+//    }
+//
+//    public void setCustomerStatus(BookingStatus bookingStatus) {
+//        this.bookingStatus = bookingStatus;
+//    }
 
     public Date getCheckInDate() {
         return checkInDate;

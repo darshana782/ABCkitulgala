@@ -3,7 +3,6 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
-import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
 import com.hotelsystem.hotelkitchensystem.example.model.UserData;
@@ -114,7 +113,7 @@ public class AuthService implements UserDetailsService{
         tempCustomer.setAddress(customerSignUpRequest.getAddressLineOne()+","+customerSignUpRequest.getAddressLineTwo()+","+customerSignUpRequest.getAddressLineThree());
         tempCustomer.setNic(customerSignUpRequest.getNic());
         tempCustomer.setDob(customerSignUpRequest.getDob());
-        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("USERS"));
+//        tempCustomer.setCustomerStatus(CustomerStatus.valueOf("USERS"));
         tempCustomer.setUserData(userData);
         customerRepository.save(tempCustomer);
 
