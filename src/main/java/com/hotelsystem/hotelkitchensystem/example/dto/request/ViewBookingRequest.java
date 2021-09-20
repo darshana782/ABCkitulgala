@@ -11,6 +11,7 @@ public class ViewBookingRequest {
     private String meal;
     private RoomTypes roomTypes;
     private String custName;
+    private int realBookID;
 
     public int getBookingID() {
         return bookingID;
@@ -58,5 +59,13 @@ public class ViewBookingRequest {
 
     public void setCustName(String custName) {
         this.custName = custName;
+    }
+
+    public int getRealBookID() {
+        return realBookID;
+    }
+
+    public void setRealBookID(int realBookID) {
+        this.realBookID = realBookID;
     }
 }
