@@ -15,7 +15,6 @@ public class CustomerDetailsResponse {
     private List<Integer> roomNo;
     private Date checkInDate;
     private Date checkoutDate;
-    private int 
 
     public List<Integer> getRoomNo() {
         return roomNo;

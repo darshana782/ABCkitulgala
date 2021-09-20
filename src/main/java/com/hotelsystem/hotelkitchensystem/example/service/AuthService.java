@@ -2,6 +2,7 @@ package com.hotelsystem.hotelkitchensystem.example.service;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.ForgetPasswordRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.CustomerSigned;
 import com.hotelsystem.hotelkitchensystem.example.enums.UserType;
 import com.hotelsystem.hotelkitchensystem.example.model.Customer;
@@ -35,6 +36,9 @@ public class AuthService implements UserDetailsService{
 
     @Autowired
     private PasswordEncoder bcryptPasswordEncoder;
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -158,5 +162,29 @@ public class AuthService implements UserDetailsService{
 
         //returning user details to the web security configurer user details according to the requested details
         return new User(userData.getEmail(), userData.getPassword(), new ArrayList<>());
+    }
+
+    public void forgetPass(String email,String password){
+        UserData userData = userDataRepository.findByEmail(email);
+        userData.setPassword(bcryptPasswordEncoder.encode(password));
+//        userData.setPassword(password);
+        userDataRepository.save(userData);
+    }
+
+    public void sendEmail(String email, String password){
+        UserData userData = userDataRepository.findByEmail(email);
+        String name = userData.getFirstName();
+        String toEmail = email;
+        String body = "Hi "+ name +". Thank you for join with Adventure Base Camp Kitulgala. Your UserName and new Password are in the below. You can change this password after login to the system.\n"
+                +"UserName : "+email+"\nPassword : "+password;
+        String subject = "Registration for the Adventure Base Kitulgala";
+        emailSenderService.sendSimpleEmail(toEmail, body, subject);
+    }
+
+    public boolean checkIfEmailExistsInSystem(String email) {
+        if (userDataRepository.findByEmail(email) != null) {
+            return false;
+        }
+        return true;
     }
 }

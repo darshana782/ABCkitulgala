@@ -3,6 +3,8 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignInRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerSignUpRequest;
+import com.hotelsystem.hotelkitchensystem.example.dto.request.ForgetPasswordRequest;
+import com.hotelsystem.hotelkitchensystem.example.model.UserData;
 import com.hotelsystem.hotelkitchensystem.example.service.AuthService;
 import com.hotelsystem.hotelkitchensystem.example.service.UserDataService;
 import com.hotelsystem.hotelkitchensystem.example.util.JwtTokenUtil;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.SecureRandom;
 
 @CrossOrigin(origins = "http://localhost:3030")
 @RestController
@@ -113,5 +117,43 @@ public class AuthController {
             throw new Exception("Invalid Username or password");
         }
         return jwtTokenUtil.generateToken(signInRequest.getEmail());
+    }
+
+    @PutMapping("/forgetpassword")
+    public ResponseEntity forgetPasswordd(@RequestBody ForgetPasswordRequest forgetPasswordRequest){
+
+        String email = forgetPasswordRequest.getEmail();
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++)
+        {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+        String password = sb.toString();
+
+        String responseMsg;
+
+        if (authService.checkIfEmailExistsInSystem(email)){
+            responseMsg="Email does not exists in the System";
+        }else{
+            try{
+                authService.forgetPass(email,password);
+                responseMsg="Password Send to the email";
+                return ResponseEntity.ok().body(responseMsg);
+            } finally {
+                new java.util.Timer().schedule(
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                authService.sendEmail(email,password);
+                            }
+                        },
+                        500
+                );
+            }
+        }
+        return ResponseEntity.badRequest().body(responseMsg);
     }
 }

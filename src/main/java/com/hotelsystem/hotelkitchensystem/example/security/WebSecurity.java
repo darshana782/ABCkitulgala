@@ -125,6 +125,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/outdoor-activity-schedules/customer-schedules/set-completed").permitAll()
                 .antMatchers("/outdoor-activity-schedules/customer-schedules/completed").permitAll()
                 .antMatchers("/outdoor-activity-schedules/customer-schedules/in-complete").permitAll()
+                .antMatchers("/auth/forgetpassword").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
