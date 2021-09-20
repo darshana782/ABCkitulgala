@@ -1,29 +1,14 @@
 package com.hotelsystem.hotelkitchensystem.example.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hotelsystem.hotelkitchensystem.example.controller.UpdateBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.BookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.ViewBookingRequest;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import com.hotelsystem.hotelkitchensystem.example.enums.CustomerStatus;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
-// import com.hotelsystem.hotelkitchensystem.example.model.Booking;
-// import com.hotelsystem.hotelkitchensystem.example.model.Customer;
-// import com.hotelsystem.hotelkitchensystem.example.model.RoomType;
-// import com.hotelsystem.hotelkitchensystem.example.model.Rooms;
-// import com.hotelsystem.hotelkitchensystem.example.repository.BookingRepository;
-// import com.hotelsystem.hotelkitchensystem.example.repository.CustomerRepository;
-// import com.hotelsystem.hotelkitchensystem.example.repository.RoomTypesRepository;
-// import com.hotelsystem.hotelkitchensystem.example.repository.RoomsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.swing.text.View;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -77,6 +62,22 @@ public class BookingService {
         Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
         customer.setCustomerStatus(CustomerStatus.PENDING);
         customerRepository.save(customer);
+        List<Booking> testBooking = bookingRepository.findAll();
+        HashSet<Integer> realBooking = new HashSet<>();
+        for (Booking booking:testBooking){
+            realBooking.add(booking.getRealBookId());
+        }
+        int y=1;
+        int nextRealBookingNo = 1;
+        while (y<1000){
+            if(realBooking.contains(y)){
+                y++;
+            }
+            else{
+                nextRealBookingNo=y;
+                break;
+            }
+        }
 
         int n = bookingRequest.getNumberOfRooms();
         for(int i=0;i<n;i++){
@@ -95,6 +96,7 @@ public class BookingService {
 
             booking.setRoomNo(x);
             booking.setRooms(roomsRepository.findByRoomNo(x));
+            booking.setRealBookId(nextRealBookingNo);
 
 //            HashSet<Integer> availableRooms = new HashSet<>(Arrays.asList(arrayNumbers));
             availableRooms.remove(x);
@@ -143,6 +145,7 @@ public class BookingService {
             tempList.setCheckOutDate(booking.getCheckoutDate());
             tempList.setMeal(booking.getMeal());
             tempList.setCustName(userData.getFirstName());
+            tempList.setRealBookID(booking.getRealBookId());
             viewBooking.add(tempList);
         }
         return viewBooking;
@@ -162,6 +165,7 @@ public class BookingService {
         tempList.setMeal(booking.getMeal());
         tempList.setCheckInDate(booking.getCheckInDate());
         tempList.setCheckOutDate(booking.getCheckoutDate());
+        tempList.setRealBookID(booking.getRealBookId());
 
         return tempList;
     }
