@@ -4,7 +4,9 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardReque
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.FinishOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.MyOrderResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.StewardTaskResponse;
+import com.hotelsystem.hotelkitchensystem.example.enums.BookingStatus;
 import com.hotelsystem.hotelkitchensystem.example.model.*;
 import com.hotelsystem.hotelkitchensystem.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,9 @@ public class OrderService {
 
     @Autowired
     OrderReportRepository orderReportRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
 
     public boolean checkIfAlreadyStewardAssigned(int orderId) {
         if (orderRepository.findByorderId(orderId) != null) {
@@ -240,5 +245,33 @@ public class OrderService {
         }
         return stewardTaskResponse;
     }
+
+    public MyOrderResponse findMyOrderResponse(int customerId){
+        List<Booking> bookings = bookingRepository.findAllByCustomer_CustomerIdOrderByDate(customerId);
+
+        MyOrderResponse myOrderResponse =new MyOrderResponse();
+
+        List<Booking> checkingDate = bookingRepository.findAllByCustomer_CustomerIdAndStatus(customerId, BookingStatus.ACTIVE);
+
+        for (Booking i:checkingDate){
+            String check = i.getCheckInDate().toString();
+                System.out.println(check);
+
+        }
+//
+//        for (Booking i:bookings){
+//            if(i.getBookingStatus() == BookingStatus.ACTIVE){
+//                MyOrderResponse myOrderResponse = new MyOrderResponse();
+//                myOrderResponse.setRoomId(i.getRoomNo());
+//
+//                for ()
+//
+//            }
+//        }
+
+        return myOrderResponse;
+    }
+
+
 
 }
