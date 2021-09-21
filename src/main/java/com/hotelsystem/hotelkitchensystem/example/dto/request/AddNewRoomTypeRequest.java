@@ -3,7 +3,7 @@ package com.hotelsystem.hotelkitchensystem.example.dto.request;
 import com.hotelsystem.hotelkitchensystem.example.enums.RoomTypes;
 
 public class AddNewRoomTypeRequest {
-    private int roomTypeID;
+//    private int roomTypeID;
     private RoomTypes roomTypes;
     private String description;
     private String image;
@@ -11,13 +11,13 @@ public class AddNewRoomTypeRequest {
     private int no_of_persons;
     private int price;
 
-    public int getRoomTypeID() {
-        return roomTypeID;
-    }
-
-    public void setRoomTypeID(int roomTypeID) {
-        this.roomTypeID = roomTypeID;
-    }
+//    public int getRoomTypeID() {
+//        return roomTypeID;
+//    }
+//
+//    public void setRoomTypeID(int roomTypeID) {
+//        this.roomTypeID = roomTypeID;
+//    }
 
     public RoomTypes getRoomTypes() {
         return roomTypes;
