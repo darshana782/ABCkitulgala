@@ -96,6 +96,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers("/report/**").permitAll()
+                .antMatchers("/order/**").permitAll()
 
 
                 .antMatchers("/receptionist/**").permitAll()

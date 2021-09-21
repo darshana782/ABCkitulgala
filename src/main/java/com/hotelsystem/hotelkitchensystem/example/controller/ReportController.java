@@ -2,8 +2,10 @@ package com.hotelsystem.hotelkitchensystem.example.controller;
 
 import com.hotelsystem.hotelkitchensystem.example.dto.request.InventoryReportDateRangeRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.InventoryReportResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.MyBillResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.OrderReportResponse;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.StockReportResponse;
+import com.hotelsystem.hotelkitchensystem.example.service.CustomerService;
 import com.hotelsystem.hotelkitchensystem.example.service.IngredientReportService;
 import com.hotelsystem.hotelkitchensystem.example.service.OrderReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ReportController {
     @Autowired
     private OrderReportService orderReportService;
 
+    @Autowired
+    private CustomerService customerService;
+
     @PostMapping("/generateInventoryReport")
     public List<InventoryReportResponse> findBySelectedDateRange(@RequestBody InventoryReportDateRangeRequest inventoryReportDateRangeRequest){
         return ingredientReportService.findBySelectedDateRange(inventoryReportDateRangeRequest);
@@ -36,4 +41,10 @@ public class ReportController {
     public List<OrderReportResponse> findOrdersBySelectedDateRange(@RequestBody InventoryReportDateRangeRequest inventoryReportDateRangeRequest){
         return orderReportService.findOrdersBySelectedDateRange(inventoryReportDateRangeRequest);
     }
+
+    @GetMapping("/myBill/{customerId}")
+    public MyBillResponse billResponse(@PathVariable int customerId){
+        return customerService.myBill(customerId);
+    }
+
 }
