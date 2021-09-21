@@ -16,7 +16,9 @@ import java.util.List;
 @Table (name="RoomType")
 
 public class RoomType {
+
     @Id
+    @GeneratedValue
     private int roomTypeID;
     @Column (nullable = false)
     @Enumerated(EnumType.STRING)

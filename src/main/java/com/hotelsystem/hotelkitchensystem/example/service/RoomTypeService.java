@@ -54,7 +54,7 @@ public class RoomTypeService {
         RoomType roomType = new RoomType();
 
         //set Another data for room type object
-        roomType.setRoomTypeID(addNewRoomTypeRequest.getRoomTypeID());
+//        roomType.setRoomTypeID(addNewRoomTypeRequest.getRoomTypeID());
         roomType.setRoomTypes(addNewRoomTypeRequest.getRoomTypes());
         roomType.setDescription(addNewRoomTypeRequest.getDescription());
         roomType.setImage(addNewRoomTypeRequest.getImage());

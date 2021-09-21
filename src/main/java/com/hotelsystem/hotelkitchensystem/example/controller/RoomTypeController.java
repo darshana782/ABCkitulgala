@@ -21,14 +21,14 @@ public class RoomTypeController {
 
     @PostMapping("/addRoomType")
     public ResponseEntity addRoomType(@RequestBody AddNewRoomTypeRequest addNewRoomTypeRequest) {
-        int roomTypeID = addNewRoomTypeRequest.getRoomTypeID();
+//        int roomTypeID = addNewRoomTypeRequest.getRoomTypeID();
         RoomTypes roomTypes = addNewRoomTypeRequest.getRoomTypes();
         String responseMsg;
 
-        if (roomTypeService.checkIfRoomTypeIdExists (roomTypeID)) {
-            responseMsg = "This Id already exisis";
-        }
-        else if (roomTypeService.checkIfRoomTypesExists(roomTypes)){
+//        if (roomTypeService.checkIfRoomTypeIdExists (roomTypeID)) {
+//            responseMsg = "This Id already exisis";
+//        }
+        if (roomTypeService.checkIfRoomTypesExists(roomTypes)){
             responseMsg="This room type already exists";
         }else {
             roomTypeService.addRoomTypes(addNewRoomTypeRequest);

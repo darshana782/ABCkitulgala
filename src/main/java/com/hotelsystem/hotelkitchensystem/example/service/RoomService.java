@@ -34,7 +34,8 @@ public class RoomService {
         Rooms rooms = new Rooms();
 
         rooms.setRoomNo(addNewRoomRequest.getRoomNo());
-        rooms.setRoomType(roomTypesRepository.findByRoomTypeID(addNewRoomRequest.getRoomTypeID()));
+//        rooms.setRoomType(roomTypesRepository.findByRoomTypeID(addNewRoomRequest.getRoomTypeID()));
+        rooms.setRoomType(roomTypesRepository.findByRoomTypes(addNewRoomRequest.getRoomTypes()));
 
         roomsRepository.save(rooms);
     }
