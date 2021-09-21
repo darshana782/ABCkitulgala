@@ -4,6 +4,7 @@ import com.hotelsystem.hotelkitchensystem.example.dto.request.AssignStewardReque
 import com.hotelsystem.hotelkitchensystem.example.dto.request.CustomerFoodOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.request.FinishOrderRequest;
 import com.hotelsystem.hotelkitchensystem.example.dto.response.FoodOrderResponse;
+import com.hotelsystem.hotelkitchensystem.example.dto.response.MyOrderResponse;
 import com.hotelsystem.hotelkitchensystem.example.model.CustomerOrders;
 import com.hotelsystem.hotelkitchensystem.example.service.FoodService;
 import com.hotelsystem.hotelkitchensystem.example.service.OrderService;
@@ -81,6 +82,12 @@ public class OrderController {
             responseMsg="Steward Added Successfully";
             return ResponseEntity.ok().body(responseMsg);
         }
+    }
+
+    @GetMapping("myOrders/{customerId}")
+        public MyOrderResponse myOrderResponse(@PathVariable int customerId){
+            return orderService.findMyOrderResponse(customerId);
+
     }
 
 

@@ -61,6 +61,8 @@ public class AuthController {
         String password = customerSignUpRequest.getPassword();
         String name = customerSignUpRequest.getFirstName();
         String responseMsg;
+
+        System.out.println(email);
         if (authService.checkIfEmailExists(email)){
             responseMsg="Email exists";
         }else if (authService.checkIfNICExists(nic)){

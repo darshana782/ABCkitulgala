@@ -29,6 +29,9 @@ public class BookingService {
     @Autowired
     private UserDataRepository userDataRepository;
 
+    @Autowired
+    private CheckingStatusRepository checkingStatusRepository;
+
     public int getRoomNoByRoomType(RoomTypes roomTypes, Date date1 ,Date date2){
         RoomType roomType = roomTypesRepository.findByRoomTypes(roomTypes);
         List<Rooms> rooms= roomsRepository.findAllByRoomType_RoomTypeID(roomType.getRoomTypeID());
@@ -58,6 +61,13 @@ public class BookingService {
     }
 
     public void addBooking(BookingRequest bookingRequest){
+
+        CheckinCheckoutStatus checkinCheckoutStatus = new CheckinCheckoutStatus();
+            checkinCheckoutStatus.setCustomerId(bookingRequest.getCustomerID());
+            checkinCheckoutStatus.setCheckinDate(bookingRequest.getCheckInDate());
+            checkinCheckoutStatus.setCheckoutDate(bookingRequest.getCheckOutDate());
+            checkinCheckoutStatus.setStatus("PENDING");
+        checkingStatusRepository.save(checkinCheckoutStatus);
 
 //        Customer customer = customerRepository.findByUserData_Id(bookingRequest.getCustomerID());
 //        customer.setCustomerStatus(BookingStatus.PENDING);

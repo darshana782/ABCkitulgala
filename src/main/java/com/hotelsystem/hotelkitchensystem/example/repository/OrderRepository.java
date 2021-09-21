@@ -30,5 +30,11 @@ public interface OrderRepository extends JpaRepository<CustomerOrders, Integer> 
     @Query(value = "SELECT x.totalPrice FROM CustomerOrders x WHERE x.orderId=?1")
     float findOrderPriceById(int orderId);
 
+    @Query(value = "SELECT x FROM CustomerOrders x WHERE x.customerId=?1 AND x.status<>'FINISH' AND x.orderDate BETWEEN ?2 AND ?3")
+    List<CustomerOrders> findAllByCustomerIDDateAndStatus(int userId, String minDate, String maxDate);
+
+    @Query(value = "SELECT x FROM CustomerOrders x WHERE x.customerId=?3 AND x.orderDate BETWEEN ?1 AND ?2")
+    List<CustomerOrders> findAllByDateRangeAndCustomerId(String checkinDate, String checkoutDate, int customerId);
+
 
 }
