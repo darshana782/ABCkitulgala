@@ -136,7 +136,7 @@ public class EmployeeController {
 
     @PutMapping("/deleteEmployee/{id}")
     public ResponseEntity deleteEmployee(@PathVariable int id){
-        UserDataService.deleteEmployeeByID(id);
+        UserDataService.deleteEmployeeByID(id); 
         return ResponseEntity.ok().body("Employee successfully deleted");
     }
 }
